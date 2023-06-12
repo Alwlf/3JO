@@ -13,16 +13,29 @@
         }
     </script>
 
+    <style>
+      .container {
+        font-family: arial;
+        font-size: 24px;
+        margin: 25px;
+        width: 350px;
+        height: 200px;
+      }
+      
+      .child {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto;
+      }
+    </style>
+
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
     <link href="/static/projectapp/css/input-file-button.css"
           rel="stylesheet"
           type="text/css">
-    <style>
-        label a{
-            text-decoration: none;
-            color: #999;
-        }
-    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="/static/projectapp/css/style1.css">
     
 
     <link href="/static/projectapp/css/bootstrap.min.css" rel="stylesheet">
@@ -43,23 +56,56 @@
 
 <br/>
 <br/>
-    <input type="radio" style="font-size:15px;">피부
-    <input type="radio">눈
+    {% comment %} <label style="font-size:20px;"><input type="radio" name="part" checked>피부</label>
+    <label style="font-size:20px;"><input type="radio" name="part">눈</label> {% endcomment %}
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+      <label class="form-check-label" for="inlineRadio1">피부</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+      <label class="form-check-label" for="inlineRadio2">눈</label>
+    </div>
     <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
+      
         <div class="bg-body-tertiary border rounded-3">
-          <br><br><br><br><h2 style="text-align: center;">이미지</h2><br><br><br><br><h2 style="text-align: center;">+</h2><br><br><br><br><h2 style="text-align: center;">업로드</h2><br><br><br><br>
+          <br/>
+          <h2>File Upload & Image Preview</h2>
+          <p class="lead">No Plugins <b>Just Javascript</b></p>
+
+          <!-- Upload  -->
+          <form id="file-upload-form" class="uploader">
+            <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+
+            <label for="file-upload" id="file-drag">
+              <img id="file-image" src="#" alt="Preview" class="hidden">
+              <div id="start">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                <div>Select a file or drag here</div>
+                <div id="notimage" class="hidden">Please select an image</div>
+                <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+              </div>
+              <div id="response" class="hidden">
+                <div id="messages"></div>
+                <progress class="progress" id="file-progress" value="0">
+                  <span>0</span>%
+                </progress>
+              </div>
+            </label>
+          </form>
         </div>
         <div class="bg-body-tertiary">
-            <h1 style="text-align: center;">주의사항</h1>
-            <h3>1. ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</h3>
-            <br/>
-            <h3>2. ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</h3>
-            <br/>
-            <h3>3. ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</h3>
-            <br/>
-            <h3>4. ㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂ</h3>
-            <br/>
-        </div>
+          <h1 style="text-align: center;">주의사항</h1>
+          <br/>
+          <h3>※ 사진 사이즈는 640 px * 640 px 사용 ※</h3>
+          <br/>
+          <h3>※ 사진 화질은 선명한 사진을 사용 ※</h3>
+          <br/>
+          <h3>※ 파일 형식은 JPG 형식을 사용 ※</h3>
+          <br/>
+          <h3>※ 질병 부위를 최대한 자세히 촬영요망 ※</h3>
+          <br/>
+      </div>
         
         <div class="filebox preview-image">     
             <label for="input-file" style="float:right">파일선택</label>
@@ -68,10 +114,9 @@
         </div>
         <button type="button" class="btn btn-primary btn-lg" style="width:33%;" onclick="javascript:location.href='/project/disease_result';">진단하기</button>
     </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="/static/projectapp/js/script1.js"></script>
 
     {% include "projectapp/include/footer.html" %}
   </body>
 </html>
     
-
-
