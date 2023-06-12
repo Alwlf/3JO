@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
+    <style>
+        table {
+          width: 100%;
+          border: 1px solid #444444;
+          border-collapse: collapse;
+        }
+        th, td {
+          border: 1px solid #444444;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function goback(){
+            history.go(-1);
+        }
+
+        function goUpload(){
+            location.href="/project/post/";
+        }
+      </script>
+</head>
+<body>
+    <!-- Responsive navbar-->
+    {% include "projectapp/include/navbar.html" %}
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">게시글 작성하기</h1>
+            </div>
+        </div>
+    </br>
+    </header>
+{% csrf_token %}
+
+<form id="fm" name="fm" method="post"
+      action="/project/board/"
+      enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+    <table>
+        <tr>
+            <th>글 제목</th>
+            <th><input type="text" name="title"
+                size="78" required></th>
+        </tr>
+        <tr>
+            <th>글 내용</td>
+            <td><textarea name="content" rows="20" 
+                cols="80" required></textarea></td>
+        </tr>
+        <!-- <tr>
+            <td>첨부파일</td>
+            <td>        <input type="file" name="file_nm"></td>
+        </tr> -->
+    </table>
+    <br/>
+    <p>
+        첨부파일 : 
+        <input type="file" name="file_nm">
+    </p>
+    
+    </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+
+    <hr/>
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <input type="submit" class="btn btn-outline-dark btn-light" value="업로드하기" onclick="goUpload()">
+                <input type="submit" class="btn btn-outline-dark btn-light" value="취소하기" onclick="goback()">
+            </div>
+        </div>
+        <div class="col-md-3">
+        </div>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Blog Home - Start Bootstrap Template</title>
+        <script type="text/javascript">
+          function goinputform(){
+              location.href="/project/inputpost/";
+          }
+
+        </script>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        {% include "projectapp/include/navbar.html" %}
+        <!-- Page header with logo and tagline-->
+        <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">게시판</h1>
+                    <p class="lead mb-0">고민거리와 자랑거리를 자유롭게 이야기 해봐요!!</p>
+                </div>
+            </div>
+            <div class="container">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>순서</th>
+                      <th>제목</th>
+                      <th>작성자</th>
+                      <th>작성일</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for d in board_list %}
+                    <tr>
+                      <td>{{d.board_id}}</td>
+                      <td><a href ="/project/board_view/">{{d.board_title}}</a></td>
+                      <td>{{d.user_id}}</td>
+                      <td>2023.06.12</td>
+                    </tr>
+                    {%endfor %}
+                    <!-- {% for i in list %}
+                    <tr>
+                      <td>{{ i.id }}</td>
+                      <td>{{ i.subject }}</a></td>
+                      <td>{{ i.name }}</td>
+                      <td>{{ i.day }}</td>
+                    </tr>
+                    {% endfor %} -->
+                  </tbody>
+                </table>
+                <hr/>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item disabled">
+                        <a class="page-link">이전</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">4</a></li>
+                      <li class="page-item"><a class="page-link" href="#">5</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">다음</a>
+                      </li>
+                    </ul>
+                  </nav>
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-light btn-outline-dark btn-primary me-md-2" type="button" onclick="goinputform()">글쓰기</button>
+                  </div>
+        </header>
+ 
+        <!-- Footer-->
+        {% include "projectapp/include/footer.html" %}
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/static/projectapp/js/scripts.js"></script>
+        <script type="text/javascript"
+        src="/static/projectapp/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

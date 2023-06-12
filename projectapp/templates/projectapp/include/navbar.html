@@ -1,0 +1,267 @@
+<style>
+    @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
+    .nav-item, .navbar-brand{
+      font-family: 'Hanna', sans-serif;
+    }
+
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.3s ease;
+      }
+      .popup-content {
+        width: 400px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+      .popup-content h2 {
+        text-align: center;
+        margin-top: 0;
+      }
+      .popup-content form {
+        display: flex;
+        flex-direction: column;
+      }
+      .popup-content input[type="text"],
+      .popup-content input[type="password"],
+      .popup-content input[type="email"],
+      .popup-content select {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+      }
+      .popup-content input[type="submit"] {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 3px;
+        background-color: #3f51b5;
+        color: #fff;
+        cursor: pointer;
+      }
+      .popup-content input[type="submit"]:hover {
+        background-color: #303f9f;
+      }
+      .popup-content .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+      }
+
+      .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.3s ease;
+      }
+      .popup-content {
+        width: 400px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+      .popup-content h2 {
+        text-align: center;
+        margin-top: 0;
+      }
+      .popup-content form {
+        display: flex;
+        flex-direction: column;
+      }
+      .popup-content input[type="text"],
+      .popup-content input[type="password"],
+      .popup-content input[type="email"],
+      .popup-content select {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+      }
+      .popup-content input[type="submit"] {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 3px;
+        background-color: #3f51b5;
+        color: #fff;
+        cursor: pointer;
+      }
+      .popup-content input[type="submit"]:hover {
+        background-color: #303f9f;
+      }
+      .popup-content .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      
+</style>
+
+<script>
+  function openLogin() {
+    var popup = document.getElementById("login");
+    popup.style.visibility = "visible";
+    popup.action = "/project/login_chk/";
+    popup.style.opacity = "1";
+    popup.submit();
+  }
+
+  function openSignup() {
+    var popup = document.getElementById("signup");
+    popup.style.visibility = "visible";
+    popup.action = "/project/insert/";
+    popup.style.opacity = "1";
+    popup.submit();
+  }
+  
+  function openFindId(){
+    var popup = document.getElementById("findId");
+    popup.style.visibility = "visible";
+    popup.style.opacity = "1";
+  }
+
+  function openFindPw(){
+    var popup = document.getElementById("findPw");
+    popup.style.visibility = "visible";
+    popup.style.opacity = "1";
+  }
+</script>
+
+
+
+<!-- 상단 영역 -->
+<header class="bg-primary bg-white">
+  <div class="container px-4 text-center">
+      <img src="/static/projectapp/images/배너1-1.png">
+  </div>
+</header> 
+
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-transfer">
+    <div class="container-fluid">
+    <a class="navbar-brand" href="/project">AI PD</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/project">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#!" onclick="openLogin()">로그인</a></li>
+        <div id="login" class="popup-overlay">
+            <div class="popup-content">
+            <h2>로그인</h2>
+            <form name="login" id="login" method="post" action="/project/login_chk/">
+                {% csrf_token %}
+                <input name="user_id" id="user_id" type="text" placeholder="아이디">
+                <input name="user_pw" id="user_pw" type="text" placeholder="비밀번호">
+                <div style="display:inline-blodck; text-align:center;">
+                <a href="#" onclick="openFindId()">아이디 찾기</a> | <a href="#" onclick="openFindPw()">비밀번호 찾기</a> 
+                <div id="findId" class="popup-overlay">
+                    <div class="popup-content">
+                    <h2>아이디 찾기</h2>
+                    <form name="findId" method="post">
+                        {% csrf_token %}
+                        <input name="name" type="text" placeholder="이름">
+                        <input name="email" type="text" placeholder="이메일">
+                        <div style="display:inline-blodck">
+                        <input type="submit" style="width:90px; float:left;" value="찾기">
+                        <input type="submit" style="width:90px; float:right;" value="취소">
+                        </div>
+          
+                    </div>
+                </div>  
+                <div id="findPw" class="popup-overlay">
+                    <div class="popup-content">
+                    <h2>비밀번호 찾기</h2>
+                    <form name="findPw" method="post">
+                        {% csrf_token %}
+                        <input name="id" type="text" placeholder="아이디">
+                        <input name="email" type="text" placeholder="이메일">
+                        <div style="display:inline-blodck">
+                        <input type="submit" style="width:90px; float:left;" value="찾기">
+                        <input type="submit" style="width:90px; float:right;" value="취소">
+                        </div>
+                   
+                    </div>     
+                </div>  
+                </div>
+                <br/>
+                <div style="display:inline-blodck">
+                <input type="submit" style="width:90px; float:left;" value="로그인" onclick="openLogin()">
+                <input type="submit" style="width:90px; float:right;" value="취소">
+                </div>
+                
+            </form>
+            </div>
+        </div>
+        <li class="nav-item"><a class="nav-link" href="#signup" onclick="openSignup()">회원가입</a></li>
+        <div id="signup" class="popup-overlay">
+            <div class="popup-content">
+            <h2>회원가입</h2>
+            <form id="signup" name="signup" method="post" action="/project/insert/" >
+                {% csrf_token %}
+                <input name="name" id="name" type="text" placeholder="이름">
+                <select name="sex">
+                <option value="male">남성</option>
+                <option value="female">여성</option>
+                </select>
+                <input name="email" type="email" placeholder="이메일 (aaa@bbb.ccc 형식)">
+                <div style="display:inline-blodck">
+                <input name="id" id ="id" type="text" placeholder="아이디 (영문,숫자 조합 10자 이하)" style="width:265px;">
+                <input type="button" style="height:40px; float:right;" value="중복 확인" >
+                </div>
+                <input name="pw" id="pw" type="password" placeholder="비밀번호 (영문,숫자 조합 15자 이하)">
+                <input type="password" placeholder="비밀번호 확인">
+                
+                <div style="display:inline-blodck">
+                <input type="submit" style="width:90px; float:left;" value="가입">
+                <input type="submit" style="width:90px; float:right;" value="취소">
+                </div>
+                
+            </form>
+            </div>
+        </div>
+        </ul>
+    </div>
+    </div>
+</nav>

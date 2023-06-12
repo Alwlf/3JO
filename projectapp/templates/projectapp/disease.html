@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>질병진단</title>
+    <script type="text/javascript">
+        function goDiseaseResult(){
+            location.href="/project/index1/";
+        }
+    </script>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
+    <link href="/static/projectapp/css/input-file-button.css"
+          rel="stylesheet"
+          type="text/css">
+    <style>
+        label a{
+            text-decoration: none;
+            color: #999;
+        }
+    </style>
+    
+
+    <link href="/static/projectapp/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <!-- Custom styles for this template -->
+    <link href="/static/projectapp/css/carousel.css" rel="stylesheet">
+  </head>
+  <body>
+
+
+    
+<header>
+  {% include "projectapp/include/navbar.html" %}
+</header>
+
+
+
+<br/>
+<br/>
+    <input type="radio" style="font-size:15px;">피부
+    <input type="radio">눈
+    <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
+        <div class="bg-body-tertiary border rounded-3">
+          <br><br><br><br><h2 style="text-align: center;">이미지</h2><br><br><br><br><h2 style="text-align: center;">+</h2><br><br><br><br><h2 style="text-align: center;">업로드</h2><br><br><br><br>
+        </div>
+        <div class="bg-body-tertiary">
+            <h1 style="text-align: center;">주의사항</h1>
+            <h3>1. ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</h3>
+            <br/>
+            <h3>2. ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</h3>
+            <br/>
+            <h3>3. ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</h3>
+            <br/>
+            <h3>4. ㅂㅂㅂㅂㅂㅂㅂㅂㅂㅂ</h3>
+            <br/>
+        </div>
+        
+        <div class="filebox preview-image">     
+            <label for="input-file" style="float:right">파일선택</label>
+            <input type="file" id="input-file" class="upload-hidden">
+            <label style="float:right"><a href="#">파일 초기화</a></label>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg" style="width:33%;" onclick="javascript:location.href='/project/disease_result';">진단하기</button>
+    </div>
+
+    {% include "projectapp/include/footer.html" %}
+  </body>
+</html>
+    
+
+
