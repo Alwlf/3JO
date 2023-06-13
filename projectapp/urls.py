@@ -14,12 +14,16 @@ urlpatterns = [
     path('disease/',views.disease),
     # 진단 결과
     path('disease_result/',views.disease_result),
+    # 진단하기
+    path('disease2/',views.disease2),
+    # 진단 결과
+    path('disease_result2/',views.setFileInsert),
     # 마이 페이지
     path('mypage/',views.mypage),
     # 회원 정보 수정
     path('update_mypage/',views.update_mypage),
-
-
+    # # 파일 입력 폼2
+    # path('file_insert/', views.setFileInsert),
 
     #로그인
     path('login_chk/',views.login_chk),
@@ -30,6 +34,8 @@ urlpatterns = [
     path('board/',views.board),
     # 게시판 글쓰기
     path('inputpost/',views.inputpost),
+    # 게시판 글쓰기
+    path('inputpost2/',views.inputpost2),
     # 게시판 상세조회
     path('board_view/',views.boardView),
 
