@@ -25,6 +25,8 @@ urlpatterns = [
     path('login_chk/',views.login_chk),
     # 회원 가입
     path('insert/',views.insert_user),
+    # 아이디 중복 체크
+    path('idChk/',views.idChk),
 
     # 게시판
     path('board/',views.board),
