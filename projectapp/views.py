@@ -84,7 +84,7 @@ def setFileInsert(request) :
 
         ####### [Database 이용시]
         # 컬럼은 두개사용 : img_full_name, download_full_name
-
+        
     # msg = """
     #     <p><img src='{0}'></p>
     # """.format(img_full_name, file_size, 
