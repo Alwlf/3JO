@@ -1,0 +1,4 @@
+projectapp/__pycache__/urls.cpython-39.pyc
+projectapp/__pycache__/views.cpython-39.pyc
+projectapp/nonmodel_db/__pycache__/db_sql.cpython-39.pyc
+projectapp/nonmodel_db/user/__pycache__/user.cpython-39.pyc
