@@ -57,12 +57,11 @@ def setFileInsert(request) :
     try :
         title = request.POST.get("title")
 
-        if request.FILES.get("fileUpload") is not None :
-            file_nm = request.FILES.get("fileUpload")
+        if request.FILES.get("file_nm") is not None :
+            file_nm = request.FILES.get("file_nm")
         else :
             file_nm = ""
-        #file_nm = request.POST.get("fileUpload")
-        print(request.POST,request.FILES,file_nm)
+
     except :
         pass
     if file_nm != "" :

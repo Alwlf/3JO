@@ -98,10 +98,9 @@
           <h2>File Upload & Image Preview</h2>
           <p class="lead">No Plugins <b>Just Javascript</b></p>
           <!-- Upload  -->
-          <form id="file-upload-form" class="uploader" method="post"
-          action="/project/disease_result2/">
-          {% csrf_token %}
+          <form id="file-upload-form" class="uploader">
             <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+
             <label for="file-upload" id="file-drag">
               <img id="file-image" src="#" alt="Preview" class="hidden">
               <div id="start">
@@ -117,8 +116,6 @@
                 </progress>
               </div>
             </label>
-            <input type="file" name="fileUpload5">
-            <input type="submit" value="진단하기">
           </form>
         </div>
         <div class="bg-body-tertiary">
