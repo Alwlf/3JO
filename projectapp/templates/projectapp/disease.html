@@ -68,23 +68,27 @@
 
 <br/>
 <br/>
-    {% comment %} <label style="font-size:20px;"><input type="radio" name="part" checked>피부</label>
-    <label style="font-size:20px;"><input type="radio" name="part">눈</label> {% endcomment %}
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-      <label class="form-check-label" for="inlineRadio1">피부</label>
+    <!-- {% comment %} <label style="font-size:20px;"><input type="radio" name="part" checked>피부</label>
+    <label style="font-size:20px;"><input type="radio" name="part">눈</label> {% endcomment %} -->
+    <div class="col-md-3">
     </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-      <label class="form-check-label" for="inlineRadio2">눈</label>
+    <div class="col-md-6">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" style="width: 30px; height: 30px;">
+        <label class="form-check-label" for="inlineRadio1" style="font-size: 30px;">피부</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" style="width: 30px; height: 30px;">
+        <label class="form-check-label" for="inlineRadio2" style="font-size: 30px;">눈</label>
+      </div>
     </div>
+    <br/>
     <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
       
         <div class="bg-body-tertiary border rounded-3">
           <br/>
           <h2>File Upload & Image Preview</h2>
           <p class="lead">No Plugins <b>Just Javascript</b></p>
-
           <!-- Upload  -->
           <form id="file-upload-form" class="uploader">
             <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
