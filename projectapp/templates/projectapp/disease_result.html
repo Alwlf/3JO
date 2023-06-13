@@ -9,7 +9,7 @@
     <title>질병진단결과</title>
     <script type="text/javascript">
         function goToBoardForm(){
-            location.href="/project/index1/";
+            location.href="/project/board/";
         }
     </script>
 
@@ -34,10 +34,11 @@
 <br/>
 <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
     <div class="bg-body-tertiary border rounded-3">
-      <br><br><br><br><h2 style="text-align: center;">업로드한</h2><br><br><br><br><br><br><br><br><h2 style="text-align: center;">이미지 보여주기</h2><br><br><br><br>
+      <p><img src='{{ img_full_name }}'></p>
+      <!-- <br><br><br><br><h2 style="text-align: center;">업로드한</h2><br><br><br><br><br><br><br><br><h2 style="text-align: center;">이미지 보여주기</h2><br><br><br><br> -->
     </div>
     <div class="bg-body-tertiary">
-        <h1>진단명 : </h1><h1>확률 : </h1>
+        <h2>진단명 : </h2><h2>확률 : </h2>
         <hr/>
         <br/>
         <div class="bg-body-tertiary border rounded-3">

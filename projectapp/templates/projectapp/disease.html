@@ -7,11 +7,15 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.104.2">
     <title>질병진단</title>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         function goDiseaseResult(){
-            location.href="/project/index1/";
+            location.href = "/project/disease_result2/";
         }
-    </script>
+          // alert(document.getElementById('file-image').src)
+          //   // location.href="/project/disease_result2/";
+        
+        
+    </script> -->
 
     <style>
       .container {
@@ -26,6 +30,18 @@
         width: 50px;
         height: 50px;
         margin: 0 auto;
+      }
+
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      th, td {
+        padding-top: 40px;
+        padding-bottom: 20px;
+        padding-left: 100px;
+        padding-right: 100px;
       }
     </style>
 
@@ -45,7 +61,10 @@
     <link href="/static/projectapp/css/carousel.css" rel="stylesheet">
   </head>
   <body>
-
+  <form id="fm" name="fm" method="post"
+    action="/project/disease_result/"
+    enctype="multipart/form-data">
+    {% csrf_token %}
 
     
 <header>
@@ -56,25 +75,31 @@
 
 <br/>
 <br/>
-    {% comment %} <label style="font-size:20px;"><input type="radio" name="part" checked>피부</label>
-    <label style="font-size:20px;"><input type="radio" name="part">눈</label> {% endcomment %}
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-      <label class="form-check-label" for="inlineRadio1">피부</label>
+    <!-- {% comment %} <label style="font-size:20px;"><input type="radio" name="part" checked>피부</label>
+    <label style="font-size:20px;"><input type="radio" name="part">눈</label> {% endcomment %} -->
+    <div class="col-md-3">
     </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-      <label class="form-check-label" for="inlineRadio2">눈</label>
+    <div class="col-md-6">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" style="width: 30px; height: 30px;">
+        <label class="form-check-label" for="inlineRadio1" style="font-size: 30px;">피부</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" style="width: 30px; height: 30px;">
+        <label class="form-check-label" for="inlineRadio2" style="font-size: 30px;">눈</label>
+      </div>
     </div>
+    <br/>
     <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
       
         <div class="bg-body-tertiary border rounded-3">
           <br/>
           <h2>File Upload & Image Preview</h2>
           <p class="lead">No Plugins <b>Just Javascript</b></p>
-
           <!-- Upload  -->
-          <form id="file-upload-form" class="uploader">
+          <form id="file-upload-form" class="uploader" method="post" action="/project/disease_result/"
+          enctype="multipart/form-data">
+          {% csrf_token %}
             <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
 
             <label for="file-upload" id="file-drag">
@@ -92,31 +117,34 @@
                 </progress>
               </div>
             </label>
-          </form>
         </div>
         <div class="bg-body-tertiary">
-          <h1 style="text-align: center;">주의사항</h1>
-          <br/>
-          <h3>※ 사진 사이즈는 640 px * 640 px 사용 ※</h3>
-          <br/>
-          <h3>※ 사진 화질은 선명한 사진을 사용 ※</h3>
-          <br/>
-          <h3>※ 파일 형식은 JPG 형식을 사용 ※</h3>
-          <br/>
-          <h3>※ 질병 부위를 최대한 자세히 촬영요망 ※</h3>
-          <br/>
+          <table>
+            <td>
+              <h1 style="text-align: center;">주의사항</h1>
+              <br/>
+              <h2>※ 질병 부위를 최대한 자세히 촬영요망 ※</h2>
+              <br/>
+              
+              <p><h2><예시></h2><img src="/static/projectapp/images/sickdog.jpg/"></p>
+              <br/>
+            </td>
+          </table>
       </div>
         
         <div class="filebox preview-image">     
-            <label for="input-file" style="float:right">파일선택</label>
             <input type="file" id="input-file" class="upload-hidden">
             <label style="float:right"><a href="#">파일 초기화</a></label>
+            <!-- <label style="float:right"><input type="submit" value="진단하기"></label> -->
+            <label style="float:right"><input for="file-upload-form" type="submit" value="진단하기"></label>
+
+            <!-- <label style="float:right"><a href='/project/file_insert_form/';>진단하기</a></label> -->
         </div>
-        <button type="button" class="btn btn-primary btn-lg" style="width:33%;" onclick="javascript:location.href='/project/disease_result';">진단하기</button>
+        <!-- <button type="button" class="btn btn-primary btn-lg" sstyle="width:33%;" onclick="javascript:history.go(-1);">파일초기화</button>
+        <button type="button" class="btn btn-primary btn-lg" style="width:33%;" onclick="javascript:location.href='/project/disease_result';">진단하기</button> -->
     </div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="/static/projectapp/js/script1.js"></script>
-
+    </form>
     {% include "projectapp/include/footer.html" %}
-  </body>
 </html>
     

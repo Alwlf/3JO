@@ -6,6 +6,11 @@ from django.shortcuts import render
 from projectapp.nonmodel_db.user import user    
 from projectapp.nonmodel_db.board import Board
 
+### File Up/Download 처리를 위한 라이브러리
+from projectapp.file_util.file_util import File_Util
+
+import urllib
+
 def index(request):
 
     # board_list =  {"board_title":"EEEE"}
@@ -31,10 +36,66 @@ def disease(request):
                   "projectapp/disease.html", 
                   {})
 
-def disease_result(request):
-    return render(request,		
-                  "projectapp/disease_result.html", 
-                  {})
+# def disease_result(request):
+#     return render(request,		
+#                   "projectapp/disease_result.html", 
+#                   {})
+
+
+### File Upload 처리하기
+def setFileInsert(request) :
+    try :
+        title = request.POST.get("title")
+
+        if request.FILES.get("fileUpload") is not None :
+            file_nm = request.FILES.get("fileUpload")
+        else :
+            file_nm = ""
+
+    except :
+        pass
+    if file_nm != "" :
+        ###########[ File Upload 처리하기 ]##########
+        ### - 파일 업로드 폴더 위치 지정 및 물리적 위치 생성하기
+        upload_dir = "./projectapp/static/projectapp/file_UpDown/"
+        download_dir = "./projectapp/static/projectapp/file_UpDown/"
+
+        ### 파일(이미지)을 페이지에 보여줄 경우 : 폴더 전체 경로 지정
+        img_dir = "/static/projectapp/file_UpDown/"
+
+        ### File_Uitl 클래스 생성하기
+        fu = File_Util()
+
+        ### 초기값 셋팅(설정)하기
+        fu.setUpload(file_nm, upload_dir, img_dir, download_dir)
+
+        ### 파일 업로드 실제 수행하기*****
+        fu.fileUpload()
+
+        ########## [ 업로드된 파일 정보 조회 ] #########
+        ### 파일 사이즈
+        file_size = fu.file_size
+        ### 업로드된 파일명
+        filename = fu.filename
+        ### <img> 태그에 넣을 src 전체 경로
+        img_full_name = fu.img_full_name
+        ### (DB 저장용) 다운로드 전체경로+파일명
+        download_full_name = fu.download_full_name
+
+        ####### [Database 이용시]
+        # 컬럼은 두개사용 : img_full_name, download_full_name
+        
+    # msg = """
+    #     <p><img src='{0}'></p>
+    # """.format(img_full_name, file_size, 
+    #            filename, download_full_name)
+    
+    return render(request,
+                  "projectapp/disease_result.html",
+                  {"img_full_name":img_full_name})
+    # return HttpResponse(msg)
+
+
 
 def mypage(request):
     return render(request,		
@@ -65,7 +126,6 @@ def idChk(request):
     return render(request,      
                   "projectapp/include/child.html", 
                   {"id_list":id_list})
-
 
 def insert_user(request):
     idDuplication =request.POST.get("idDuplication","ERROR")
