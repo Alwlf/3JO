@@ -58,24 +58,39 @@ def inputpost(request):
                   "projectapp/inputpost.html", 
                   {})
 
+def idChk(request):
+
+    id_list = user.idCheck()
+    
+    return render(request,      
+                  "projectapp/include/child.html", 
+                  {"id_list":id_list})
 
 
 def insert_user(request):
-
-    name = request.POST.get("name","ERROR")
-    gender = request.POST.get("gender","ERROR")
-    email = request.POST.get("email","ERROR")
-    id = request.POST.get("id","ERROR")
-    pw = request.POST.get("pw","ERROR")
-
-    m = user.setUserInsert(id,pw,name,gender,email)
-
-    msg = f"""
+    idDuplication =request.POST.get("idDuplication","ERROR")
+    if idDuplication == "idUncheck":
+        msg = """
             <script type='text/javascript'>
-                alert('{id}'+'/'+'{pw}');
-                location.href = '/project/';
+                alert('아이디 중복체크를 해주세요');
+                self.close();
             </script>
     """
+    else:
+        name = request.POST.get("name","ERROR")
+        gender = request.POST.get("gender","ERROR")
+        email = request.POST.get("email","ERROR")
+        id = request.POST.get("id","ERROR") 
+        pw = request.POST.get("pw","ERROR")
+
+        m = user.setUserInsert(id,pw,name,gender,email)
+
+        msg = f"""
+                <script type='text/javascript'>
+                    alert('회원가입이 정상적으로 완료되었습니다.');
+                    location.href = '/project/';
+                </script>
+        """
     return HttpResponse(msg)
 
 

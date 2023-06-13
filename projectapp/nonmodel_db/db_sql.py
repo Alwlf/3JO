@@ -12,7 +12,6 @@ def getList(sql) :
     return list_row
 
 
-
 ### 한건 조회하기
 def getView(sql) :
     ### 클래스 생성시키기

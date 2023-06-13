@@ -7,7 +7,7 @@ def setUserInsert(id,pw,name,gender,email) :
     ### 구문 작성
     sql = """
             Insert Into user (
-                user_id, user_pw, user_name,user_gender,user_email
+                user_id,user_pw,user_name,user_gender,user_email
             ) Values (
                 '{}', '{}', '{}','{}','{}'
             )
@@ -27,3 +27,14 @@ def setLoginUser(user_id,user_pw) :
     """.format(user_id,user_pw)
 
     return db_sql.getView(sql)
+
+
+### 아이디 중복
+def idCheck():
+    ### 구문 작성
+    sql = """
+        Select user_id
+        From user
+    """
+
+    return db_sql.getList(sql)
