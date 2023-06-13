@@ -16,8 +16,6 @@
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
-
-
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -30,25 +28,6 @@
                     <p class="lead mb-0">고민거리와 자랑거리를 자유롭게 이야기 해봐요!!</p>
                 </div>
             </div>
-            <div class="row">
-              <div class="col-md-8">
-              </div>
-              <div class="col-md-4">
-                <div class = "search_wrapper">
-                  <div class = "mid_wrapper">
-                    <!-- 검색창 -->
-                    <input type="text" id = "name" autocomplete="off">
-                    <!-- 검색버튼 -->
-                    <input type="button" id = "submit_button" value="검색" > 
-                  </div>
-                  <!-- 추천창 -->
-                  <div id="suggestion_box" class = "invisible">
-                    <div id = suggested_items></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <br/>
             <div class="container">
                 <table class="table table-striped">
                   <thead>
@@ -65,7 +44,7 @@
                       <td>{{d.board_id}}</td>
                       <td><a href ="/project/board_view/">{{d.board_title}}</a></td>
                       <td>{{d.user_id}}</td>
-                      <td>2023.06.12</td>
+                      <td>{{ d.board_time }}</td>
                     </tr>
                     {%endfor %}
                     <!-- {% for i in list %}
@@ -79,10 +58,6 @@
                   </tbody>
                 </table>
                 <hr/>
-                
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <button class="btn btn-light btn-outline-dark btn-primary me-md-2" type="button" onclick="goinputform()">글쓰기</button>
-                </div>
 
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
@@ -99,7 +74,9 @@
                       </li>
                     </ul>
                   </nav>
-                  
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-light btn-outline-dark btn-primary me-md-2" type="button" onclick="goinputform()">글쓰기</button>
+                  </div>
         </header>
  
         <!-- Footer-->
