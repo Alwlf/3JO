@@ -129,6 +129,11 @@ def inputpost(request):
                   "projectapp/inputpost.html", 
                   {})
 
+def inputpost2(request):
+    return render(request,      
+                  "projectapp/inputpost2.html", 
+                  {})
+
 
 
 def insert_user(request):

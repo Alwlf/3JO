@@ -34,6 +34,8 @@ urlpatterns = [
     path('board/',views.board),
     # 게시판 글쓰기
     path('inputpost/',views.inputpost),
+    # 게시판 글쓰기
+    path('inputpost2/',views.inputpost2),
     # 게시판 상세조회
     path('board_view/',views.boardView),
 
