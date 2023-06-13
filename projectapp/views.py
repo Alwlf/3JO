@@ -35,30 +35,20 @@ def disease(request):
     return render(request,		
                   "projectapp/disease.html", 
                   {})
-def disease2(request):
-    return render(request,		
-                  "projectapp/disease2.html", 
-                  {})
 
-def disease_result(request):
-    return render(request,		
-                  "projectapp/disease_result.html", 
-                  {})
-# def disease_result2(request):
-#     img = request.GET["image"]
-#     # print(img)
-#     print(urllib.request.urlopen(img[5:]))
+# def disease_result(request):
 #     return render(request,		
-#                   "projectapp/disease_result2.html", 
-#                   {"image":img})
+#                   "projectapp/disease_result.html", 
+#                   {})
+
 
 ### File Upload 처리하기
 def setFileInsert(request) :
     try :
         title = request.POST.get("title")
 
-        if request.FILES.get("file_nm") is not None :
-            file_nm = request.FILES.get("file_nm")
+        if request.FILES.get("fileUpload") is not None :
+            file_nm = request.FILES.get("fileUpload")
         else :
             file_nm = ""
 
@@ -101,7 +91,7 @@ def setFileInsert(request) :
     #            filename, download_full_name)
     
     return render(request,
-                  "projectapp/disease_result2.html",
+                  "projectapp/disease_result.html",
                   {"img_full_name":img_full_name})
     # return HttpResponse(msg)
 
@@ -128,12 +118,6 @@ def inputpost(request):
     return render(request,      
                   "projectapp/inputpost.html", 
                   {})
-
-def inputpost2(request):
-    return render(request,      
-                  "projectapp/inputpost2.html", 
-                  {})
-
 
 
 def insert_user(request):
