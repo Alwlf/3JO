@@ -46,3 +46,15 @@ def setFileInsert(file_name,board_id):
         ) Values ('{}',{});
     """.format(file_name,board_id)
     return db_sql.setCUD(sql)
+
+
+
+### 게시글 검색
+def searchBoard(searchField,search):
+
+    sql = """
+        Select * 
+        From Board
+        Where {} LIKE '%{}%';
+    """.format(searchField,search)
+    return db_sql.getList(sql)

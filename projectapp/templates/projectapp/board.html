@@ -10,7 +10,20 @@
           function goinputform(){
               location.href="/project/inputpost/";
           }
-
+          function searchBoard(){
+              fm = document.getElementById("fm");
+              // s1 = "";
+              // for(i=0; i<fm.searchField.options.length; i++){
+              //   if(fm.searchField.options[i].selected == true){
+              //       s1 = fm.searchField.options[i].value;
+              //       break;
+              //   }
+              // }
+              url = "/project/board/?";
+              url = url;
+              fm.action = url;
+              fm.submit();
+          }
         </script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
@@ -28,6 +41,27 @@
                     <p class="lead mb-0">고민거리와 자랑거리를 자유롭게 이야기 해봐요!!</p>
                 </div>
             </div>
+
+            <div class="container">
+              <div class="row">
+                <form method="get" name="fm"  id="fm" action="#">
+                  <table class="pull-right">
+                    <tr>
+                      <td><select class="form-control" name="searchField" id="searchField">
+                          <option value="board_title">제목</option>
+                          <option value="user_id">작성자</option>
+                      </select></td>
+                      <td><input type="text" class="form-control"
+                        placeholder="검색어 입력" name="searchText" id="searchText" maxlength="100"></td>
+                      <td><button type="submit" class="btn btn-success" onclick="searchBoard()">검색</button></td>
+                    </tr>
+          
+                  </table>
+                </form>
+              </div>
+            </div>
+         
+
             <div class="container">
                 <table class="table table-striped">
                   <thead>
@@ -59,26 +93,64 @@
                 </table>
                 <hr/>
 
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                      <li class="page-item disabled">
-                        <a class="page-link">이전</a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#">다음</a>
-                      </li>
-                    </ul>
-                  </nav>
+                
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button class="btn btn-light btn-outline-dark btn-primary me-md-2" type="button" onclick="goinputform()">글쓰기</button>
                   </div>
         </header>
- 
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+              <!-- {% if is_prev %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ board_list.previous_page_number }}">이전</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link">이전</a>
+              </li>
+              {% endif %} -->
+          
+               <!-- 이전 페이지 처리 영역 -->
+               {% if is_prev %}
+               <li class="page-item">
+                   <a class="page-link" 
+                       href="/project/board/?page={{start_page | add:'-3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
+                       aria-label="Previous" >
+                       <span aria-hidden="true">&laquo;</span>
+                   </a>
+               </li>
+            {% endif %}
+            <!-- 페이지 번호 처리 영역(1~10까지 보여주기) -->
+            {% for i in page_range %}
+            <li class="page-item">
+                {% if i == now_page %}
+                    <strong>
+                        <a class="page-link" href="#" 
+                            style="color: black;">{{ i }}</a>
+                    </strong>
+                {% else %}
+                    <a class="page-link" 
+                        href="/project/board/?page={{ i }}&searchField={{searchField}}&searchText={{ searchText }}" >{{ i }}</a>
+                {% endif %}
+              </li>
+            {% endfor %} 
+          
+            <!-- 다음 페이지 처리 영역 -->
+            {% if is_next %}
+            <li class="page-item">
+                <a class="page-link" 
+                    href="/project/board/?page={{start_page | add:'3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
+                    aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+     
+       
+</body>
+
         <!-- Footer-->
         {% include "projectapp/include/footer.html" %}
         <!-- Bootstrap core JS-->
@@ -87,5 +159,4 @@
         <script src="/static/projectapp/js/scripts.js"></script>
         <script type="text/javascript"
         src="/static/projectapp/js/bootstrap.bundle.min.js"></script>
-</body>
 </html>
