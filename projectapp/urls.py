@@ -13,8 +13,6 @@ urlpatterns = [
     # 진단하기
     path('disease/',views.disease),
     # 진단 결과
-    # path('disease_result/',views.disease_result),
-    # 진단 결과
     path('disease_result/',views.setFileInsert),
     # 마이 페이지
     path('mypage/',views.mypage),
