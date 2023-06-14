@@ -28,7 +28,7 @@ def index(request):
 
     # board_list =  {"board_title":"EEEE"}
     board_list = Board.getBoardList()
-    board_list = board_list[:3]
+    board_list = board_list[:4]
     return render(request,		
                   "projectapp/index.html", 
                   {"board_list":board_list})
