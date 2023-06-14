@@ -156,6 +156,10 @@
     popup.submit();
   }
 
+  function Logout(){
+    location.href='/project/log_out/';
+  }
+
   function openSignup() {
     var popup = document.getElementById("signup");
     popup.style.visibility = "visible";
@@ -235,6 +239,9 @@
   </div>
 </header> 
 
+
+
+{% if not request.session.session_user_id  %}
 <nav class="navbar navbar-expand-md navbar-light fixed-top bg-transfer">
     <div class="container-fluid">
     <a class="navbar-brand" href="/project">AI PD</a>
@@ -286,7 +293,7 @@
                 <br/>
                 <div style="display:inline-blodck">
                 <input type="submit" style="width:90px; float:left;" value="로그인" onclick="openLogin()">
-                <input type="button" style="width:90px; float:right;" value="취소" onclick="closeLogin()">
+                <input type="submit" style="width:90px; float:right;" value="취소">
                 </div>
                 
             </form>
@@ -303,7 +310,7 @@
                 <option value="male">남성</option>
                 <option value="female">여성</option>
                 </select>
-                <input name="email" type="email" placeholder="이메일 (aaa@bbb.ccc 형식)" required>
+                <input name="email" type="email" placeholder="이메일 (aaa@bbb.ccc 형식)">
                 <div style="display:inline-blodck">
                 <input name="id" id ="id" type="text" placeholder="아이디 (영문,숫자 조합 10자 이하)" style="width:265px;" onkeydown="inputIdChk()" oninput="id_handleOnInput(this)" required>
                 <input type="button" id="dbCheckId" style="height:40px; float:right;" value="중복 확인"  onclick="new_window();">
@@ -325,3 +332,22 @@
     </div>
     </div>
 </nav>
+
+{% else %}
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-transfer">
+  <div class="container-fluid">
+  <a class="navbar-brand" href="/project">AI PD</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="/project">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="#!" onclick="openLogin()">{{ request.session.session_user_name }}님</a></li>
+      <li class="nav-item"><a class="nav-link" aria-current="page" href="/project/mypage">마이페이지</a></li>
+      <li class="nav-item"><a class="nav-link" href="#signup" onclick="Logout()">로그아웃</a></li>
+      </ul>
+  </div>
+  </div>
+</nav>
+{% endif %}

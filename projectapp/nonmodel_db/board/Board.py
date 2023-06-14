@@ -6,7 +6,43 @@ def getBoardList():
     sql= """
         Select *
         From board
-        Order By board_id Desc
+        Order By board_id DESC
     """
 
     return db_sql.getList(sql)
+
+
+def findBoardId(board_title,user_id,board_time):
+
+    sql ="""
+        Select board_id
+        From board
+        Where board_title = '{}' and user_id = '{}' and board_time = '{}'
+    """.format(board_title,user_id,board_time)
+
+    return db_sql.getView(sql)
+
+
+### 게시글 테이블에 데이터 작성
+def setBoardInsert(board_title,board_content,user_id,board_time) :
+    
+    sql = """
+            Insert Into board (
+                board_title, board_content, user_id,board_time
+            ) Values (
+                '{}', '{}', '{}','{}'
+            )
+    """.format(board_title,board_content,user_id,board_time)
+
+    return db_sql.setCUD(sql)
+
+
+### 첨부파일 데이터 삽입
+def setFileInsert(file_name,board_id):
+
+    sql = """
+        Insert into file(
+            fi_name,board_id
+        ) Values ('{}',{});
+    """.format(file_name,board_id)
+    return db_sql.setCUD(sql)
