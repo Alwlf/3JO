@@ -227,6 +227,16 @@
     }
 }
 
+function closeId(){
+    const bgbg = document.getElementById('findId');
+    bgbg.style.visibility = "hidden";
+}
+
+function closePw(){
+    const bgbg = document.getElementById('findPw');
+    bgbg.style.visibility = "hidden";
+}
+
 </script>
 
 
@@ -265,7 +275,7 @@
                   <form>
                     <div style="display:inline-blodck">
                       <input type="submit" style="width:90px; float:left;" value="로그인" onclick="openLogin()">
-                      <input type="submit" style="width:90px; float:right;" value="취소">
+                      <input type="button" style="width:90px; float:right;" value="취소" onclick="closeLogin()">
                       </div>
                   </form>
                 <div id="findId" class="popup-overlay">
@@ -277,7 +287,7 @@
                         <input name="user_email" type="text" placeholder="이메일">
                         <div style="display:inline-blodck">
                         <input type="submit" style="width:90px; float:left;" value="찾기">
-                        <input type="submit" style="width:90px; float:right;" value="취소">
+                        <input type="button" style="width:90px; float:right;" value="취소" onclick="closeId()">
                         </div>
                       </form>
                     </div>
@@ -291,10 +301,10 @@
                         <input name="user_email" type="text" placeholder="이메일">
                         <div style="display:inline-blodck">
                         <input type="submit" style="width:90px; float:left;" value="찾기">
-                        <input type="submit" style="width:90px; float:right;" value="취소">
+                        <input type="button" style="width:90px; float:right;" value="취소" onclick="closePw()">
                         </div>
                     </form>
-                    </div>     
+                    </div>
                 </div>  
                 </div>
               </form>
