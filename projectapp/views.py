@@ -133,29 +133,29 @@ def idChk(request):
                   {"id_list":id_list})
 
 def insert_user(request):
-    idDuplication =request.POST.get("idDuplication","ERROR")
-    if idDuplication == "idUncheck":
+    name = request.POST.get("name","ERROR")
+    gender = request.POST.get("gender","ERROR")
+    email = request.POST.get("email","ERROR")
+    id = request.POST.get("id","ERROR") 
+    pw = request.POST.get("pw1","ERROR")
+
+    try :
+        m = user.setUserInsert(id,pw,name,gender,email)
+    except :
         msg = """
             <script type='text/javascript'>
-                alert('아이디 중복체크를 해주세요');
-                self.close();
+                alert('아이디 중복 체크를 해주세요.');
+                location.href = '/project/';
+            </script>
+        """
+        return HttpResponse(msg)
+    
+    msg = """
+            <script type='text/javascript'>
+                alert('회원가입이 정상적으로 완료되었습니다.');
+                location.href = '/project/';
             </script>
     """
-    else:
-        name = request.POST.get("name","ERROR")
-        gender = request.POST.get("gender","ERROR")
-        email = request.POST.get("email","ERROR")
-        id = request.POST.get("id","ERROR") 
-        pw = request.POST.get("pw","ERROR")
-
-        m = user.setUserInsert(id,pw,name,gender,email)
-
-        msg = f"""
-                <script type='text/javascript'>
-                    alert('회원가입이 정상적으로 완료되었습니다.');
-                    location.href = '/project/';
-                </script>
-        """
     return HttpResponse(msg)
 
 
@@ -346,5 +346,58 @@ def post(request):
 
     return HttpResponse(msg)
 
+# 아이디 찾기
+def search_id(request):
+    try:
+        user_name=request.POST.get("user_name","A")
+        user_email=request.POST.get("user_email","B")
 
+        rs_msg=user.search_user_id(user_name,user_email)
+
+        ms = rs_msg['user_id']
+
+        msg="""
+            <script type='text/javascript'>
+                alert('{}');
+                location.href='/project/';
+            </script>
+        """.format(ms)
+        return HttpResponse(msg)
+    
+    except:
+        msg = """
+            <script type='text/javascript'>
+                alert('이름 또는 이메일을 확인해 주세요.');
+                location.href = '/project/';
+            </script>
+        """
+        return HttpResponse(msg)
+
+
+# 비번 찾기
+def search_pw(request):
+    try:
+        user_id=request.POST.get("user_id","A")
+        user_email=request.POST.get("user_email","B")
+        
+        rs_msg=user.search_user_pw(user_id,user_email)
+
+        ms = rs_msg['user_pw']
+        
+        msg="""
+            <script type='text/javascript'>
+                alert('{}');
+                location.href='/project/';
+            </script>
+        """.format(ms)
+        return HttpResponse(msg)
+    
+    except:
+        msg = """
+            <script type='text/javascript'>
+                alert('아이디 또는 이메일을 확인해 주세요.');
+                location.href = '/project/';
+            </script>
+        """
+        return HttpResponse(msg)
 

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>회원가입 확인</title>
+  </head>
+  <body onload="finalCheck();">
+    <br/>
+    <span id="SpanID">.</span>
+    <button onclick="javascript:self.close();" style="float: right; width:70px;">확인</button>
+    
+  
+    <script>
+      function finalCheck(){
+        var ChekId = window.opener.document.getElementById( "idDuplication" ).value;
+        var name = window.opener.document.getElementById('name').value;
+        var email = window.opener.document.getElementById('email').value;
+        var id = window.opener.document.getElementById('id').value;
+        var p1 = window.opener.document.getElementById('pw').value;
+        var p2 = window.opener.document.getElementById('pw2').value;
+        var text = "";
+        let regPass1 = /^(?=.*[a-zA-Z])(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,11}$/;
+        let regPass2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        let regPass3 = /^(?=.*[a-zA-Z])(?=.*[0-9]).{1,11}$/;
+        let regPass4 = /^(?=.*[a-zA-Z])(?=.*[0-9]).{1,16}$/;
+        
+        alert(ChekId);
+        if(!regPass1.test(name)){
+            text='이름을 입력해주세요.';
+            
+        }
+        else if(!regPass2.test(email)) {
+                text='이메일 형식으로 입력해주세요.';
+        }
+        else if(ChekId == "idUnCheck") {
+            text='아이디 중복체크를 해주세요.';
+        }
+        else if(!regPass3.test(id)) {
+                text='아이디를 영문,숫자 조합으로 10자리 이하로 입력해주세요.';
+        }
+        else if(!regPass4.test(p1)) {
+                        text='비밀번호를 영문,숫자 조합으로 15자리 이하로 입력해주세요.';
+        }
+        else if( p1 != p2 ) {
+            text="비밀번호가 일치 하지 않습니다";
+        } 
+        else{
+               text='회원 가입이 정상적으로 완료되었습니다.';
+        }
+                
+        document.getElementById("SpanID").textContent=text;
+        
+        }
+        
+      
+      
+    
+  
+  
+
+    </script>
+  </body>
+</html>

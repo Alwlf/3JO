@@ -37,4 +37,8 @@ urlpatterns = [
     # 게시판 상세조회
     path('board_view/',views.boardView),
 
+    # 아이디 찾기
+    path('search_id/',views.search_id),
+    # 비밀번호 찾기
+    path('search_pw/',views.search_pw),
 ]
