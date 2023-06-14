@@ -16,10 +16,16 @@ from projectapp.file_util.file_util import File_Util
 
 import urllib
 
+from PIL import Image
+
+import os
+path=os.path.dirname(os.path.abspath(__file__))
+
 def index(request):
 
     # board_list =  {"board_title":"EEEE"}
     board_list = Board.getBoardList()
+    board_list = board_list[:3]
     return render(request,		
                   "projectapp/index.html", 
                   {"board_list":board_list})
@@ -258,7 +264,9 @@ def setFileInsert(request) :
     #     <p><img src='{0}'></p>
     # """.format(img_full_name, file_size, 
     #            filename, download_full_name)
-    
+    img=Image.open(path+img_full_name)
+    img=img.resize((800,600))
+    img.save(path+img_full_name)
     return render(request,
                   "projectapp/disease_result.html",
                   {"img_full_name":img_full_name})
@@ -271,6 +279,7 @@ def setFileInsert(request) :
 def board(request):
 
     board_list = Board.getBoardList()
+    print(board_list)
     return render(request,		
                   "projectapp/board.html", 
                   {"board_list":board_list})
@@ -334,6 +343,7 @@ def post(request):
             location.href = '/project/board/';
         </script>
     """.format(board_chk)
+
     return HttpResponse(msg)
 
 
