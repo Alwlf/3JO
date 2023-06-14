@@ -155,6 +155,10 @@
     popup.submit();
   }
 
+  function Logout(){
+    location.href='/project/log_out/';
+  }
+
   function openSignup() {
     var popup = document.getElementById("signup");
     popup.style.visibility = "visible";
@@ -184,6 +188,31 @@
     const bgbg = document.getElementById('signup');
     bgbg.style.visibility = "hidden";
   }
+
+  var new_window_width = 300;
+  var new_window_height = 100;
+  var positionX = ( window.screen.width / 2 ) - ( new_window_width / 2 );
+  var positionY = ( window.screen.height / 2 ) - ( new_window_height / 2 );
+
+  function new_window() {
+    window.open(
+      "/project/idChk",
+      "Child",
+      "width=" + new_window_width + ", height=" + new_window_height + ", top=" + positionY + ", left=" + positionX
+    );
+  }
+
+  //중복 체크 후 다른 아이디 변경 했을 경우
+  function inputIdChk(){
+    var signup = document.signup;
+    var dbChekId = document.signup.dbChekId;
+    document.signup.idDuplication.value="idUncheck";
+    dbChekId.disabled=false;
+    dbChekId.style.opacity=1;
+    dbChekId.style.cursor="pointer";
+  }
+
+
 </script>
 
 
@@ -191,10 +220,14 @@
 <!-- 상단 영역 -->
 <header class="bg-primary bg-white">
   <div class="container px-4 text-center">
-      <img src="/static/projectapp/images/배너1-1.png">
+      <img src="/static/projectapp/images/배너1-1.png"
+      style="cursor: pointer;"  onclick="javascript:location.href='/';">
   </div>
 </header> 
 
+
+
+{% if not request.session.session_user_id  %}
 <nav class="navbar navbar-expand-md navbar-light fixed-top bg-transfer">
     <div class="container-fluid">
     <a class="navbar-brand" href="/project">AI PD</a>
@@ -246,7 +279,7 @@
                 <br/>
                 <div style="display:inline-blodck">
                 <input type="submit" style="width:90px; float:left;" value="로그인" onclick="openLogin()">
-                <input type="button" style="width:90px; float:right;" value="취소" onclick="closeLogin()">
+                <input type="submit" style="width:90px; float:right;" value="취소">
                 </div>
                 
             </form>
@@ -273,7 +306,7 @@
                 
                 <div style="display:inline-blodck">
                 <input type="submit" style="width:90px; float:left;" value="가입">
-                <input type="button" style="width:90px; float:right;" onClick="closeSignup()" value="취소">
+                <input type="submit" style="width:90px; float:right;" value="취소">
                 </div>
                 
             </form>
@@ -283,3 +316,21 @@
     </div>
     </div>
 </nav>
+
+{% else %}
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-transfer">
+  <div class="container-fluid">
+  <a class="navbar-brand" href="/project">AI PD</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="/project">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="#!" onclick="openLogin()">{{ request.session.session_user_name }}님</a></li>
+      <li class="nav-item"><a class="nav-link" href="#signup" onclick="Logout()">로그아웃</a></li>
+      </ul>
+  </div>
+  </div>
+</nav>
+{% endif %}

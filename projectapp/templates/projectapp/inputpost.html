@@ -25,7 +25,9 @@
         }
 
         function goUpload(){
-            location.href="/project/board/";
+            fm = document.getElementById("fm");
+            fm.action ='/project/board/';
+            fm.submit();
         }
       </script>
 </head>
@@ -41,46 +43,41 @@
         </div>
     </br>
     </header>
-{% csrf_token %}
 
-<form id="fm" name="fm" method="post"
-      action="/project/board/"
-      enctype="multipart/form-data">
+
+<form method="post" action="/project/board/">
     {% csrf_token %}
-    <div class="row">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-6">
-        <table class="table table-hover">
-            <tbody>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="글 제목" name="contentTitle" maxlength="40"></td>
-                </tr>
-                <tr>
-                    <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="contentDetail" maxlength="1024" style="height: 400px;"></textarea></td>
-                </tr>
-                <tr>
-                    <td><input type="file" name="file_nm"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    </div>
-    <div class="col-md-3">
-    </div>
+    <div class="container">        
+      <table class="table table-hover">
+        <tbody>
+            <tr>
+              <td><input type="text" class="form-control" placeholder="글 제목" name="contentTitle" maxlength="40"></td>
+            </tr>
 
-    <hr/>
-    <div class="row">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-6">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <input type="submit" class="btn btn-outline-dark btn-light" value="업로드하기" onclick="goUpload()">
-                <input type="submit" class="btn btn-outline-dark btn-light" value="취소하기" onclick="goback()">
-            </div>
-        </div>
-        <div class="col-md-3">
-        </div>
+            <tr>
+              <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="contentDetail" maxlength="1024" style="height: 400px;"></textarea></td>
+            </tr>
 
+            <tr>
+                <td>
+                    <p>
+                    첨부파일 : 
+                    <input type="file" name="file_nm" id="file_nm">
+                    </p>
+                </td>
+            </tr>
+        </tbody>  
+      </table>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6"></div>
+        <div class="col-md-3">
+        <input type="submit" class="btn btn-light btn-outline-dark btn-primary pull-right" value="업로드하기">
+        <input type="submit" class="btn btn-light btn-outline-dark btn-primary pull-right" value="취소하기">
+        </div>
+        </div>
+    </div>
+    <br/>
+</form>
 </body>
 </html>

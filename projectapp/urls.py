@@ -25,13 +25,19 @@ urlpatterns = [
 
     #로그인
     path('login_chk/',views.login_chk),
+    #로그아웃
+    path('log_out/',views.logout_chk),
     # 회원 가입
     path('insert/',views.insert_user),
+    # 아이디 중복 체크
+    path('idChk/',views.idChk),
 
     # 게시판
     path('board/',views.board),
     # 게시판 글쓰기
     path('inputpost/',views.inputpost),
+    # 게시글 작성
+    path('post/',views.post),
     # 게시판 상세조회
     path('board_view/',views.boardView),
 
