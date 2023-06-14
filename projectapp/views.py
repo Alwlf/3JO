@@ -101,6 +101,11 @@ def mypage(request):
                   "projectapp/mypage.html", 
                   {})
 
+def mypage2(request):
+    return render(request,		
+                  "projectapp/mypage2.html", 
+                  {})
+
 def update_mypage(request):
     return render(request,		
                   "projectapp/update_mypage.html", 

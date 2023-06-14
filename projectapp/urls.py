@@ -18,6 +18,8 @@ urlpatterns = [
     path('disease_result/',views.setFileInsert),
     # 마이 페이지
     path('mypage/',views.mypage),
+    # 마이 페이지
+    path('mypage2/',views.mypage2),
     # 회원 정보 수정
     path('update_mypage/',views.update_mypage),
 
