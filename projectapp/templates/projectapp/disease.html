@@ -9,8 +9,8 @@
     <title>질병진단</title>
     <script type="text/javascript">
       function goreset(){
-        var imageElement = document.getElementById('file-image');
-        imageElement.src = '#';
+        uploadBox.style.display = 'block'; // upload-box를 숨김
+        uploadedImage.style.display = 'none'; // uploaded-image를 표시
       }
     </script>
     <style>
@@ -39,6 +39,24 @@
         padding-left: 100px;
         padding-right: 100px;
       }
+      #upload-box {
+            width: 907px;
+            height: 470px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            text-align: center;
+            padding: 100px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            color: #666;
+        }
+
+        #uploaded-image {
+            max-width: 100%;
+            max-height: 100%;
+            margin-top: 20px;
+        }
+        
     </style>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
@@ -89,30 +107,105 @@
     <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
       
         <div class="bg-body-tertiary border rounded-3">
-          <br/>
-          <h2>File Upload & Image Preview</h2>
-          <p class="lead">No Plugins <b>Just Javascript</b></p>
-          <!-- Upload  -->
-          <form id="file-upload-form" class="uploader" method="post" action="/project/disease_result/"
-          enctype="multipart/form-data">
-          {% csrf_token %}
-            <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+          <div id="upload-box">
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <p style="font-size: 30px; font-family: '굴림'; font-weight: bold;">파일을 드래그 앤 드롭하거나</p>
+            <p style="font-size: 30px; font-family: '굴림'; font-weight: bold;">파일을 선택하려면 여기를 클릭하세요.</p>
+            <input type="file" id="file-input" style="display: none;">
+        </div>
+    
+        <img id="uploaded-image">
+    
+        <script>
+            var uploadBox = document.getElementById('upload-box');
+            var fileInput = document.getElementById('file-input');
+            var uploadedImage = document.getElementById('uploaded-image');
+    
+            // 드래그 앤 드롭 이벤트 처리
+            uploadBox.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadBox.style.backgroundColor = '#f7f7f7';
+            });
+    
+            uploadBox.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadBox.style.backgroundColor = '';
+            });
+    
+            uploadBox.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadBox.style.backgroundColor = '';
+                var file = e.dataTransfer.files[0];
+                handleFile(file);
+            });
+    
+            // 파일 선택 이벤트 처리
+            uploadBox.addEventListener('click', function(e) {
+                fileInput.click();
+            });
+    
+            fileInput.addEventListener('change', function(e) {
+                var file = e.target.files[0];
+                handleFile(file);
+            });
+    
+            // 업로드된 파일 처리
+            function handleFile(file) {
+                if (file) {
+                    // 이미지 파일인 경우
+                    if (file.type.startsWith('image/')) {
+                        uploadBox.style.display = 'none'; // upload-box를 숨김
+                        uploadedImage.style.display = 'block'; // uploaded-image를 표시
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            uploadedImage.src = e.target.result; // 이미지 표시
+                            adjustImageSize(); // 이미지 크기 조정
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                    // 이미지 파일이 아닌 경우
+                    else {
+                        alert('이미지 파일만 업로드할 수 있습니다.');
+                    }
+                }
+            }
+  
+            // 이미지 크기 조정
+            function adjustImageSize() {
+                var minWidth = 500; // 최소 가로 크기
+                var minHeight = 500; // 최소 세로 크기
+                var maxWidth = 800; // 최대 가로 크기
+                var maxHeight = 800; // 최대 세로 크기
 
-            <label for="file-upload" id="file-drag">
-              <img id="file-image" src="#" alt="Preview" class="hidden">
-              <div id="start">
-                <i class="fa fa-download" aria-hidden="true"></i>
-                <div>Select a file or drag here</div>
-                <div id="notimage" class="hidden">Please select an image</div>
-                <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
-              </div>
-              <div id="response" class="hidden">
-                <div id="messages"></div>
-                <progress class="progress" id="file-progress" value="0">
-                  <span>0</span>%
-                </progress>
-              </div>
-            </label>
+                var image = new Image();
+                image.src = uploadedImage.src;
+                image.onload = function() {
+                    var width = image.width;
+                    var height = image.height;
+                    var ratio = 1;
+
+                    if (width < minWidth || height < minHeight) {
+                        ratio = Math.max(minWidth / width, minHeight / height);
+                    } else if (width > maxWidth || height > maxHeight) {
+                        ratio = Math.min(maxWidth / width, maxHeight / height);
+                    }
+
+                    width *= ratio;
+                    height *= ratio;
+
+                    uploadedImage.style.width = width + 'px';
+                    uploadedImage.style.height = height + 'px';
+                    uploadedImage.style.display = 'block';
+                };
+            }
+            function resetImage() {
+                    uploadedImage.src = '';
+                    uploadedImage.style.display = 'none';
+                }
+        </script>
         </div>
         <div class="bg-body-tertiary">
           <table>
@@ -130,6 +223,7 @@
         
         <div class="filebox preview-image">
             <input type="file" id="input-file" class="upload-hidden">
+            <!-- <button id="reset-button" onclick="resetImage()">파일 초기화</button> -->
             <label style="float:right"><input type="button" value="파일초기화" class="btn btn-light btn-outline-dark btn-primary pull-right" onclick="goreset()"></label>
             <label style="float:right"><input for="file-upload-form" type="submit" value="진단하기" class="btn btn-light btn-outline-dark btn-primary pull-right"></label>
         </div>
