@@ -116,10 +116,7 @@ def update_mypage(request):
                   {})
 
 
-def boardView(request):
-    return render(request,		
-                  "projectapp/board_view.html", 
-                  {})
+
 
 
 def inputpost(request):
@@ -362,6 +359,18 @@ def board(request):
                 #   {"board_list":board_list},
                     context,
                   )
+
+### 게시글 조회
+def boardView(request):
+    board_id = request.GET.get("board_id","ERROR")
+
+
+    board_vidw = Board.getBoardView(board_id)
+
+
+    return render(request,		
+                  "projectapp/board_view.html", 
+                  {"board_view":board_vidw})
 
 ### 게시글 작성
 def post(request):

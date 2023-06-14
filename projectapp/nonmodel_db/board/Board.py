@@ -58,3 +58,13 @@ def searchBoard(searchField,search):
         Where {} LIKE '%{}%';
     """.format(searchField,search)
     return db_sql.getList(sql)
+
+
+### 게시글아이디로 해당하는 값들 불러오기 (board_view)
+def getBoardView(board_id):
+    sql="""
+        Select * 
+        From Board
+        Where board_id = '{}';
+    """.format(board_id)
+    return db_sql.getView(sql)

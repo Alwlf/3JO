@@ -24,6 +24,12 @@
               fm.action = url;
               fm.submit();
           }
+
+          function goView(board_id){
+            url = "/project/board_view/?"
+            url = url + "board_id="+ board_id;
+            location.href = url;
+          }
         </script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
@@ -76,7 +82,7 @@
                     {% for d in board_list %}
                     <tr>
                       <td>{{d.board_id}}</td>
-                      <td><a href ="/project/board_view/">{{d.board_title}}</a></td>
+                      <td><a href ="javascript:goView('{{ d.board_id }}'); ">{{d.board_title}}</a></td>
                       <td>{{d.user_id}}</td>
                       <td>{{ d.board_time }}</td>
                     </tr>
