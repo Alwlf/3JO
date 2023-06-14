@@ -336,5 +336,58 @@ def post(request):
     """.format(board_chk)
     return HttpResponse(msg)
 
+# 아이디 찾기
+def search_id(request):
+    try:
+        user_name=request.POST.get("user_name","A")
+        user_email=request.POST.get("user_email","B")
 
+        rs_msg=user.search_user_id(user_name,user_email)
+
+        ms = rs_msg['user_id']
+
+        msg="""
+            <script type='text/javascript'>
+                alert('{}');
+                location.href='/project/';
+            </script>
+        """.format(ms)
+        return HttpResponse(msg)
+    
+    except:
+        msg = """
+            <script type='text/javascript'>
+                alert('이름 또는 이메일을 확인해 주세요.');
+                location.href = '/project/';
+            </script>
+        """
+        return HttpResponse(msg)
+
+
+# 비번 찾기
+def search_pw(request):
+    try:
+        user_id=request.POST.get("user_id","A")
+        user_email=request.POST.get("user_email","B")
+        
+        rs_msg=user.search_user_pw(user_id,user_email)
+
+        ms = rs_msg['user_pw']
+        
+        msg="""
+            <script type='text/javascript'>
+                alert('{}');
+                location.href='/project/';
+            </script>
+        """.format(ms)
+        return HttpResponse(msg)
+    
+    except:
+        msg = """
+            <script type='text/javascript'>
+                alert('아이디 또는 이메일을 확인해 주세요.');
+                location.href = '/project/';
+            </script>
+        """
+        return HttpResponse(msg)
 

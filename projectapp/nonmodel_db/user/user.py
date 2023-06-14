@@ -38,3 +38,26 @@ def idCheck():
     """
 
     return db_sql.getList(sql)
+
+
+# 아이디 찾기
+def search_user_id(user_name,user_email):
+    # 구문 작성
+    sql="""
+        Select user_id
+        From user
+        Where user_name = '{}' and user_email = '{}'
+    """.format(user_name,user_email)
+
+    return db_sql.getView(sql)
+
+# 비번 찾기
+def search_user_pw(user_id,user_email):
+    # 구문 작성
+    sql="""
+        Select user_pw
+        From user
+        Where user_id = '{}' and user_email = '{}'
+    """.format(user_id,user_email)
+
+    return db_sql.getView(sql)
