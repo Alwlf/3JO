@@ -29,3 +29,13 @@ def setCUD(sql) :
     db_util.setCUD(sql)    
 
     return "ok"
+
+
+
+### 입력/수정/삭제 처리하기
+def setCUD2(sql) :
+    ### 클래스 생성하기
+    db_util = DB_Util()
+    db_util.setCUDscript(sql)    
+
+    return "ok"

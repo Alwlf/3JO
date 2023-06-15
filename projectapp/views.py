@@ -385,8 +385,16 @@ def boardDelete(request):
         board_id = request.GET.get("board_id","ERROR")
         user_id = request.GET.get("user_id","ERROR")
         
+        file_view = Board.getBoardFileView(board_id)
+
         delete_chk = Board.setBoardDelete(board_id)
-    
+        
+
+        for ee in file_view:
+            
+            print(path+'/static/projectapp/board_file/'+ee['fi_name'])
+            os.remove(path+'/static/projectapp/board_file/'+ee['fi_name'])
+
     except:
             msg = """
                 <script type='text/javascript'>
