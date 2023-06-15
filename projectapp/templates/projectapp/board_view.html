@@ -71,26 +71,34 @@
     <body>
         <!-- Responsive navbar-->
         {% include "projectapp/include/navbar.html" %}
+        <link href="/static/projectapp/css/carousel.css" rel="stylesheet">
+        <div class="container marketing">
+
+          
         <!-- Page header with logo and tagline-->
         <header class="py-5 bg-light border-bottom mb-4">
           <div class="container">
-            <div class="text-center my-5">
-                <h1 class="fw-bolder">게시판</h1>
-                <p class="lead mb-0">고민거리와 자랑거리를 자유롭게 이야기 해봐요!!</p>
-            </div>
+            {% comment %} <div class="text-center my-5"> {% endcomment %}
+                <h1 class="fw-bolder" style="text-align:center">{{ board_view.board_title }}</h1>
+                <p class="lead mb-0" style="text-align:right">작성자 아이디: {{ board_view.user_id }}</p>
+            {% comment %} </div> {% endcomment %}
           </div>
             <br/>
+            {% if  board_view.user_id  == request.session.session_user_id  %}
             <button onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )">수정</button>
             <button onclick="goDelete( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )">삭제</button>
+            {% endif %}
             <table class="table table-hover">
               <tbody>
                  
-                  <tr>
+                  {% comment %} <tr>
                     <td><p>글 제목 : {{ board_view.board_title }}</p></td>
-                  </tr>
+                  </tr> {% endcomment %}
                   
                   <tr>
-                    <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="contentDetail" maxlength="1024" style="height: 400px;">{{ board_view.board_content }}</textarea></td>
+                    <td><p  class="form-control"  name="contentDetail" style="height: 400px;">
+                      {{ board_view.board_content }}</p></td>
+                    {% comment %} <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="contentDetail" maxlength="1024" style="height: 400px;">{{ board_view.board_content }}</textarea></td> {% endcomment %}
                   </tr>
                   <tr>
                       <td>
@@ -103,26 +111,23 @@
                   </tr>
                 
               </tbody>  
-            </table>
-          </div>          
+            </table>       
           <h5>댓글</h5>
           <hr/>
           <div id="comments">
           </div>
           <form id="comment-form">
-            <label for="username">아이디:</label>
-            <input type="text" id="username" size="10" required>
-            <br/>
-            <br/>
-            <label for="comment">댓글 :</label>
-            <textarea id="comment"rows="4" cols="160" required></textarea>
-            <button type="submit">댓글 작성</button>
+            <p type="text" id="username" size="10">아이디: {{ request.session.session_user_id }}</p>
+            <div>
+            <textarea id="comment"rows="4" cols="155" required></textarea>
+            <button type="submit" style="float:right">댓글 작성</button>
+            </div>
           </form> 
           <script>
             document.getElementById("comment-form").addEventListener("submit", function(event) {
               event.preventDefault();
               var comment = document.getElementById("comment").value;
-              var username = document.getElementById("username").value;
+              var username = request.session.session_user_id;
               var newComment = document.createElement("div");
               newComment.classList.add("comment");
               newComment.innerHTML = "<strong>" + username + "</strong>: " + comment;
@@ -175,6 +180,8 @@
             });
           </script>
     </header>
+
+  </div>
  
         <!-- Footer-->
         {% include "projectapp/include/footer.html" %}
@@ -184,5 +191,6 @@
         <script src="/static/projectapp/js/scripts.js"></script>
         <script type="text/javascript"
         src="/static/projectapp/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
