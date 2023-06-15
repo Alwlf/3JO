@@ -26,7 +26,6 @@ path=os.path.dirname(os.path.abspath(__file__))
 
 def index(request):
 
-    # board_list =  {"board_title":"EEEE"}
     board_list = Board.getBoardList()
     board_list = board_list[:4]
     return render(request,		
@@ -106,14 +105,25 @@ def setFileInsert(request) :
 
 
 def mypage(request):
-    return render(request,		
-                  "projectapp/mypage.html", 
+
+    return render(request,
+                  "projectapp/mypage.html",
                   {})
 
 def update_mypage(request):
-    return render(request,		
-                  "projectapp/update_mypage.html", 
-                  {})
+    id = request.session["session_user_id"]
+    pw = request.POST.get("form_pw","ERROR")
+    email = request.POST.get("form_email","ERROR")
+    
+    m = user.update_mypage(id,pw,email)
+
+    msg = f"""
+            <script type='text/javascript'>
+                alert('회원 정보 수정이 정상적으로 완료되었습니다.');
+                location.href = '/project/';
+            </script>
+    """
+    return HttpResponse(msg)
 
 
 
@@ -187,7 +197,10 @@ def login_chk(request):
         return HttpResponse(msg)
     
     request.session["session_user_id"] = id
+    request.session["session_user_pw"] = pw
     request.session["session_user_name"] = user_view.get("user_name")
+    request.session["session_user_gender"] = user_view.get("user_gender")
+    request.session["session_user_email"] = user_view.get("user_email")
 
 
     msg = """
