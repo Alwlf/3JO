@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Blog Home - Start Bootstrap Template</title>
+
+        <script type="text/javascript">
+          function goUpdate(board_id,user_id,session_id){
+            if (user_id == session_id){
+              // alert(board_id+'/'+user_id+'/'+session_id);
+              url = '/project/board_update/?board_id='+board_id;
+              url = url+"&user_id="+user_id;
+              location.href = url;
+            }
+          }
+
+        </script>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
+        <style>
+          .comment {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+          }
+          .comment strong {
+            font-weight: bold;
+          }
+          .reply-form {
+            margin-top: 10px;
+          }
+          .reply-form textarea {
+            width: 100%; 
+            height: 100px; 
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+          }
+          .reply-form button[type="submit"],
+          .comment .delete-button {
+            padding: 2px 5px;
+            border-radius: 3px;
+            cursor: pointer;
+          }
+          .reply-form button[type="submit"]:hover,
+          .comment .delete-button:hover {
+            padding: 2px 5px;
+            border-radius: 3px;
+          }
+        </style>
+    </head>
+    <body>
+       
+      
+      <!-- Responsive navbar-->
+        {% include "projectapp/include/navbar.html" %}
+        <!-- Page header with logo and tagline-->
+        <form name="fm" id="fm" method="post" action="/project/board_update/">
+          {% csrf_token %}
+        <header class="py-5 bg-light border-bottom mb-4">
+          <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">게시판</h1>
+                <p class="lead mb-0">고민거리와 자랑거리를 자유롭게 이야기 해봐요!!</p>
+            </div>
+          </div>
+            <br/>
+            <table class="table table-hover">
+              <tbody>
+                 
+                  <tr>
+                    <td><p>글 제목 : {{ board_view.board_title }}</p></td>
+                  </tr>
+                  
+                  <tr>
+                    <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="contentDetail" id="cotent" maxlength="1024" style="height: 400px;">{{ board_view.board_content }}</textarea></td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <p>
+                          첨부파일 : 
+                          <input type="file" name="file_nm" id="file_nm">
+                          </p>
+                      </td>
+                  </tr>
+                
+              </tbody>  
+            </table>
+          </div>    
+                <input type ="submit" value ="저장">
+                <input type ="submit" value = "뒤로가기">
+          </form>
+    </header>
+ 
+        <!-- Footer-->
+        {% include "projectapp/include/footer.html" %}
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/static/projectapp/js/scripts.js"></script>
+        <script type="text/javascript"
+        src="/static/projectapp/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
