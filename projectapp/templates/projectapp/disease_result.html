@@ -13,24 +13,29 @@
         }
     </script>
     <style>
-      p{
-        padding-left: 100px;
-        padding-right: 100px;
-      }
-      .navbar-nav .center-align{
-        margin-left: 80px; 
-        margin-right: 60px; 
-      }
-      /* h2{
-        padding-left: 10px;
+      /* p{
+        padding-left: 60px;
+        padding-right: 60px;
       } */
+      .navbar-nav .center-align{
+        margin-left: 60px; 
+        margin-right: 40px; 
+      }
+      h2{
+        padding-left: 300px;
+      }
     </style>
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
+    <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
     <link href="/static/projectapp/css/bootstrap.min.css" rel="stylesheet">
 
     
-    <!-- Custom styles for this template -->
-    <link href="/static/projectapp/css/carousel.css" rel="stylesheet">
+    Custom styles for this template
+    <link href="/static/projectapp/css/carousel.css" rel="stylesheet"> -->
+
+    <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
+    
   </head>
   <body>
 
@@ -41,11 +46,8 @@
 </header>
 
 
-
-<br/>
-<br/>
 <div class="d-grid gap-3" style="grid-template-columns: 1fr 2fr;">
-    <div class="bg-body-tertiary border rounded-1">
+    <div class="bg-body-tertiary">
       <p><img src='{{ img_full_name }}'></p>
       <!-- <br><br><br><br><h2 style="text-align: center;">업로드한</h2><br><br><br><br><br><br><br><br><h2 style="text-align: center;">이미지 보여주기</h2><br><br><br><br> -->
     </div>
@@ -55,13 +57,16 @@
           <div class="collapse navbar-collapse" id="navbarNavDropdown" >
             <ul class="navbar-nav">
               <li class="nav-item center-align">
-                <a class="nav-link" href="#" onclick="showDiagnosis()">진단명　확률</a>
+                <a class="nav-link" href="#" onclick="showDiagnosis()";return false;>진단명&확률</a>
               </li>
               <li class="nav-item center-align">
-                <a class="nav-link" href="#">주변병원</a>
+                <a class="nav-link" href="/project/map_view/" >주변병원</a>
               </li>
               <li class="nav-item center-align">
                 <a class="nav-link" href="#">관련사진</a>
+              </li>
+              <li class="nav-item center-align">
+                <a class="nav-link" href="/project/board/">문의하기</a>
               </li>
             </ul>
           </div>
@@ -71,10 +76,11 @@
         <br/>
         <br/>
         <br/>
-        <br/>
         <h2>진단명 : XX</h2>
         <br/>
         <h2>확률 : XX</h2>
+      </div>
+      <div id="hospitalContent" style="display: none;">
       </div>
     </div>
     <script>
@@ -82,11 +88,14 @@
         var diagnosisContent = document.getElementById('diagnosisContent');
         diagnosisContent.style.display = 'block';
       }
-    </script> 
+      
+      // 페이지가 로드될 때 자동으로 진단명과 확률을 보여주도록 설정
+      window.addEventListener('load', showDiagnosis);
+      
+
+    </script>
 </div>
-<button type="button" class="btn btn-light btn-primary btn-small" style="width:20%; float:right" onclick="goToBoardForm()">문의하기</button>
-<br/>
-<br/>
+
 
 
 {% include "projectapp/include/footer.html" %}
