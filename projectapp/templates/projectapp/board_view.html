@@ -76,12 +76,13 @@
 
           
         <!-- Page header with logo and tagline-->
+        <hr/>
         <header class="py-5  border-bottom mb-4">
           <div class="container">
-            {% comment %} <div class="text-center my-5"> {% endcomment %}
-                <h1 class="fw-bolder" style="text-align:center">{{ board_view.board_title }}</h1>
-                <p class="lead mb-0" style="text-align:right">작성자 아이디: {{ board_view.user_id }}</p>
-            {% comment %} </div> {% endcomment %}
+            
+            <h1 class="fw-bolder" style="text-align:center">{{ board_view.board_title }}</h1>
+            <p class="lead mb-0" style="text-align:right">작성자 아이디: {{ board_view.user_id }}</p>
+            <hr/>
           </div>
             <br/>
             {% if  board_view.user_id  == request.session.session_user_id  %}
@@ -119,10 +120,12 @@
           <form id="comment-form">
             <p type="text" id="username" size="10">아이디: {{ request.session.session_user_id }}</p>
             <div>
-            <textarea id="comment"rows="4" cols="155" required></textarea>
+            <textarea id="comment"rows="4" cols="155" placeholder="댓글 쓰기.." required></textarea>
             <button type="submit" style="float:right">댓글 작성</button>
             </div>
           </form> 
+
+          
           <script>
             document.getElementById("comment-form").addEventListener("submit", function(event) {
               event.preventDefault();
@@ -179,9 +182,30 @@
               document.getElementById("username").value = "";
             });
           </script>
+
     </header>
 
   </div>
+    <div class="row g-5">
+      <nav aria-label="Page navigation">
+          <ul class="pagination">
+              <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">이전글</span>
+                  </a>
+              </li>
+
+              <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo; </span>
+                      <span class="sr-only">다음글</span>
+                  </a>
+              </li>
+          </ul>
+      </nav>
+  </div>
+  
  
         <!-- Footer-->
         {% include "projectapp/include/footer.html" %}
