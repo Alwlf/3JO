@@ -103,7 +103,7 @@ def setFileInsert(request) :
     # return HttpResponse(msg)
 
 
-
+### 마이페이지
 def mypage(request):
     id = request.session["session_user_id"]
 
@@ -113,6 +113,7 @@ def mypage(request):
                   "projectapp/mypage.html",
                   {'user_view':user_view})
 
+### 회원 정보 수정
 def update_mypage(request):
     id = request.session["session_user_id"]
     pw = request.POST.get("form_pw","ERROR")
@@ -129,14 +130,12 @@ def update_mypage(request):
     return HttpResponse(msg)
 
 
-
-
-
 def inputpost(request):
     return render(request,      
                   "projectapp/inputpost.html", 
                   {})
 
+### 로그인
 def idChk(request):
 
     id_list = user.idCheck()
@@ -145,28 +144,30 @@ def idChk(request):
                   "projectapp/include/child.html", 
                   {"id_list":id_list})
 
+### 회원가입
 def insert_user(request):
     name = request.POST.get("name","ERROR")
     gender = request.POST.get("gender","ERROR")
     email = request.POST.get("email","ERROR")
     id = request.POST.get("id","ERROR") 
     pw = request.POST.get("pw1","ERROR")
+    url = request.POST.get("url_su","ERROR")
 
     try :
         m = user.setUserInsert(id,pw,name,gender,email)
     except :
-        msg = """
+        msg = f"""
             <script type='text/javascript'>
                 alert('아이디 중복 체크를 해주세요.');
-                location.href = '/project/';
+                location.href = '{url}';
             </script>
         """
         return HttpResponse(msg)
     
-    msg = """
+    msg = f"""
             <script type='text/javascript'>
                 alert('회원가입이 정상적으로 완료되었습니다.');
-                location.href = '/project/';
+                location.href = '{url}';
             </script>
     """
     return HttpResponse(msg)
@@ -177,6 +178,7 @@ def login_chk(request):
 
     id = request.POST.get("user_id","ERROR")
     pw = request.POST.get("user_pw","ERROR")
+    url = request.POST.get("url","ERROR")
 
     user_view = user.setLoginUser(id,pw)
 
@@ -206,9 +208,9 @@ def login_chk(request):
     msg = """
             <script type='text/javascript'>
                 alert('환영합니다. [{}]님 로그인 되었습니다.');
-                location.href = '/';
+                location.href = '{}';
             </script>
-    """.format(user_view.get("user_name"))
+    """.format(user_view.get("user_name"),url)
 
 
     
@@ -467,6 +469,7 @@ def search_id(request):
     try:
         user_name=request.POST.get("user_name","A")
         user_email=request.POST.get("user_email","B")
+        url = request.POST.get("url_fi","ERROR")
 
         rs_msg=user.search_user_id(user_name,user_email)
 
@@ -475,16 +478,16 @@ def search_id(request):
         msg="""
             <script type='text/javascript'>
                 alert('{}');
-                location.href='/project/';
+                location.href='{}';
             </script>
-        """.format(ms)
+        """.format(ms,url)
         return HttpResponse(msg)
     
     except:
-        msg = """
+        msg = f"""
             <script type='text/javascript'>
                 alert('이름 또는 이메일을 확인해 주세요.');
-                location.href = '/project/';
+                location.href = '{url}';
             </script>
         """
         return HttpResponse(msg)
@@ -495,6 +498,7 @@ def search_pw(request):
     try:
         user_id=request.POST.get("user_id","A")
         user_email=request.POST.get("user_email","B")
+        url = request.POST.get("url_fp","ERROR")
         
         rs_msg=user.search_user_pw(user_id,user_email)
 
@@ -503,16 +507,16 @@ def search_pw(request):
         msg="""
             <script type='text/javascript'>
                 alert('{}');
-                location.href='/project/';
+                location.href='{}';
             </script>
-        """.format(ms)
+        """.format(ms,url)
         return HttpResponse(msg)
     
     except:
-        msg = """
+        msg = f"""
             <script type='text/javascript'>
                 alert('아이디 또는 이메일을 확인해 주세요.');
-                location.href = '/project/';
+                location.href = '{url}';
             </script>
         """
         return HttpResponse(msg)
