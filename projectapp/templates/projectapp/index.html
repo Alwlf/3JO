@@ -6,7 +6,14 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.104.2">
     <title>Carousel Template · Bootstrap v5.2</title>
+    <script type="text/javascript">
+      function goView(board_id){
+        url = "/project/board_view/?"
+        url = url + "board_id="+ board_id;
+        location.href = url;
+      }
 
+    </script>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
 
 
@@ -125,7 +132,7 @@
               <tbody>
                 <tr>
                   <th scope="row">{{d.board_id}}</th>
-                  <td><a href="/project/board_view/">{{d.board_title}}</a></td>
+                  <td><a href="javascript:goView('{{ d.board_id }}')">{{d.board_title}}</a></td>
 
                 </tr>
               </tbody>

@@ -206,7 +206,7 @@ def login_chk(request):
     msg = """
             <script type='text/javascript'>
                 alert('환영합니다. [{}]님 로그인 되었습니다.');
-                location.href = '/project/';
+                location.href = '/';
             </script>
     """.format(user_view.get("user_name"))
 
@@ -378,12 +378,28 @@ def boardView(request):
     board_id = request.GET.get("board_id","ERROR")
 
 
-    board_vidw = Board.getBoardView(board_id)
+    board_view = Board.getBoardView(board_id)
 
 
     return render(request,		
                   "projectapp/board_view.html", 
-                  {"board_view":board_vidw})
+                  {"board_view":board_view})
+
+### 게시글 수정 폼
+def boardUpdateForm(request):
+
+    board_id = request.GET.get("board_id","ERROR")
+
+
+    board_view = Board.getBoardView(board_id)
+
+    return render(request,"projectapp/board_update_form.html",
+                  {"board_view":board_view})
+
+### 게시글 수정 
+def boardUpdate(request):
+
+    return HttpResponse("@")
 
 ### 게시글 작성
 def post(request):

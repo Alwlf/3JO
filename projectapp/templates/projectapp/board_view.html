@@ -6,6 +6,18 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Blog Home - Start Bootstrap Template</title>
+
+        <script type="text/javascript">
+          function goUpdate(board_id,user_id,session_id){
+            if (user_id == session_id){
+              // alert(board_id+'/'+user_id+'/'+session_id);
+              url = '/project/board_update_form/?board_id='+board_id;
+              url = url+"&user_id="+user_id;
+              location.href = url;
+            }
+          }
+
+        </script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -55,13 +67,15 @@
             </div>
           </div>
             <br/>
+            <button onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )">수정</button>
+            <button onclick="">삭제</button>
             <table class="table table-hover">
               <tbody>
                  
                   <tr>
                     <td><p>글 제목 : {{ board_view.board_title }}</p></td>
                   </tr>
-               
+                  
                   <tr>
                     <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="contentDetail" maxlength="1024" style="height: 400px;">{{ board_view.board_content }}</textarea></td>
                   </tr>
