@@ -52,7 +52,7 @@
       }
       #upload-box {
             width: 720px;
-            height: 555px;
+            height: 480px;
             border: 2px dashed #ccc;
             border-radius: 10px;
             text-align: center;
@@ -64,7 +64,7 @@
 
         #uploaded-image {
             max-width: 720px;
-            max-height: 550px;
+            max-height: 480px;
         }
         
     </style>
@@ -184,9 +184,9 @@
             // 이미지 크기 조정
             function adjustImageSize() {
                 var minWidth = 720; // 최소 가로 크기
-                var minHeight = 550; // 최소 세로 크기
+                var minHeight = 480; // 최소 세로 크기
                 var maxWidth = 720; // 최대 가로 크기
-                var maxHeight = 550; // 최대 세로 크기
+                var maxHeight = 480; // 최대 세로 크기
 
                 var image = new Image();
                 image.src = uploadedImage.src;
