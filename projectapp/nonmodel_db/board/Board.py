@@ -92,10 +92,21 @@ def setBoardUpdate(board_id,board_title,board_content):
 
 ### 게시글 삭제
 def setBoardDelete(board_id):
-    sql = """
+    
+    sql = f"""
         Delete
-        From Board
-        Where board_id = {};
-    """.format(board_id)
-    return db_sql.setCUD(sql)
+        From file
+        Where board_id = {board_id};
+
+        Delete
+        From rev
+        Where board_id = {board_id};
+
+        Delete
+        From board
+        Where board_id = {board_id};
+
+    """
+    
+    return db_sql.setCUD2(sql)
 

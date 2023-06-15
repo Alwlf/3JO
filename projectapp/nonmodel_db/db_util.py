@@ -95,6 +95,20 @@ class DB_Util :
         self.DBClose()
 
 
+  ##### - sql문 script로 처리 
+    def setCUDscript(self, sql):
+        ### 구문 실행하기
+        self.cursor.executescript(sql)
+       
+        ### 데이터 수정/삭제/입력 시에 아래 적용해야함
+        self.conn.commit()
+ 
+        ### DB 접속 해제하기
+        self.DBClose()
+
+
+
+
     ##### - 커서 및 connect 접속 해제하는 기능 정의
     def DBClose(self) :
         ### 커서(cursor) 반환하기
