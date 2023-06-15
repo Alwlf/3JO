@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html>
   <head>
@@ -59,8 +60,11 @@
                 <a class="nav-link" href="#" onclick="showDiagnosis()";return false;>진단명&확률</a>
               </li>
               <li class="nav-item center-align">
-                <a class="nav-link" href="/project/map_view/" >주변병원</a>
+                <div id="load_view">
+                <a class="nav-link" href="#" onclick="showHospitals()"; return false;>주변병원</a>
+              </div>
               </li>
+              
               <li class="nav-item center-align">
                 <a class="nav-link" href="#">관련사진</a>
               </li>
@@ -75,6 +79,7 @@
         <br/>
         <br/>
         <br/>
+        <br/>
         <h2>진단명 : XX</h2>
         <br/>
         <h2>확률 : XX</h2>
@@ -84,14 +89,26 @@
     </div>
     <script>
       function showDiagnosis() {
-        var diagnosisContent = document.getElementById('diagnosisContent');
-        diagnosisContent.style.display = 'block';
+        var diagnosisContent = $('#diagnosisContent');
+        diagnosisContent.show();
+        
+        var hospitalContent = $('#hospitalContent');
+        hospitalContent.hide();
       }
       
-      // 페이지가 로드될 때 자동으로 진단명과 확률을 보여주도록 설정
-      window.addEventListener('load', showDiagnosis);
+      function showHospitals() {
+        var hospitalContent = $('#hospitalContent');
+        hospitalContent.load('/project/map_view/'); // 비동기로 map_view.html의 내용을 가져와 표시합니다
+        hospitalContent.show();
+        
+        var diagnosisContent = $('#diagnosisContent');
+        diagnosisContent.hide();
+      }
       
-
+      // 페이지가 로드될 때 자동으로 진단명과 확률을 보여줍니다
+      $(document).ready(function() {
+        showDiagnosis();
+      });
     </script>
 </div>
 
