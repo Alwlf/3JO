@@ -105,10 +105,13 @@ def setFileInsert(request) :
 
 
 def mypage(request):
+    id = request.session["session_user_id"]
+
+    user_view = user.userInfo(id)
 
     return render(request,
                   "projectapp/mypage.html",
-                  {})
+                  {'user_view':user_view})
 
 def update_mypage(request):
     id = request.session["session_user_id"]
@@ -120,7 +123,7 @@ def update_mypage(request):
     msg = f"""
             <script type='text/javascript'>
                 alert('회원 정보 수정이 정상적으로 완료되었습니다.');
-                location.href = '/project/';
+                location.href = '/project/mypage/';
             </script>
     """
     return HttpResponse(msg)
@@ -197,10 +200,7 @@ def login_chk(request):
         return HttpResponse(msg)
     
     request.session["session_user_id"] = id
-    request.session["session_user_pw"] = pw
     request.session["session_user_name"] = user_view.get("user_name")
-    request.session["session_user_gender"] = user_view.get("user_gender")
-    request.session["session_user_email"] = user_view.get("user_email")
 
 
     msg = """

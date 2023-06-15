@@ -357,10 +357,6 @@ function closePw(){
       <li class="nav-item"><a class="nav-link active" aria-current="page" href="/project">Home</a></li>
       <li class="nav-item"><a class="nav-link" href="#!" onclick="openLogin()">{{ request.session.session_user_name }}님</a></li>
       <input id="user_id" type="hidden" value ={{ request.session.session_user_id }}>
-      <input id="user_pw" type="hidden" value ={{ request.session.session_user_pw }}>
-      <input id="user_name" type="hidden" value ={{ request.session.session_user_name }}>
-      <input id="user_gender" type="hidden" value ={{ request.session.session_user_gender }}>
-      <input id="user_email" type="hidden" value ={{ request.session.session_user_email }}>
       <li class="nav-item"><a class="nav-link" aria-current="page" href="/project/mypage">마이페이지</a></li>
       <li class="nav-item"><a class="nav-link" href="#signup" onclick="Logout()">로그아웃</a></li>
       </ul>
