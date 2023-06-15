@@ -47,4 +47,6 @@ urlpatterns = [
     path('search_id/',views.search_id),
     # 비밀번호 찾기
     path('search_pw/',views.search_pw),
+    # 지도 보여주기
+    path('map_view/',views.mapview),
 ]

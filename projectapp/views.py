@@ -236,16 +236,16 @@ def logout_chk(request) :
 
 
 
-### File Upload 처리하기
 def setFileInsert(request) :
     url = request.POST.get("img")
     img=Image.open(BytesIO(urllib.request.urlopen(url).read()))
-    img=img.resize((500,500))
+    
+    img=img.resize((640,440))
+    img_full_name="/static/projectapp/images/image.jpg"
+    img.save(path+img_full_name)
     return render(request,
                   "projectapp/disease_result.html",
-                  {"img_full_name":url})
-    # return HttpResponse(msg)
-
+                  {"img_full_name":img_full_name})
 
 
 
@@ -537,4 +537,9 @@ def search_pw(request):
             </script>
         """
         return HttpResponse(msg)
+
+def mapview(request):
+    return render(request,
+                  "projectapp/map_view.html",
+                  {})
 
