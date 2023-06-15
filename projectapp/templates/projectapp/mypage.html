@@ -11,14 +11,27 @@
       var emailInput = document.getElementById('email');
       emailInput.disabled = false;
     }
+
+    function mypage(){
+      form_id.value=document.getElementById('user_id').value;
+      form_name.value=document.getElementById('user_name').value;
+      form_pw.value=document.getElementById('user_pw').value;
+      form_gender.value=document.getElementById('user_gender').value;
+      form_email.value=document.getElementById('user_email').value;
+    }
+    
+    function updateUser(){
+      document.getElementById('mypage')
+    }
+    
   </script>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
 
-
     <link href="/static/projectapp/css/bootstrap.min.css" rel="stylesheet">
 
-  <style>
     
+
+  <style>
     
     .child {
       width: 50px;
@@ -48,7 +61,7 @@
   </style>
 </head>
 
-<body>
+<body onload="mypage()">
   <!-- Responsive navbar-->
   {% include "projectapp/include/navbar.html" %}
 </main>
@@ -61,32 +74,26 @@
           <table>
             <tr>
               <td>
-                <form>
-                  <label for="name">이름 :</label>
-                  <input type="text" id="name" value="김화영" size="28" disabled>
+                <form name="mypage" id="mypage" method="post" action="/project/update_mypage/">
+                  {%csrf_token%}
+                  <label for="name">이름 :</label><input type="text" name="form_name" id="form_name" size="28" disabled>
                   <br/>
                   <br/>
-                  <label for="name">성별 :</label>
-                  <input type="text" id="gender" value="여" size="28" disabled>
+                  <label for="gender">성별 :</label><input type="text" name="form_gender" id="form_gender" size="28" disabled>
                   <br/>
                   <br/>
-                  <label for="username">아이디 :</label>
-                  <input type="text" id="username" value="hwayoung" size="26" disabled>
+                  <label for="username">아이디 :</label><input type="text" name="form_id" id="form_id" size="26" disabled>
                   <br/>
                   <br/>
-                  <label for="password">비밀번호 :</label>
-                  <input type="password" id="password" value="*********" size="18">
-                  <button type="button" onclick="editpass()">수정</button>
+                  <label for="password">비밀번호 :</label><input type="text" name="form_pw" id="form_pw" size="18"oninput="pw_handleOnInput(this)" required >
                   <br/>
                   <br/>
-                  <label for="email">이메일 :</label>
-                  <input type="email" id="email" value="hwayoung@google.com">
-                  <button type="button" onclick="editEmail()">수정</button>
+                  <label for="email">이메일 :</label><input type="email" name="form_email" id="form_email" required>
                   <br/>
                   <br/>
                   <div style="text-align: center;">
-                  <button type="submit">저장</button>
-                  <button type="submit">취소</button>
+                  <input type="submit" value="저장">
+                  <button type="button" onclick="javascript:location.href='/'">취소</button>
                   </div>
                 </form>
             </td>
