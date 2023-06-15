@@ -28,7 +28,7 @@ def index(request):
 
     # board_list =  {"board_title":"EEEE"}
     board_list = Board.getBoardList()
-    board_list = board_list[:4]
+    board_list = board_list[:6]
     return render(request,		
                   "projectapp/index.html", 
                   {"board_list":board_list})
@@ -385,8 +385,51 @@ def boardUpdateForm(request):
 
 ### 게시글 수정 
 def boardUpdate(request):
+    board_id = request.POST.get("board_id",'')
+    board_title = request.POST.get("board_title",'')
+    board_content = request.POST.get("board_content",'')
+    user_id = request.POST.get("user_id",'')
 
-    return HttpResponse("@")
+    update_chk = Board.setBoardUpdate(board_id,board_title,board_content,user_id)
+
+    msg = """
+            <script type='text/javascript'>
+                alert('{}');
+                location.href = '/project/board/';
+            </script>
+    """.format(update_chk)
+    return HttpResponse(msg)
+
+
+### 게시글 삭제
+def boardDelete(request):
+    try:
+
+        board_id = request.GET.get("board_id","ERROR")
+        user_id = request.GET.get("user_id","ERROR")
+        
+        delete_chk = Board.setBoardDelete(board_id)
+    
+    except:
+            msg = """
+                <script type='text/javascript'>
+                    alert('잘못된 접근입니다.!!');
+                    location.href = '/project/board/';
+                </script>
+            """
+            return HttpResponse(msg)
+
+    msg = """
+            <script type='text/javascript'>
+                alert('정상적으로 삭제되었습니다!');
+                location.href='/project/board/';
+            </script>
+    """
+    return HttpResponse(msg)
+
+
+
+
 
 ### 게시글 작성
 def post(request):

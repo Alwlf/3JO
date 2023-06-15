@@ -68,3 +68,22 @@ def getBoardView(board_id):
         Where board_id = '{}';
     """.format(board_id)
     return db_sql.getView(sql)
+
+
+### 게시글 수정
+def setBoardUpdate(board_id,board_title,board_content,user_id):
+    sql ="""
+        Update Board
+        Set board_title= '{}', board_content='{}'
+        Where board_id = {}
+        """.format(board_title,board_content,board_id)
+    return db_sql.setCUD(sql)
+
+### 게시글 삭제
+def setBoardDelete(board_id):
+    sql = """
+        Delete
+        From Board
+        Where board_id = {};
+    """.format(board_id)
+    return db_sql.setCUD(sql)

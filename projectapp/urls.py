@@ -36,10 +36,12 @@ urlpatterns = [
     path('post/',views.post),
     # 게시판 상세조회
     path('board_view/',views.boardView),
-    # 게시판 수정
+    # 게시판 수정 폼
     path('board_update_form/',views.boardUpdateForm),
-     # 게시판 수정
+    # 게시판 수정
     path('board_update/',views.boardUpdate),
+    # 게시판 삭제
+    path('board_delete/',views.boardDelete),
 
     # 아이디 찾기
     path('search_id/',views.search_id),
