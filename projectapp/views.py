@@ -417,59 +417,68 @@ def post(request):
     user_id = request.session.get("session_user_id")
     board_time = DateFormat(datetime.now()).format('Y.m.d H:i')
     
+    if user_id :
 
-    if request.FILES.get("file_nm") is not None :
-            file_nm = request.FILES.get("file_nm")
-    else :
-            file_nm = ""
-    
-    # board_time = datetime.now()
-    
-    board_chk = Board.setBoardInsert(board_title,board_content,user_id,board_time)
-    
-
-    board_list = Board.findBoardId(board_title,user_id,board_time)
-    board_id=board_list['board_id']
-
-    if file_nm != "" :
-        ###########[ File Upload 처리하기 ]##########
-        ### - 파일 업로드 폴더 위치 지정 및 물리적 위치 생성하기
-        upload_dir = "./projectapp/static/projectapp/board_file/"
-        download_dir = "./projectapp/static/projectapp/board_file/"
-
-        ### 파일(이미지)을 페이지에 보여줄 경우 : 폴더 전체 경로 지정
-        img_dir = "/static/projectapp/board_file/"
-
-        ### File_Uitl 클래스 생성하기
-        fu = File_Util()
-
-        ### 초기값 셋팅(설정)하기
-        fu.setUpload(file_nm, upload_dir, img_dir, download_dir)
-
-        ### 파일 업로드 실제 수행하기*****
-        fu.fileUpload()
-
-        ########## [ 업로드된 파일 정보 조회 ] #########
-        ### 파일 사이즈
-        file_size = fu.file_size
-        ### 업로드된 파일명
-        filename = fu.filename
-        ### <img> 태그에 넣을 src 전체 경로
-        img_full_name = fu.img_full_name
-        ### (DB 저장용) 다운로드 전체경로+파일명
-        download_full_name = fu.download_full_name
-
-        board_ee=Board.setFileInsert(filename,board_id)
+        if request.FILES.get("file_nm") is not None :
+                file_nm = request.FILES.get("file_nm")
+        else :
+                file_nm = ""
         
- 
+        # board_time = datetime.now()
+        
+        board_chk = Board.setBoardInsert(board_title,board_content,user_id,board_time)
+        
 
-    msg = """
-        <script type='text/javascript'>
-            alert('{}');
-            location.href = '/project/board/';
-        </script>
-    """.format(board_chk)
+        board_list = Board.findBoardId(board_title,user_id,board_time)
+        board_id=board_list['board_id']
 
+        if file_nm != "" :
+            ###########[ File Upload 처리하기 ]##########
+            ### - 파일 업로드 폴더 위치 지정 및 물리적 위치 생성하기
+            upload_dir = "./projectapp/static/projectapp/board_file/"
+            download_dir = "./projectapp/static/projectapp/board_file/"
+
+            ### 파일(이미지)을 페이지에 보여줄 경우 : 폴더 전체 경로 지정
+            img_dir = "/static/projectapp/board_file/"
+
+            ### File_Uitl 클래스 생성하기
+            fu = File_Util()
+
+            ### 초기값 셋팅(설정)하기
+            fu.setUpload(file_nm, upload_dir, img_dir, download_dir)
+
+            ### 파일 업로드 실제 수행하기*****
+            fu.fileUpload()
+
+            ########## [ 업로드된 파일 정보 조회 ] #########
+            ### 파일 사이즈
+            file_size = fu.file_size
+            ### 업로드된 파일명
+            filename = fu.filename
+            ### <img> 태그에 넣을 src 전체 경로
+            img_full_name = fu.img_full_name
+            ### (DB 저장용) 다운로드 전체경로+파일명
+            download_full_name = fu.download_full_name
+
+            board_ee=Board.setFileInsert(filename,board_id)
+            
+    
+
+        msg = """
+            <script type='text/javascript'>
+                alert('{}');
+                location.href = '/project/board/';
+            </script>
+        """.format(board_chk)
+    
+    else :
+         
+         msg = """
+            <script type='text/javascript'>
+                alert('로그인을 해주세요!');
+                location.href = '/project/board/';
+            </script>
+        """
     return HttpResponse(msg)
 
 # 아이디 찾기
