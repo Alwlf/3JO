@@ -17,6 +17,19 @@
             }
           }
 
+          function goDelete(board_id,user_id,session_id){
+            if (user_id == session_id){
+              if (confirm("정말 삭제하시겠습니까??") == true){
+                url = '/project/board_delete/?board_id='+board_id;
+                url = url+"&user_id="+user_id;
+                location.href = url;
+              }else{
+                return false;
+              }
+            }
+
+          }
+
         </script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
@@ -68,7 +81,7 @@
           </div>
             <br/>
             <button onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )">수정</button>
-            <button onclick="">삭제</button>
+            <button onclick="goDelete( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )">삭제</button>
             <table class="table table-hover">
               <tbody>
                  

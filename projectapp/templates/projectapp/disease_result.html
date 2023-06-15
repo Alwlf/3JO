@@ -14,9 +14,16 @@
     </script>
     <style>
       p{
-        padding-left:100px;
-        padding-top:38px;
+        padding-left: 100px;
+        padding-right: 100px;
       }
+      .navbar-nav .center-align{
+        margin-left: 80px; 
+        margin-right: 60px; 
+      }
+      /* h2{
+        padding-left: 10px;
+      } */
     </style>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
     <link href="/static/projectapp/css/bootstrap.min.css" rel="stylesheet">
@@ -37,28 +44,50 @@
 
 <br/>
 <br/>
-<div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
-    <div class="bg-body-tertiary border rounded-3">
+<div class="d-grid gap-3" style="grid-template-columns: 1fr 2fr;">
+    <div class="bg-body-tertiary border rounded-1">
       <p><img src='{{ img_full_name }}'></p>
       <!-- <br><br><br><br><h2 style="text-align: center;">업로드한</h2><br><br><br><br><br><br><br><br><h2 style="text-align: center;">이미지 보여주기</h2><br><br><br><br> -->
     </div>
     <div class="bg-body-tertiary">
-        <h2>진단명 : </h2><h2>확률 : </h2>
-        <hr/>
-        <br/>
-        <div class="bg-body-tertiary border rounded-3">
-            <br><br><br><h3>결과로 나온 진단명의 유의사항 나오는칸</h3><br><br><br><br><br><br><br><br><br><br>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarNavDropdown" >
+            <ul class="navbar-nav">
+              <li class="nav-item center-align">
+                <a class="nav-link" href="#" onclick="showDiagnosis()">진단명　확률</a>
+              </li>
+              <li class="nav-item center-align">
+                <a class="nav-link" href="#">주변병원</a>
+              </li>
+              <li class="nav-item center-align">
+                <a class="nav-link" href="#">관련사진</a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </div> 
+      </nav>
+      <div id="diagnosisContent" style="display: none;">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <h2>진단명 : XX</h2>
+        <br/>
+        <h2>확률 : XX</h2>
+      </div>
+    </div>
+    <script>
+      function showDiagnosis() {
+        var diagnosisContent = document.getElementById('diagnosisContent');
+        diagnosisContent.style.display = 'block';
+      }
+    </script> 
 </div>
-<br/>
-<button type="button" class="btn btn-primary btn-small" style="width:20%; float:right" onclick="goToBoardForm()">문의하기</button>
-<br/>
+<button type="button" class="btn btn-light btn-primary btn-small" style="width:20%; float:right" onclick="goToBoardForm()">문의하기</button>
 <br/>
 <br/>
-<div class="bg-body-tertiary border rounded-3">
-    <br><br><br><br><br><h3>지도에 근처 동물병원 마커표시</h3><br><br><br><br><br><br><br><br>
-</div>
+
 
 {% include "projectapp/include/footer.html" %}
 </body>

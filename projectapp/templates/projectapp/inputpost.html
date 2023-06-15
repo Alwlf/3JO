@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시글 작성</title>
+
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -20,7 +21,7 @@
     </style>
 
     <script type="text/javascript">
-        function goback(){
+        function goBack(){
             history.go(-1);
         }
 
@@ -29,6 +30,7 @@
             fm.action ='/project/board/';
             fm.submit();
         }
+
       </script>
 </head>
 <body>
@@ -51,11 +53,11 @@
       <table class="table table-hover">
         <tbody>
             <tr>
-              <td><input type="text" class="form-control" placeholder="글 제목" id="title" name="title" maxlength="40"></td>
+              <td><input type="text" class="form-control" placeholder="글 제목" id="title" name="title" minlength="2" maxlength="20" required></td>
             </tr>
 
             <tr>
-              <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" id="content" name="content" maxlength="1024" style="height: 400px;"></textarea></td>
+              <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" id="content" name="content" minlength="2" maxlength="1024" style="height: 400px;" required></textarea></td>
             </tr>
 
             <tr>
@@ -73,7 +75,7 @@
         <div class="col-md-6"></div>
         <div class="col-md-3">
         <input type="submit" class="btn btn-light btn-outline-dark btn-primary pull-right" value="업로드하기">
-        <input type="submit" class="btn btn-light btn-outline-dark btn-primary pull-right" value="취소하기">
+        <input type="button" class="btn btn-light btn-outline-dark btn-primary pull-right" value="취소하기" onclick="goBack()">
         </div>
         </div>
     </div>

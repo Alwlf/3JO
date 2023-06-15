@@ -8,15 +8,9 @@
         <title>Blog Home - Start Bootstrap Template</title>
 
         <script type="text/javascript">
-          function goUpdate(board_id,user_id,session_id){
-            if (user_id == session_id){
-              // alert(board_id+'/'+user_id+'/'+session_id);
-              url = '/project/board_update/?board_id='+board_id;
-              url = url+"&user_id="+user_id;
-              location.href = url;
-            }
+          function goBack(){
+            history.go(-1);
           }
-
         </script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
@@ -62,7 +56,10 @@
         {% include "projectapp/include/navbar.html" %}
         <!-- Page header with logo and tagline-->
         <form name="fm" id="fm" method="post" action="/project/board_update/">
+          <input type="hidden" name="board_id" value="{{ board_view.board_id }}">
+          <input type="hidden" name="user_id" value="{{ board_view.user_id }}">
           {% csrf_token %}
+
         <header class="py-5 bg-light border-bottom mb-4">
           <div class="container">
             <div class="text-center my-5">
@@ -75,11 +72,11 @@
               <tbody>
                  
                   <tr>
-                    <td><p>글 제목 : {{ board_view.board_title }}</p></td>
+                    <td><p>글 졔목: <input type="text" name="board_title" value="{{ board_view.board_title }}" minlength="2" maxlength="20" required></p></td>
                   </tr>
                   
                   <tr>
-                    <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="contentDetail" id="cotent" maxlength="1024" style="height: 400px;">{{ board_view.board_content }}</textarea></td>
+                    <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="board_content" id="board_cotent" minlength="2" maxlength="1024" style="height: 400px;" required>{{ board_view.board_content }}</textarea></td>
                   </tr>
                   <tr>
                       <td>
@@ -94,7 +91,7 @@
             </table>
           </div>    
                 <input type ="submit" value ="저장">
-                <input type ="submit" value = "뒤로가기">
+                <input type ="button" value = "뒤로가기" onclick="goBack()">
           </form>
     </header>
  
