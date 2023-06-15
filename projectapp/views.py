@@ -180,8 +180,8 @@ def insert_user(request):
 ### 로그인 인증 처리
 def login_chk(request):
 
-    id = request.POST.get("user_id","ERROR")
-    pw = request.POST.get("user_pw","ERROR")
+    id = request.POST.get("user_id","")
+    pw = request.POST.get("user_pw","")
     url = request.POST.get("url","ERROR")
 
     user_view = user.setLoginUser(id,pw)
@@ -368,7 +368,7 @@ def boardUpdate(request):
     board_content = request.POST.get("board_content",'')
     user_id = request.POST.get("user_id",'')
 
-    update_chk = Board.setBoardUpdate(board_id,board_title,board_content,user_id)
+    update_chk = Board.setBoardUpdate(board_id,board_title,board_content)
 
     msg = """
             <script type='text/javascript'>

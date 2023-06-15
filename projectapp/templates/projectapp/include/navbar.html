@@ -279,8 +279,8 @@ function closePw(){
             <h2>로그인</h2>
             <form name="login" id="login" method="post" action="/project/login_chk/">
                 {% csrf_token %}
-                <input name="user_id" id="user_id" type="text" placeholder="아이디" >
-                <input name="user_pw" id="user_pw" type="text" placeholder="비밀번호">
+                <input name="user_id" id="user_id" type="text" placeholder="아이디" required>
+                <input name="user_pw" id="user_pw" type="text" placeholder="비밀번호" required>
                 <input name="url" id="url" type="hidden">
                 <div style="display:inline-blodck; text-align:center;">
                   <a href="#findId" onclick="openFindId()">아이디 찾기</a> | <a href="#findPw" onclick="openFindPw()">비밀번호 찾기</a>
@@ -333,20 +333,19 @@ function closePw(){
             <form id="signup" name="signup" method="post" action="/project/insert/">
                 {% csrf_token %}
                 <input name="url_su" id="url_su" type="hidden" >
+                <div style="display:inline-blodck">
+                  <input name="id" id ="id" type="text" placeholder="아이디 (영문,숫자 조합 10자 이하)" style="width:265px;" onkeydown="inputIdChk()" oninput="id_handleOnInput(this)" required>
+                  <input type="button" id="dbCheckId" style="height:40px; float:right;" value="중복 확인"  onclick="new_window();">
+                  <input type="hidden" id="idDuplication" value = "idUnCheck">
+                </div>
+                <input name="pw1" id="pw1" type="password" placeholder="비밀번호 (영문,숫자 조합 15자 이하)" oninput="pw_handleOnInput(this)" required >
                 <input name="name" id="name" type="text" placeholder="이름" required >
                 <select name="gender">
                 <option value="남">남성</option>
                 <option value="여">여성</option>
                 </select>
                 <input name="email" type="email" placeholder="이메일 (aaa@bbb.ccc 형식)" required>
-                <div style="display:inline-blodck">
-                <input name="id" id ="id" type="text" placeholder="아이디 (영문,숫자 조합 10자 이하)" style="width:265px;" onkeydown="inputIdChk()" oninput="id_handleOnInput(this)" required>
-                <input type="button" id="dbCheckId" style="height:40px; float:right;" value="중복 확인"  onclick="new_window();">
-                <input type="hidden" id="idDuplication" value = "idUnCheck">
-                </div>
-                <input name="pw1" id="pw1" type="password" placeholder="비밀번호 (영문,숫자 조합 15자 이하)" oninput="pw_handleOnInput(this)" required >
                 <!-- <input id="pw2" type="password" onchange="check_pw()" placeholder="비밀번호 확인" required ><span id="check"></span> -->
-
                 <div style="display:inline-blodck">
                 <input type="submit" style="width:90px; float:left;" value="가입" >
                 <input type="button" style="width:90px; float:right;" onClick="closeSignup()" value="취소">
