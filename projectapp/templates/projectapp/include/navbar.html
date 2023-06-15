@@ -227,6 +227,18 @@
     }
 }
 
+<<<<<<< HEAD
+=======
+function closeId(){
+    const bgbg = document.getElementById('findId');
+    bgbg.style.visibility = "hidden";
+}
+
+function closePw(){
+    const bgbg = document.getElementById('findPw');
+    bgbg.style.visibility = "hidden";
+}
+>>>>>>> 2ec7bbd6b02d571760f971f0b4ef9794dd612875
 
 </script>
 
@@ -261,45 +273,47 @@
                 <input name="user_id" id="user_id" type="text" placeholder="아이디">
                 <input name="user_pw" id="user_pw" type="text" placeholder="비밀번호">
                 <div style="display:inline-blodck; text-align:center;">
-                <a href="#" onclick="openFindId()">아이디 찾기</a> | <a href="#" onclick="openFindPw()">비밀번호 찾기</a> 
+                  <a href="#findId" onclick="openFindId()">아이디 찾기</a> | <a href="#findPw" onclick="openFindPw()">비밀번호 찾기</a>
+                  <br/>          
+                  <form>
+                    <div style="display:inline-blodck">
+                      <input type="submit" style="width:90px; float:left;" value="로그인" onclick="openLogin()">
+                      <input type="button" style="width:90px; float:right;" value="취소" onclick="closeLogin()">
+                      </div>
+                  </form>
                 <div id="findId" class="popup-overlay">
                     <div class="popup-content">
-                    <h2>아이디 찾기</h2>
-                    <form name="findId" method="post">
+                    <h2>아이디 찾기</h2>                      
+                      <form name="findId" method="post" action="/project/search_id/">
                         {% csrf_token %}
-                        <input name="name" type="text" placeholder="이름">
-                        <input name="email" type="text" placeholder="이메일">
+                        <input name="user_name" type="text" placeholder="이름">
+                        <input name="user_email" type="text" placeholder="이메일">
                         <div style="display:inline-blodck">
                         <input type="submit" style="width:90px; float:left;" value="찾기">
-                        <input type="submit" style="width:90px; float:right;" value="취소">
+                        <input type="button" style="width:90px; float:right;" value="취소" onclick="closeId()">
                         </div>
-          
+                      </form>
                     </div>
                 </div>  
                 <div id="findPw" class="popup-overlay">
                     <div class="popup-content">
                     <h2>비밀번호 찾기</h2>
-                    <form name="findPw" method="post">
+                    <form id="findPw" name="findPw" method="post" action="/project/search_pw/">
                         {% csrf_token %}
-                        <input name="id" type="text" placeholder="아이디">
-                        <input name="email" type="text" placeholder="이메일">
+                        <input name="user_id" type="text" placeholder="아이디">
+                        <input name="user_email" type="text" placeholder="이메일">
                         <div style="display:inline-blodck">
                         <input type="submit" style="width:90px; float:left;" value="찾기">
-                        <input type="submit" style="width:90px; float:right;" value="취소">
+                        <input type="button" style="width:90px; float:right;" value="취소" onclick="closePw()">
                         </div>
-                   
-                    </div>     
+                    </form>
+                    </div>
                 </div>  
                 </div>
-                <br/>
-                <div style="display:inline-blodck">
-                <input type="submit" style="width:90px; float:left;" value="로그인" onclick="openLogin()">
-                <input type="submit" style="width:90px; float:right;" value="취소">
-                </div>
-                
-            </form>
+              </form>
             </div>
         </div>
+
         <li class="nav-item"><a class="nav-link" href="#signup" onclick="openSignup()">회원가입</a></li>
         <div id="signup" class="popup-overlay">
             <div class="popup-content">

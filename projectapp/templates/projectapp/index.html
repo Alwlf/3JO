@@ -55,7 +55,31 @@
         text-decoration: none;
         color:black;
       }
-      
+      h4{
+        text-align: center;
+        padding: 10px;
+        padding-left: 10px;
+        padding-top:10px;
+        background-color: #DACDBF;
+        border-radius: 20px;
+        font-family: "굴림";
+        font-weight: bold;
+      }
+      .col2{
+        text-align: center;
+        background-color: #f1ebe3;
+        border-radius: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-top: 27px;
+        padding-bottom: 20px;
+        box-shadow: 4px 4px 4px ;
+      }
+      .table{
+        padding-top:40px;
+        background-color: #F2EADE;
+        border-radius: 20px;
+      }
     </style>
 
     <!-- Custom styles for this template -->
@@ -85,24 +109,31 @@
             <img class="img" src="/static/projectapp/images/cat1.png" style="cursor: pointer; border-radius:10%" height="400" width="400"
             onclick="javascript:location.href='/project/disease';">
           </div>
+
           <div class="col">
+            <div class="col2">
+            <h4><a href="/project/board/">게시판</a></h4>
+            
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">번호</th>
+                  <th scope="col">제목</th>
+                </tr>
+              </thead>
+              {% for d in board_list %}
+              <tbody>
+                <tr>
+                  <th scope="row">{{d.board_id}}</th>
+                  <td><a href="/project/board_view/">{{d.board_title}}</a></td>
 
-            <div class="card mb-4">
-
-              <div class="card-header">게시판</div>
-              <div class="card-body">
-                          {% for d in board_list %}
-                          <ul class="list-unstyled mb-0">
-                              <!-- <li><a href="/project/post">{{d.board_title}}</a></li>
-                              <hr/> -->
-                              <li><a href="/project/board/">{{d.board_title}}</a></li>
-                              <hr/>
-                          </ul>
-                          {% endfor %}
-              </div>
-
+                </tr>
+              </tbody>
+              {% endfor %}
+            </table>
             </div>
-            <li class="list-group-item" style="text-align: right;"><a href="/project/board">목록가기</a></li>
+            </div>
+
           </div>
         </div>
       </div>

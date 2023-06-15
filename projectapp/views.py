@@ -14,11 +14,20 @@ from django.utils.dateformat import DateFormat
 ### File Up/Download 처리를 위한 라이브러리
 from projectapp.file_util.file_util import File_Util
 
+### 페이징 처리를 위한 라이브러리
+from django.core.paginator import Paginator
+
 import urllib
+
+from PIL import Image
+
+import os
+path=os.path.dirname(os.path.abspath(__file__))
 
 def index(request):
 
     board_list = Board.getBoardList()
+    board_list = board_list[:4]
     return render(request,		
                   "projectapp/index.html", 
                   {"board_list":board_list})
@@ -117,10 +126,7 @@ def update_mypage(request):
     return HttpResponse(msg)
 
 
-def boardView(request):
-    return render(request,		
-                  "projectapp/board_view.html", 
-                  {})
+
 
 
 def inputpost(request):
@@ -271,7 +277,9 @@ def setFileInsert(request) :
     #     <p><img src='{0}'></p>
     # """.format(img_full_name, file_size, 
     #            filename, download_full_name)
-    
+    img=Image.open(path+img_full_name)
+    img=img.resize((800,600))
+    img.save(path+img_full_name)
     return render(request,
                   "projectapp/disease_result.html",
                   {"img_full_name":img_full_name})
@@ -284,10 +292,98 @@ def setFileInsert(request) :
 def board(request):
 
     board_list = Board.getBoardList()
-    return render(request,		
-                  "projectapp/board.html", 
-                  {"board_list":board_list})
+   
 
+    searchField = request.GET.get('searchField','ERROR')
+    search = request.GET.get('searchText','ERROR')
+    
+    if search =="":
+        msg = """
+                <script type='text/javascript'>
+                    alert('다시 입력해주세요.');
+                    location.href = '/project/board/';
+                </script>
+            """
+        return HttpResponse(msg)
+    if search != "ERROR":
+        board_list = Board.searchBoard(searchField,search)
+        
+        if not board_list:
+            msg = """
+                <script type='text/javascript'>
+                    alert('검색결과가 없습니다');
+                    location.href = '/project/board/';
+                </script>
+            """
+            return HttpResponse(msg)
+
+    now_page = request.GET.get("page", "1")
+    now_page = int(now_page)
+    num_row = 5
+
+    p = Paginator(board_list, num_row)
+
+    #  # Change 10 to the number of items per page you desire
+    rows_data = p.get_page(now_page)
+    
+    start_page = (now_page-1) // num_row * num_row + 1
+    end_page = start_page + 3
+    if end_page > p.num_pages :
+        end_page = p.num_pages
+
+    ####################################
+    ###     다음 / 이전 버튼 처리     ###
+    ####################################
+    ### 다음/이전 버튼을 보여줄지 여부 처리
+    is_prev = False # 이전
+    is_next = False # 다음
+
+    ### 이전 버튼 보여줄지 여부 처리
+    if start_page > 1 :
+        is_prev = True
+
+    ### 다음 버튼 보여줄지 여부 처리
+    if end_page < p.num_pages :
+        is_next = True
+   
+    context = {
+        ### 화면에 보여줄 10개의 행을 담고 있는 데이터
+        "board_list" : rows_data,
+        ### 페이지 번호의 시작(start_page)~종료(end_page) 범위
+        "page_range" : range(start_page, end_page+1),
+        ### 이전 버튼 보여줄지 여부
+        "is_prev" : is_prev,
+        ### 다음 버튼 보여줄지 여부
+        "is_next" : is_next,
+        ### 시작번호(start_page)
+        "start_page" : start_page,
+        ### 선택된 페이지 번호가 현재 페이지와 같은지 여부 확인용
+        "now_page" : now_page,
+        
+        ### 검색 유형 (글 제목, 작성자)
+        'searchField' :searchField,
+        ### 검색 내용
+        'searchText':search
+    }
+    
+   
+    return render(request,
+                  "projectapp/board.html", 
+                #   {"board_list":board_list},
+                    context,
+                  )
+
+### 게시글 조회
+def boardView(request):
+    board_id = request.GET.get("board_id","ERROR")
+
+
+    board_vidw = Board.getBoardView(board_id)
+
+
+    return render(request,		
+                  "projectapp/board_view.html", 
+                  {"board_view":board_vidw})
 
 ### 게시글 작성
 def post(request):
@@ -347,6 +443,64 @@ def post(request):
             location.href = '/project/board/';
         </script>
     """.format(board_chk)
+
     return HttpResponse(msg)
 
+# 아이디 찾기
+def search_id(request):
+    try:
+        user_name=request.POST.get("user_name","A")
+        user_email=request.POST.get("user_email","B")
 
+        rs_msg=user.search_user_id(user_name,user_email)
+
+        ms = rs_msg['user_id']
+
+        msg="""
+            <script type='text/javascript'>
+                alert('{}');
+                location.href='/project/';
+            </script>
+        """.format(ms)
+        return HttpResponse(msg)
+    
+    except:
+        msg = """
+            <script type='text/javascript'>
+                alert('이름 또는 이메일을 확인해 주세요.');
+                location.href = '/project/';
+            </script>
+        """
+        return HttpResponse(msg)
+
+<<<<<<< HEAD
+=======
+
+# 비번 찾기
+def search_pw(request):
+    try:
+        user_id=request.POST.get("user_id","A")
+        user_email=request.POST.get("user_email","B")
+        
+        rs_msg=user.search_user_pw(user_id,user_email)
+
+        ms = rs_msg['user_pw']
+        
+        msg="""
+            <script type='text/javascript'>
+                alert('{}');
+                location.href='/project/';
+            </script>
+        """.format(ms)
+        return HttpResponse(msg)
+    
+    except:
+        msg = """
+            <script type='text/javascript'>
+                alert('아이디 또는 이메일을 확인해 주세요.');
+                location.href = '/project/';
+            </script>
+        """
+        return HttpResponse(msg)
+
+>>>>>>> 2ec7bbd6b02d571760f971f0b4ef9794dd612875

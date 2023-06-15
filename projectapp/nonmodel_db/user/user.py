@@ -39,6 +39,7 @@ def idCheck():
     return db_sql.getList(sql)
 
 
+<<<<<<< HEAD
 ### 회원 정보 수정
 def update_mypage(id,pw,email):
     ### 구문 작성
@@ -50,3 +51,26 @@ def update_mypage(id,pw,email):
     """.format(pw,email,id)
     
     return db_sql.setCUD(sql)
+=======
+# 아이디 찾기
+def search_user_id(user_name,user_email):
+    # 구문 작성
+    sql="""
+        Select user_id
+        From user
+        Where user_name = '{}' and user_email = '{}'
+    """.format(user_name,user_email)
+
+    return db_sql.getView(sql)
+
+# 비번 찾기
+def search_user_pw(user_id,user_email):
+    # 구문 작성
+    sql="""
+        Select user_pw
+        From user
+        Where user_id = '{}' and user_email = '{}'
+    """.format(user_id,user_email)
+
+    return db_sql.getView(sql)
+>>>>>>> 2ec7bbd6b02d571760f971f0b4ef9794dd612875
