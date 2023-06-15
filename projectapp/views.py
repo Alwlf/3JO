@@ -473,8 +473,6 @@ def search_id(request):
         """
         return HttpResponse(msg)
 
-<<<<<<< HEAD
-=======
 
 # 비번 찾기
 def search_pw(request):
@@ -503,4 +501,3 @@ def search_pw(request):
         """
         return HttpResponse(msg)
 
->>>>>>> 2ec7bbd6b02d571760f971f0b4ef9794dd612875
