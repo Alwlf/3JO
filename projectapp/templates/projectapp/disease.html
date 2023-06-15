@@ -12,6 +12,17 @@
         uploadBox.style.display = 'block'; // upload-box를 숨김
         uploadedImage.style.display = 'none'; // uploaded-image를 표시
       }
+
+      function imgs(){
+        fi = document.getElementById('uploaded-image').src;
+        document.getElementById('img').value=fi
+    
+        f = document.getElementById('fm');
+        // f.setAttribute('method', 'post');
+        // f.setAttribute('action', "/project/disease_result/");
+
+        f.submit();
+      }
     </script>
     <style>
       .container {
@@ -36,18 +47,19 @@
       th, td {
         padding-top: 40px;
         padding-bottom: 20px;
-        padding-left: 100px;
-        padding-right: 100px;
+        padding-left: 60px;
+        padding-right: 60px;
       }
       #upload-box {
-            width: 907px;
-            height: 470px;
+            width: 700px;
+            height: 500px;
             border: 2px dashed #ccc;
             border-radius: 10px;
             text-align: center;
             padding: 100px;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial, sans-serif';
             font-size: 18px;
+
             color: #666;
         }
 
@@ -79,7 +91,7 @@
     action="/project/disease_result/"
     enctype="multipart/form-data">
     {% csrf_token %}
-
+    <input type="text" id="img" name="img" style="display: none;">
     
 <header>
   {% include "projectapp/include/navbar.html" %}
@@ -175,10 +187,10 @@
   
             // 이미지 크기 조정
             function adjustImageSize() {
-                var minWidth = 500; // 최소 가로 크기
-                var minHeight = 500; // 최소 세로 크기
-                var maxWidth = 800; // 최대 가로 크기
-                var maxHeight = 800; // 최대 세로 크기
+                var minWidth = 600; // 최소 가로 크기
+                var minHeight = 400; // 최소 세로 크기
+                var maxWidth = 680; // 최대 가로 크기
+                var maxHeight = 480; // 최대 세로 크기
 
                 var image = new Image();
                 image.src = uploadedImage.src;
@@ -212,7 +224,7 @@
             <td>
               <h1 style="text-align: center;">주의사항</h1>
               <br/>
-              <h2>※ 질병 부위를 최대한 자세히 촬영요망 ※</h2>
+              <h2 style="font-family: '굴림';">※ 질병 부위를 최대한 자세히 촬영요망 ※</h2>
               <br/>
               
               <p><h2><예시></h2><img src="/static/projectapp/images/sickdog.jpg/"></p>
@@ -225,7 +237,7 @@
             <input type="file" id="input-file" class="upload-hidden">
             <!-- <button id="reset-button" onclick="resetImage()">파일 초기화</button> -->
             <label style="float:right"><input type="button" value="파일초기화" class="btn btn-light btn-outline-dark btn-primary pull-right" onclick="goreset()"></label>
-            <label style="float:right"><input for="fm" type="submit" value="진단하기" class="btn btn-light btn-outline-dark btn-primary pull-right"></label>
+            <label style="float:right"><input for="file-upload-form" type="button" value="진단하기" class="btn btn-light btn-outline-dark btn-primary pull-right" onclick=imgs()></label>
         </div>
         <!-- <button type="button" class="btn btn-primary btn-lg" sstyle="width:33%;" onclick="javascript:history.go(-1);">파일초기화</button>
         <button type="button" class="btn btn-primary btn-lg" style="width:33%;" onclick="javascript:location.href='/project/disease_result';">진단하기</button> -->
