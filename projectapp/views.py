@@ -24,6 +24,10 @@ from PIL import Image
 import os
 path=os.path.dirname(os.path.abspath(__file__))
 
+import base64
+
+from io import  BytesIO
+
 def index(request):
 
     board_list = Board.getBoardList()
@@ -103,7 +107,7 @@ def setFileInsert(request) :
     # return HttpResponse(msg)
 
 
-
+### 마이페이지
 def mypage(request):
     id = request.session["session_user_id"]
 
@@ -113,6 +117,7 @@ def mypage(request):
                   "projectapp/mypage.html",
                   {'user_view':user_view})
 
+### 회원 정보 수정
 def update_mypage(request):
     id = request.session["session_user_id"]
     pw = request.POST.get("form_pw","ERROR")
@@ -129,14 +134,12 @@ def update_mypage(request):
     return HttpResponse(msg)
 
 
-
-
-
 def inputpost(request):
     return render(request,      
                   "projectapp/inputpost.html", 
                   {})
 
+### 로그인
 def idChk(request):
 
     id_list = user.idCheck()
@@ -145,28 +148,30 @@ def idChk(request):
                   "projectapp/include/child.html", 
                   {"id_list":id_list})
 
+### 회원가입
 def insert_user(request):
     name = request.POST.get("name","ERROR")
     gender = request.POST.get("gender","ERROR")
     email = request.POST.get("email","ERROR")
     id = request.POST.get("id","ERROR") 
     pw = request.POST.get("pw1","ERROR")
+    url = request.POST.get("url_su","ERROR")
 
     try :
         m = user.setUserInsert(id,pw,name,gender,email)
     except :
-        msg = """
+        msg = f"""
             <script type='text/javascript'>
                 alert('아이디 중복 체크를 해주세요.');
-                location.href = '/project/';
+                location.href = '{url}';
             </script>
         """
         return HttpResponse(msg)
     
-    msg = """
+    msg = f"""
             <script type='text/javascript'>
                 alert('회원가입이 정상적으로 완료되었습니다.');
-                location.href = '/project/';
+                location.href = '{url}';
             </script>
     """
     return HttpResponse(msg)
@@ -177,6 +182,7 @@ def login_chk(request):
 
     id = request.POST.get("user_id","ERROR")
     pw = request.POST.get("user_pw","ERROR")
+    url = request.POST.get("url","ERROR")
 
     user_view = user.setLoginUser(id,pw)
 
@@ -206,9 +212,9 @@ def login_chk(request):
     msg = """
             <script type='text/javascript'>
                 alert('환영합니다. [{}]님 로그인 되었습니다.');
-                location.href = '/';
+                location.href = '{}';
             </script>
-    """.format(user_view.get("user_name"))
+    """.format(user_view.get("user_name"),url)
 
 
     
@@ -232,57 +238,12 @@ def logout_chk(request) :
 
 ### File Upload 처리하기
 def setFileInsert(request) :
-    try :
-        title = request.POST.get("title")
-
-        if request.FILES.get("fileUpload") is not None :
-            file_nm = request.FILES.get("fileUpload")
-        else :
-            file_nm = ""
-
-    except :
-        pass
-    if file_nm != "" :
-        ###########[ File Upload 처리하기 ]##########
-        ### - 파일 업로드 폴더 위치 지정 및 물리적 위치 생성하기
-        upload_dir = "./projectapp/static/projectapp/file_UpDown/"
-        download_dir = "./projectapp/static/projectapp/file_UpDown/"
-
-        ### 파일(이미지)을 페이지에 보여줄 경우 : 폴더 전체 경로 지정
-        img_dir = "/static/projectapp/file_UpDown/"
-
-        ### File_Uitl 클래스 생성하기
-        fu = File_Util()
-
-        ### 초기값 셋팅(설정)하기
-        fu.setUpload(file_nm, upload_dir, img_dir, download_dir)
-
-        ### 파일 업로드 실제 수행하기*****
-        fu.fileUpload()
-
-        ########## [ 업로드된 파일 정보 조회 ] #########
-        ### 파일 사이즈
-        file_size = fu.file_size
-        ### 업로드된 파일명
-        filename = fu.filename
-        ### <img> 태그에 넣을 src 전체 경로
-        img_full_name = fu.img_full_name
-        ### (DB 저장용) 다운로드 전체경로+파일명
-        download_full_name = fu.download_full_name
-
-        ####### [Database 이용시]
-        # 컬럼은 두개사용 : img_full_name, download_full_name
-        
-    # msg = """
-    #     <p><img src='{0}'></p>
-    # """.format(img_full_name, file_size, 
-    #            filename, download_full_name)
-    img=Image.open(path+img_full_name)
-    img=img.resize((800,600))
-    img.save(path+img_full_name)
+    url = request.POST.get("img")
+    img=Image.open(BytesIO(urllib.request.urlopen(url).read()))
+    img=img.resize((500,500))
     return render(request,
                   "projectapp/disease_result.html",
-                  {"img_full_name":img_full_name})
+                  {"img_full_name":url})
     # return HttpResponse(msg)
 
 
@@ -516,6 +477,7 @@ def search_id(request):
     try:
         user_name=request.POST.get("user_name","A")
         user_email=request.POST.get("user_email","B")
+        url = request.POST.get("url_fi","ERROR")
 
         rs_msg=user.search_user_id(user_name,user_email)
 
@@ -524,16 +486,16 @@ def search_id(request):
         msg="""
             <script type='text/javascript'>
                 alert('{}');
-                location.href='/project/';
+                location.href='{}';
             </script>
-        """.format(ms)
+        """.format(ms,url)
         return HttpResponse(msg)
     
     except:
-        msg = """
+        msg = f"""
             <script type='text/javascript'>
                 alert('이름 또는 이메일을 확인해 주세요.');
-                location.href = '/project/';
+                location.href = '{url}';
             </script>
         """
         return HttpResponse(msg)
@@ -544,6 +506,7 @@ def search_pw(request):
     try:
         user_id=request.POST.get("user_id","A")
         user_email=request.POST.get("user_email","B")
+        url = request.POST.get("url_fp","ERROR")
         
         rs_msg=user.search_user_pw(user_id,user_email)
 
@@ -552,16 +515,16 @@ def search_pw(request):
         msg="""
             <script type='text/javascript'>
                 alert('{}');
-                location.href='/project/';
+                location.href='{}';
             </script>
-        """.format(ms)
+        """.format(ms,url)
         return HttpResponse(msg)
     
     except:
-        msg = """
+        msg = f"""
             <script type='text/javascript'>
                 alert('아이디 또는 이메일을 확인해 주세요.');
-                location.href = '/project/';
+                location.href = '{url}';
             </script>
         """
         return HttpResponse(msg)

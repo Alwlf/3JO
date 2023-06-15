@@ -149,11 +149,15 @@
 <script>
 
   function openLogin() {
+
+    url.value=window.location.href;
+    
     var popup = document.getElementById("login");
     popup.style.visibility = "visible";
     popup.action = "/project/login_chk/";
     popup.style.opacity = "1";
     popup.submit();
+
   }
 
   function Logout(){
@@ -161,18 +165,27 @@
   }
 
   function openSignup() {
+    
+    url_su.value=window.location.href;
+    
     var popup = document.getElementById("signup");
     popup.style.visibility = "visible";
     popup.style.opacity = "1";
   }
   
   function openFindId(){
+
+    url_fi.value=window.location.href;
+
     var popup = document.getElementById("findId");
     popup.style.visibility = "visible";
     popup.style.opacity = "1";
   }
 
   function openFindPw(){
+
+    url_fw.value=window.location.href;
+
     var popup = document.getElementById("findPw");
     popup.style.visibility = "visible";
     popup.style.opacity = "1";
@@ -214,18 +227,18 @@
     e.value = e.value.replace(/[^0-9A-Za-z]/ig, '').substr(0,15)
   }
 
-  function check_pw(){
-    if(document.getElementById('pw1').value !='' && document.getElementById('pw2').value!=''){
-        if(document.getElementById('pw1').value==document.getElementById('pw2').value){
-            document.getElementById('check').innerHTML='비밀번호가 일치합니다.'
-            document.getElementById('check').style.color='blue';
-        }
-        else{
-            document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다.';
-            document.getElementById('check').style.color='red';
-        }
-    }
-}
+//   function check_pw(){
+//     if(document.getElementById('pw1').value !='' && document.getElementById('pw2').value!=''){
+//         if(document.getElementById('pw1').value==document.getElementById('pw2').value){
+//             document.getElementById('check').innerHTML='비밀번호가 일치합니다.'
+//             document.getElementById('check').style.color='blue';
+//         }
+//         else{
+//             document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다.';
+//             document.getElementById('check').style.color='red';
+//         }
+//     }
+// }
 
 function closeId(){
     const bgbg = document.getElementById('findId');
@@ -238,7 +251,6 @@ function closePw(){
 }
 
 </script>
-
 
 
 <!-- 상단 영역 -->
@@ -269,6 +281,7 @@ function closePw(){
                 {% csrf_token %}
                 <input name="user_id" id="user_id" type="text" placeholder="아이디" >
                 <input name="user_pw" id="user_pw" type="text" placeholder="비밀번호">
+                <input name="url" id="url" type="hidden">
                 <div style="display:inline-blodck; text-align:center;">
                   <a href="#findId" onclick="openFindId()">아이디 찾기</a> | <a href="#findPw" onclick="openFindPw()">비밀번호 찾기</a>
                   <br/>          
@@ -285,6 +298,7 @@ function closePw(){
                         {% csrf_token %}
                         <input name="user_name" type="text" placeholder="이름">
                         <input name="user_email" type="text" placeholder="이메일">
+                        <input name="url_fi" id="url_fi" type="hidden">
                         <div style="display:inline-blodck">
                         <input type="submit" style="width:90px; float:left;" value="찾기">
                         <input type="button" style="width:90px; float:right;" value="취소" onclick="closeId()">
@@ -299,6 +313,7 @@ function closePw(){
                         {% csrf_token %}
                         <input name="user_id" type="text" placeholder="아이디">
                         <input name="user_email" type="text" placeholder="이메일">
+                        <input name="url_fw" id="url_fw" type="hidden">
                         <div style="display:inline-blodck">
                         <input type="submit" style="width:90px; float:left;" value="찾기">
                         <input type="button" style="width:90px; float:right;" value="취소" onclick="closePw()">
@@ -317,20 +332,20 @@ function closePw(){
             <h2>회원가입</h2>
             <form id="signup" name="signup" method="post" action="/project/insert/">
                 {% csrf_token %}
+                <input name="url_su" id="url_su" type="hidden" >
                 <input name="name" id="name" type="text" placeholder="이름" required >
                 <select name="gender">
-                <option value="male">남성</option>
-                <option value="female">여성</option>
+                <option value="남">남성</option>
+                <option value="여">여성</option>
                 </select>
                 <input name="email" type="email" placeholder="이메일 (aaa@bbb.ccc 형식)" required>
                 <div style="display:inline-blodck">
                 <input name="id" id ="id" type="text" placeholder="아이디 (영문,숫자 조합 10자 이하)" style="width:265px;" onkeydown="inputIdChk()" oninput="id_handleOnInput(this)" required>
                 <input type="button" id="dbCheckId" style="height:40px; float:right;" value="중복 확인"  onclick="new_window();">
-                
                 <input type="hidden" id="idDuplication" value = "idUnCheck">
                 </div>
                 <input name="pw1" id="pw1" type="password" placeholder="비밀번호 (영문,숫자 조합 15자 이하)" oninput="pw_handleOnInput(this)" required >
-                <input id="pw2" type="password" onchange="check_pw()" placeholder="비밀번호 확인" required ><span id="check"></span>
+                <!-- <input id="pw2" type="password" onchange="check_pw()" placeholder="비밀번호 확인" required ><span id="check"></span> -->
 
                 <div style="display:inline-blodck">
                 <input type="submit" style="width:90px; float:left;" value="가입" >
