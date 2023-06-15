@@ -24,12 +24,15 @@
               fm.action = url;
               fm.submit();
           }
+    
 
           function goView(board_id){
             url = "/project/board_view/?"
             url = url + "board_id="+ board_id;
             location.href = url;
           }
+
+       
         </script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
@@ -50,8 +53,8 @@
 
             <div class="container">
               <div class="row">
-                <form method="get" name="fm"  id="fm" action="#">
-                  <table class="pull-right">
+                <form method="get" name="fm"  id="fm" action="#" >
+                  <table class="pull-right" float="right">
                     <tr>
                       <td><select class="form-control" name="searchField" id="searchField">
                           <option value="board_title">제목</option>

@@ -45,17 +45,17 @@
     </header>
 
 
-<form method="post" action="/project/board/">
+<form method="post" action="/project/post/">
     {% csrf_token %}
     <div class="container">        
       <table class="table table-hover">
         <tbody>
             <tr>
-              <td><input type="text" class="form-control" placeholder="글 제목" name="contentTitle" maxlength="40"></td>
+              <td><input type="text" class="form-control" placeholder="글 제목" id="title" name="title" maxlength="40"></td>
             </tr>
 
             <tr>
-              <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="contentDetail" maxlength="1024" style="height: 400px;"></textarea></td>
+              <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" id="content" name="content" maxlength="1024" style="height: 400px;"></textarea></td>
             </tr>
 
             <tr>
