@@ -18,7 +18,6 @@ def setUserInsert(id,pw,name,gender,email) :
 
 ### 로그인하기
 def setLoginUser(user_id,user_pw) :
-
     ### 구문 작성
     sql = """
         Select *
@@ -39,6 +38,29 @@ def idCheck():
 
     return db_sql.getList(sql)
 
+
+### 회원 정보 수정
+def update_mypage(id,pw,email):
+    ### 구문 작성
+    sql = """
+        Update user
+            Set user_pw = '{}',
+                user_email = '{}'
+        Where user_id = '{}'
+    """.format(pw,email,id)
+    
+    return db_sql.setCUD(sql)
+
+### 회원 정보 조회
+def userInfo(id):
+    ### 구문 작성
+    sql = f"""
+        Select user_name, user_gender, user_pw, user_email
+        From user
+        Where user_id = '{id}'
+    """
+    
+    return db_sql.getView(sql)
 
 # 아이디 찾기
 def search_user_id(user_name,user_email):

@@ -322,7 +322,7 @@ function closePw(){
                 <option value="male">남성</option>
                 <option value="female">여성</option>
                 </select>
-                <input name="email" type="email" placeholder="이메일 (aaa@bbb.ccc 형식)">
+                <input name="email" type="email" placeholder="이메일 (aaa@bbb.ccc 형식)" required>
                 <div style="display:inline-blodck">
                 <input name="id" id ="id" type="text" placeholder="아이디 (영문,숫자 조합 10자 이하)" style="width:265px;" onkeydown="inputIdChk()" oninput="id_handleOnInput(this)" required>
                 <input type="button" id="dbCheckId" style="height:40px; float:right;" value="중복 확인"  onclick="new_window();">
@@ -356,6 +356,7 @@ function closePw(){
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
       <li class="nav-item"><a class="nav-link active" aria-current="page" href="/project">Home</a></li>
       <li class="nav-item"><a class="nav-link" href="#!" onclick="openLogin()">{{ request.session.session_user_name }}님</a></li>
+      <input id="user_id" type="hidden" value ={{ request.session.session_user_id }}>
       <li class="nav-item"><a class="nav-link" aria-current="page" href="/project/mypage">마이페이지</a></li>
       <li class="nav-item"><a class="nav-link" href="#signup" onclick="Logout()">로그아웃</a></li>
       </ul>

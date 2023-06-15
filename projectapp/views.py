@@ -26,7 +26,6 @@ path=os.path.dirname(os.path.abspath(__file__))
 
 def index(request):
 
-    # board_list =  {"board_title":"EEEE"}
     board_list = Board.getBoardList()
     board_list = board_list[:6]
     return render(request,		
@@ -106,14 +105,28 @@ def setFileInsert(request) :
 
 
 def mypage(request):
-    return render(request,		
-                  "projectapp/mypage.html", 
-                  {})
+    id = request.session["session_user_id"]
+
+    user_view = user.userInfo(id)
+
+    return render(request,
+                  "projectapp/mypage.html",
+                  {'user_view':user_view})
 
 def update_mypage(request):
-    return render(request,		
-                  "projectapp/update_mypage.html", 
-                  {})
+    id = request.session["session_user_id"]
+    pw = request.POST.get("form_pw","ERROR")
+    email = request.POST.get("form_email","ERROR")
+    
+    m = user.update_mypage(id,pw,email)
+
+    msg = f"""
+            <script type='text/javascript'>
+                alert('회원 정보 수정이 정상적으로 완료되었습니다.');
+                location.href = '/project/mypage/';
+            </script>
+    """
+    return HttpResponse(msg)
 
 
 
