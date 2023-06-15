@@ -338,7 +338,6 @@ def board(request):
 def boardView(request):
     board_id = request.GET.get("board_id","ERROR")
 
-
     board_view = Board.getBoardView(board_id)
     file_list = Board.getBoardFileView(board_id)
 
