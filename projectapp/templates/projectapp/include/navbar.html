@@ -267,7 +267,7 @@ function closePw(){
             <h2>로그인</h2>
             <form name="login" id="login" method="post" action="/project/login_chk/">
                 {% csrf_token %}
-                <input name="user_id" id="user_id" type="text" placeholder="아이디">
+                <input name="user_id" id="user_id" type="text" placeholder="아이디" >
                 <input name="user_pw" id="user_pw" type="text" placeholder="비밀번호">
                 <div style="display:inline-blodck; text-align:center;">
                   <a href="#findId" onclick="openFindId()">아이디 찾기</a> | <a href="#findPw" onclick="openFindPw()">비밀번호 찾기</a>

@@ -379,11 +379,13 @@ def boardView(request):
 
 
     board_view = Board.getBoardView(board_id)
-
+    file_list = Board.getBoardFileView(board_id)
 
     return render(request,		
                   "projectapp/board_view.html", 
-                  {"board_view":board_view})
+                  {"board_view":board_view,
+                  "file_list":file_list})
+
 
 ### 게시글 수정 폼
 def boardUpdateForm(request):
@@ -392,9 +394,11 @@ def boardUpdateForm(request):
 
 
     board_view = Board.getBoardView(board_id)
+    file_list = Board.getBoardFileView(board_id)
 
     return render(request,"projectapp/board_update_form.html",
-                  {"board_view":board_view})
+                  {"board_view":board_view,
+                   "file_list":file_list})
 
 ### 게시글 수정 
 def boardUpdate(request):
@@ -452,11 +456,12 @@ def post(request):
     user_id = request.session.get("session_user_id")
     board_time = DateFormat(datetime.now()).format('Y.m.d H:i')
     
+
     if request.FILES.get("file_nm") is not None :
             file_nm = request.FILES.get("file_nm")
     else :
             file_nm = ""
-
+    
     # board_time = datetime.now()
     
     board_chk = Board.setBoardInsert(board_title,board_content,user_id,board_time)
@@ -494,8 +499,9 @@ def post(request):
         download_full_name = fu.download_full_name
 
         board_ee=Board.setFileInsert(filename,board_id)
-    # if board_id
-    
+        
+ 
+
     msg = """
         <script type='text/javascript'>
             alert('{}');

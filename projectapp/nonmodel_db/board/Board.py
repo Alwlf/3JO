@@ -65,9 +65,19 @@ def getBoardView(board_id):
     sql="""
         Select * 
         From Board
-        Where board_id = '{}';
+        Where board_id = {};
     """.format(board_id)
     return db_sql.getView(sql)
+
+### 해당 게시글 첨부파일 가져오기
+def getBoardFileView(board_id):
+    sql="""
+        Select *
+        From File
+        Where board_id = {};
+    """.format(board_id)
+    return db_sql.getList(sql)
+
 
 
 ### 게시글 수정
@@ -87,3 +97,4 @@ def setBoardDelete(board_id):
         Where board_id = {};
     """.format(board_id)
     return db_sql.setCUD(sql)
+

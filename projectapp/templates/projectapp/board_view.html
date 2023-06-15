@@ -94,10 +94,11 @@
                   </tr>
                   <tr>
                       <td>
+                          {% for file in file_list %}
                           <p>
-                          첨부파일 : 
-                          <input type="file" name="file_nm" id="file_nm">
+                          <img src="/static/projectapp/board_file/{{ file.fi_name }}">
                           </p>
+                          {% endfor %}
                       </td>
                   </tr>
                 
