@@ -81,13 +81,14 @@ def getBoardFileView(board_id):
 
 
 ### 게시글 수정
-def setBoardUpdate(board_id,board_title,board_content,user_id):
+def setBoardUpdate(board_id,board_title,board_content):
     sql ="""
         Update Board
         Set board_title= '{}', board_content='{}'
         Where board_id = {}
         """.format(board_title,board_content,board_id)
     return db_sql.setCUD(sql)
+
 
 ### 게시글 삭제
 def setBoardDelete(board_id):
