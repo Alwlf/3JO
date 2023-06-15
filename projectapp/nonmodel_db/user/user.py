@@ -50,6 +50,18 @@ def update_mypage(id,pw,email):
     """.format(pw,email,id)
     
     return db_sql.setCUD(sql)
+
+### 회원 정보 조회
+def userInfo(id):
+    ### 구문 작성
+    sql = f"""
+        Select user_name, user_gender, user_pw, user_email
+        From user
+        Where user_id = '{id}'
+    """
+    
+    return db_sql.getView(sql)
+
 # 아이디 찾기
 def search_user_id(user_name,user_email):
     # 구문 작성

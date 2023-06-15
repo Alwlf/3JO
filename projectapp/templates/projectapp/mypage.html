@@ -7,23 +7,15 @@
   <meta name="author" content="" />
   <title>마이페이지</title>
   <script type="text/javascript">
-    function editEmail() {
-      var emailInput = document.getElementById('email');
-      emailInput.disabled = false;
-    }
 
     function mypage(){
       form_id.value=document.getElementById('user_id').value;
-      form_name.value=document.getElementById('user_name').value;
-      form_pw.value=document.getElementById('user_pw').value;
-      form_gender.value=document.getElementById('user_gender').value;
-      form_email.value=document.getElementById('user_email').value;
     }
-    
-    function updateUser(){
-      document.getElementById('mypage')
+
+    function pw_handleOnInput(e)  {
+      e.value = e.value.replace(/[^0-9A-Za-z]/ig, '').substr(0,15)
     }
-    
+
   </script>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
 
@@ -33,11 +25,11 @@
 
   <style>
     
-    .child {
-      width: 50px;
-      height: 50px;
-      margin: 0 auto;
-    }
+    #txt {
+      float: left;
+      padding-right: 10px;
+      width: 100px;
+      }
 
     table, th, td {
       border: 1px solid black;
@@ -57,6 +49,8 @@
       font-weight: bold;
       text-align: center;
     }
+
+    
     
   </style>
 </head>
@@ -76,24 +70,24 @@
               <td>
                 <form name="mypage" id="mypage" method="post" action="/project/update_mypage/">
                   {%csrf_token%}
-                  <label for="name">이름 :</label><input type="text" name="form_name" id="form_name" size="28" disabled>
+                  <span id="txt"><label for="name">이름 :</label></span><input type="text" name="form_name" id="form_name" value={{user_view.user_name}} disabled>
                   <br/>
                   <br/>
-                  <label for="gender">성별 :</label><input type="text" name="form_gender" id="form_gender" size="28" disabled>
+                  <span id="txt"><label for="gender">성별 :</label></span><input type="text" name="form_gender" id="form_gender" value={{user_view.user_gender}} disabled>
                   <br/>
                   <br/>
-                  <label for="username">아이디 :</label><input type="text" name="form_id" id="form_id" size="26" disabled>
+                  <span id="txt"><label for="username">아이디 :</label></span><input type="text" name="form_id" id="form_id" disabled>
                   <br/>
                   <br/>
-                  <label for="password">비밀번호 :</label><input type="text" name="form_pw" id="form_pw" size="18"oninput="pw_handleOnInput(this)" required >
+                  <span id="txt"><label for="password">비밀번호 :</label></span><input type="text" name="form_pw" id="form_pw" oninput="pw_handleOnInput(this)" value={{user_view.user_pw}} required >
                   <br/>
                   <br/>
-                  <label for="email">이메일 :</label><input type="email" name="form_email" id="form_email" required>
+                  <span id="txt"><label for="email">이메일 :</label></span><input type="email" name="form_email" id="form_email" value={{user_view.user_email}} required>
                   <br/>
                   <br/>
                   <div style="text-align: center;">
-                  <input type="submit" value="저장">
-                  <button type="button" onclick="javascript:location.href='/'">취소</button>
+                  <input type="submit" value="저장" style="float:left">
+                  <input type="button" style="float:right" onclick="javascript:location.href='/'" value="취소">
                   </div>
                 </form>
             </td>
