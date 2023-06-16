@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>게시판</title>
+        <script type="text/javascript">
+          function goinputform(){
+              location.href="/project/inputpost2/";
+          }
+          function searchBoard(){
+              fm = document.getElementById("fm");
+              // s1 = "";
+              // for(i=0; i<fm.searchField.options.length; i++){
+              //   if(fm.searchField.options[i].selected == true){
+              //       s1 = fm.searchField.options[i].value;
+              //       break;
+              //   }
+              // }
+              url = "/project/board_hospital/?";
+              url = url;
+              fm.action = url;
+              fm.submit();
+          }
+    
+
+          function goView(board_id){
+            url = "/project/board_view2/?"
+            url = url + "board_id="+ board_id;
+            location.href = url;
+          }
+       
+        </script>
+
+        <style>
+        @font-face {
+          font-family: 'SUITE-Regular';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+          }
+
+          h1, p, th{
+            font-family: 'SUITE-Regular';
+          }
+
+        </style>
+
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        {% include "projectapp/include/navbar.html" %}
+        <!-- Page header with logo and tagline-->
+        <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">동물병원 리뷰</h1>
+                    <p class="lead mb-0">솔직한 리뷰를 공유해보세요!!</p>
+                </div>
+            </div>
+
+
+            <div class="container" style="padding-left: 100px; padding-right: 100px;">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th style="width:100px; padding-left: 50px; font-size: 20px;" >번호</th>
+                      <th style="padding-left: 80px;font-size: 20px;">병원이름</th>
+                      <th style="padding-left: 80px;font-size: 20px;">별점</th>
+                      <th style="padding-left: 80px;font-size: 20px;">작성자</th>
+                      <th style="font-size: 20px;">작성일</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for d in board_list %}
+                    <tr>
+                      <td style="padding-left: 50px; font-size: 20px;">{{d.board_id}}</td>
+                      <td style="padding-left: 80px; font-size: 20px;"><a href ="javascript:goView('{{ d.board_id }}');">{{d.hospital}}</a></td>
+                      <td style="padding-left: 80px; font-size: 20px;">{{d.reviewStar}}</td>
+                      <td style="padding-left: 80px; font-size: 20px;">{{d.user_id}}</td>
+                      <td style="font-size: 20px;">{{ d.board_time }}</td>
+                    </tr>
+                    {%endfor %}
+                  </tbody>
+                </table>
+                <hr/>
+
+                {% if request.session.session_user_id  %}
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-light btn-primary me-md-2" type="button" style="border: 1px solid" onclick="goinputform()">글쓰기</button>
+                  </div>
+                {% endif %}
+        </header>
+        <div class="container">
+          <div class="row">
+            <form method="get" name="fm"  id="fm" action="#" >
+              <table class="pull-right" float="right" >
+                <tr>
+                  <td style="padding-left: 450px;"><select class="form-control" name="searchField" id="searchField">
+                      <option value="hospital">제목</option>
+                      <option value="user_id">작성자</option>
+                  </select></td>
+                  <td><input type="text" class="form-control"
+                    placeholder="검색어 입력" name="searchText" id="searchText" maxlength="100" size="35px"></td>
+                  <td><button type="submit" class="btn btn-success" style="background-color: #2270FC;" onclick="searchBoard()">검색</button></td>
+                </tr>
+      
+              </table>
+            </form>
+          </div>
+        </div>
+      <br/>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+          
+               <!-- 이전 페이지 처리 영역 -->
+               {% if is_prev %}
+               <li class="page-item">
+                   <a class="page-link" 
+                       href="/project/board/?page={{start_page | add:'-3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
+                       aria-label="Previous" >
+                       <span aria-hidden="true">&laquo;</span>
+                   </a>
+               </li>
+            {% endif %}
+            <!-- 페이지 번호 처리 영역(1~10까지 보여주기) -->
+            {% for i in page_range %}
+            <li class="page-item">
+                {% if i == now_page %}
+                    <strong>
+                        <a class="page-link" href="#" 
+                            style="color: black;">{{ i }}</a>
+                    </strong>
+                {% else %}
+                    <a class="page-link" 
+                        href="/project/board/?page={{ i }}&searchField={{searchField}}&searchText={{ searchText }}" >{{ i }}</a>
+                {% endif %}
+              </li>
+            {% endfor %} 
+          
+            <!-- 다음 페이지 처리 영역 -->
+            {% if is_next %}
+            <li class="page-item">
+                <a class="page-link" 
+                    href="/project/board/?page={{start_page | add:'3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
+                    aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+     
+       
+</body>
+
+        <!-- Footer-->
+        {% include "projectapp/include/footer.html" %}
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/static/projectapp/js/scripts.js"></script>
+        <script type="text/javascript"
+        src="/static/projectapp/js/bootstrap.bundle.min.js"></script>
+</html>

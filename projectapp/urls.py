@@ -10,6 +10,7 @@ urlpatterns = [
   
     # 게시글
     path('post/',views.post),
+    path('post2/',views.post2),
     # 진단하기
     path('disease/',views.disease),
     # 진단 결과
@@ -30,12 +31,16 @@ urlpatterns = [
 
     # 게시판
     path('board/',views.board),
+    path('board_hospital/',views.board_hospital),
     # 게시판 글쓰기
     path('inputpost/',views.inputpost),
+    path('inputpost2/',views.inputpost2),
     # 게시글 작성
     path('post/',views.post),
+    path('post/',views.post2),
     # 게시판 상세조회
     path('board_view/',views.boardView),
+    path('board_view2/',views.board_view2),
     # 게시판 수정 폼
     path('board_update_form/',views.boardUpdateForm),
     # 게시판 수정

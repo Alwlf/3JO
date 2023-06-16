@@ -11,6 +11,16 @@ def getBoardList():
 
     return db_sql.getList(sql)
 
+def getBoardList2():
+
+    sql= """
+        Select *
+        From board_hospital
+        Order By board_id DESC
+    """
+
+    return db_sql.getList(sql)
+
 
 def findBoardId(board_title,user_id,board_time):
 
@@ -33,6 +43,18 @@ def setBoardInsert(board_title,board_content,user_id,board_time) :
                 '{}', '{}', '{}','{}'
             )
     """.format(board_title,board_content,user_id,board_time)
+
+    return db_sql.setCUD(sql)
+
+def setBoardInsert2(hospital,reviewStar,reviewContents,user_id,board_time) :
+    
+    sql = """
+            Insert Into board_hospital (
+                hospital,reviewStar, board_content, user_id,board_time
+            ) Values (
+                '{}', '{}', '{}','{}','{}'
+            )
+    """.format(hospital,reviewStar,reviewContents,user_id,board_time)
 
     return db_sql.setCUD(sql)
 
@@ -65,6 +87,16 @@ def searchBoard(searchField,search):
         Where {} LIKE '%{}%';
     """.format(searchField,search)
     return db_sql.getList(sql)
+
+def searchBoard2(searchField,search):
+
+    sql = """
+        Select * 
+        From board_hospital
+        Where {} LIKE '%{}%';
+    """.format(searchField,search)
+    return db_sql.getList(sql)
+
 
 
 ### 게시글아이디로 해당하는 값들 불러오기 (board_view)

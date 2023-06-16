@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성</title>
+
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
+    <style>
+        table {
+          width: 100%;
+          border: 1px solid #444444;
+          border-collapse: collapse;
+        }
+        th, td {
+          border: 1px solid #444444;
+          font-family:'SUITE-Regular';
+        }
+        @font-face {
+          font-family: 'SUITE-Regular';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+          }
+
+        @font-face {
+            font-family: 'GongGothicMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        h1{
+          font-family: 'SUITE-Regular';
+          font-weight: 700;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function goBack(){
+            location.href="/project/board_hospital";
+        }
+
+        function goUpload(){
+            fm = document.getElementById("fm");
+            fm.action ='/project/board/';
+            fm.submit();
+        }
+
+        function check(){
+          var size = document.getElementsByName("reviewStar").length;
+          var value = '';
+          for(var i = 0; i < size; i++){
+              if(document.getElementsByName("reviewStar")[i].checked == true){
+                value = document.getElementsByName("reviewStar")[i].value;
+                break;
+              }
+          }
+          if(value==''){
+            alert('별점을 입력해주세요')
+          }
+          
+        }
+
+      </script>
+</head>
+<body>
+    <!-- Responsive navbar-->
+    {% include "projectapp/include/navbar.html" %}
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">동물병원 리뷰</h1>
+            </div>
+        </div>
+    </header>
+    <link href="/static/projectapp/css/star.css" rel="stylesheet"/>
+
+  <form class="mb-3" name="myform" id="myform" method="post" action="/project/post2/">
+    {% csrf_token %}
+    <div class="container">     
+      <input type="text" class="form-control" style="font-size:20px" placeholder="병원 이름" id="title" name="title" minlength="2" maxlength="20" required>   
+      <fieldset>
+        <span class="text-bold">별점을 선택해주세요</span>
+        <input type="radio" name="reviewStar" value="5" id="rate1"><label
+          for="rate1">★</label>
+        <input type="radio" name="reviewStar" value="4" id="rate2"><label
+          for="rate2">★</label>
+        <input type="radio" name="reviewStar" value="3" id="rate3"><label
+          for="rate3">★</label>
+        <input type="radio" name="reviewStar" value="2" id="rate4"><label
+          for="rate4">★</label>
+        <input type="radio" name="reviewStar" value="1" id="rate5" required><label
+          for="rate5">★</label>
+      </fieldset>
+      <div>
+        <textarea class="col-auto form-control" type="text" id="reviewContents" name="reviewContents"
+              placeholder="리뷰를 입력해주세요." required></textarea>
+      </div>
+    </form>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6"></div>
+        <div class="col-md-3" style="padding-left: 110px;">
+        <input type="submit" onclick="check()" class="btn btn-light btn-primary pull-right" value="업로드하기">
+        <input type="button" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" value="취소하기" onclick="goBack()">
+        </div>
+        </div>
+    </div>
+    <br/>
+</form>
+{% include "projectapp/include/footer.html" %}
+</body>
+</html>

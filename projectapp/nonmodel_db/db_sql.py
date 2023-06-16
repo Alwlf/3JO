@@ -28,7 +28,7 @@ def setCUD(sql) :
     db_util = DB_Util()
     db_util.setCUD(sql)    
 
-    return "ok"
+    return "작업이 정상적으로 완료되었습니다!"
 
 
 
