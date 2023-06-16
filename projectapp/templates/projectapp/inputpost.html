@@ -17,6 +17,25 @@
         }
         th, td {
           border: 1px solid #444444;
+          font-family:'SUITE-Regular';
+        }
+        @font-face {
+          font-family: 'SUITE-Regular';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+          }
+
+        @font-face {
+            font-family: 'GongGothicMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        h1{
+          font-family: 'SUITE-Regular';
+          font-weight: 700;
         }
     </style>
 
@@ -43,7 +62,6 @@
                 <h1 class="fw-bolder">게시글 작성하기</h1>
             </div>
         </div>
-    </br>
     </header>
 
 
@@ -53,11 +71,11 @@
       <table class="table table-hover">
         <tbody>
             <tr>
-              <td><input type="text" class="form-control" placeholder="글 제목" id="title" name="title" minlength="2" maxlength="20" required></td>
+              <td><input type="text" class="form-control" style="font-size:20px" placeholder="글 제목" id="title" name="title" minlength="2" maxlength="20" required></td>
             </tr>
 
             <tr>
-              <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" id="content" name="content" minlength="2" maxlength="1024" style="height: 400px;" required></textarea></td>
+              <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" id="content" name="content" minlength="2" maxlength="1024" style="height: 400px; font-size:20px;" required></textarea></td>
             </tr>
 
             <tr>
@@ -74,12 +92,13 @@
         <div class="col-md-3"></div>
         <div class="col-md-6"></div>
         <div class="col-md-3" style="padding-left: 110px;">
-        <input type="submit" class="btn btn-light btn-outline-dark btn-primary pull-right" value="업로드하기">
-        <input type="button" class="btn btn-light btn-outline-dark btn-primary pull-right" value="취소하기" onclick="goBack()">
+        <input type="submit" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" value="업로드하기">
+        <input type="button" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" value="취소하기" onclick="goBack()">
         </div>
         </div>
     </div>
     <br/>
 </form>
+{% include "projectapp/include/footer.html" %}
 </body>
 </html>

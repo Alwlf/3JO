@@ -31,9 +31,23 @@
             url = url + "board_id="+ board_id;
             location.href = url;
           }
-
        
         </script>
+
+        <style>
+        @font-face {
+          font-family: 'SUITE-Regular';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+          }
+
+          h1, p, th{
+            font-family: 'SUITE-Regular';
+          }
+
+        </style>
+
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -71,14 +85,6 @@
                       <td>{{ d.board_time }}</td>
                     </tr>
                     {%endfor %}
-                    <!-- {% for i in list %}
-                    <tr>
-                      <td>{{ i.id }}</td>
-                      <td>{{ i.subject }}</a></td>
-                      <td>{{ i.name }}</td>
-                      <td>{{ i.day }}</td>
-                    </tr>
-                    {% endfor %} -->
                   </tbody>
                 </table>
                 <hr/>
@@ -110,15 +116,6 @@
       <br/>
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
-              <!-- {% if is_prev %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ board_list.previous_page_number }}">이전</a>
-              </li>
-              {% else %}
-              <li class="page-item disabled">
-                <a class="page-link">이전</a>
-              </li>
-              {% endif %} -->
           
                <!-- 이전 페이지 처리 영역 -->
                {% if is_prev %}
