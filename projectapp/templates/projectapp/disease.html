@@ -47,11 +47,11 @@
       th, td {
         padding-top: 40px;
         padding-bottom: 20px;
-        padding-left: 50px;
-        padding-right: 50px;
+        padding-left: 20px;
+        padding-right: 20px;
       }
       #upload-box {
-            width: 720px;
+            width: 600px;
             height: 480px;
             border: 2px dashed #ccc;
             border-radius: 10px;
@@ -97,6 +97,7 @@
           font-family:'GongGothicMedium';
           font-weight: 300;
         }
+        
     </style>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
@@ -117,7 +118,7 @@
         <div class="col-md-3">
         </div>
         <div class="col-md-6">
-          <div class="form-check form-check-inline" style="padding-left: 270px;">
+          <div class="form-check form-check-inline" style="padding-left: 230px;">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" style="width: 30px; height: 30px;">
             <label class="form-check-label" for="inlineRadio1" style="font-size: 30px; padding-right: 100px;">피부</label>
           </div>
@@ -129,14 +130,13 @@
         <br/>
         <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
           
-            <div class="bg-body-tertiary" style="padding-left: 25px;">
+            <div class="bg-body-tertiary" style="padding-left: 20px;">
               <div id="upload-box">
                 <br/>
                 <br/>
-                <br/>
-                <p style="font-size: 30px; font-family: '굴림'; font-weight: bold;">파일을 드래그 앤 드롭하거나</p>
-                <p style="font-size: 30px; font-family: '굴림'; font-weight: bold;">파일을 선택하려면</p>
-                <p style="font-size: 30px; font-family: '굴림'; font-weight: bold;">여기를 클릭하세요.</p>
+                <p style="font-size: 30px; font-family: 'SUITE-Regular'; font-weight: bold;">파일을 드래그 앤 드롭하거나</p>
+                <p style="font-size: 30px; font-family: 'SUITE-Regular'; font-weight: bold;">파일을 선택하려면</p>
+                <p style="font-size: 30px; font-family: 'SUITE-Regular'; font-weight: bold;">여기를 클릭하세요.</p>
                 <input type="file" id="file-input" style="display: none;">
             </div>
         
@@ -198,9 +198,9 @@
   
             // 이미지 크기 조정
             function adjustImageSize() {
-                var minWidth = 720; // 최소 가로 크기
-                var minHeight = 480; // 최소 세로 크기
-                var maxWidth = 720; // 최대 가로 크기
+                var minWidth = 500; // 최소 가로 크기
+                var minHeight = 400; // 최소 세로 크기
+                var maxWidth = 600; // 최대 가로 크기
                 var maxHeight = 480; // 최대 세로 크기
 
                 var image = new Image();
@@ -237,21 +237,21 @@
               <br/>
               <h5 style="text-align: center;">※ 질병 부위를 최대한 자세히 촬영요망 ※</h5>
               <br/>
-              
-              <p><h4 style="text-align: center;">< 예시 ></h4><img src="/static/projectapp/images/sickdog.jpg/"></p>
+              <p><h4 style="text-align: center;">< 예시 ></h4><img src="/static/projectapp/images/sickdog.jpg/" style="width:600px; height:200px;"></p>
               <br/>
             </td>
           </table>
       </div>
         
-        <div class="filebox preview-image">
-            <!-- <input type="file" id="input-file" class="upload-hidden"> -->
-            <!-- <button id="reset-button" onclick="resetImage()">파일 초기화</button> -->
-            <label style="float:right"><input type="button" style="font-size: 18px; font-family: 'SUITE-Regular';" value="파일초기화" class="btn btn-light btn-outline-dark btn-primary pull-right" onclick="goreset()"></label>
-            <label style="float:right"><input for="file-upload-form" type="button" style="font-size: 18px; font-family: 'SUITE-Regular';" value="진단하기" class="btn btn-light btn-outline-dark btn-primary pull-right" onclick=imgs()></label>
-        </div>
-        <!-- <button type="button" class="btn btn-primary btn-lg" sstyle="width:33%;" onclick="javascript:history.go(-1);">파일초기화</button>
-        <button type="button" class="btn btn-primary btn-lg" style="width:33%;" onclick="javascript:location.href='/project/disease_result';">진단하기</button> -->
+      <div class="filebox preview-image" style="padding-right: 14px;">
+        <label style="float:right; margin-left: 10px;">
+            <input type="button" style="font-size: 18px; font-family: 'SUITE-Regular'; border: 1px solid;" value="진단하기" class="btn btn-light btn-primary pull-right" onclick=imgs()>
+        </label>
+        <label style="float:right;">
+            <input type="button" style="font-size: 18px; font-family: 'SUITE-Regular'; border: 1px solid;" value="파일초기화" class="btn btn-light btn-primary pull-right" onclick="goreset()">
+        </label>
+    </div>
+    
     </div>
     {% comment %} <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="/static/projectapp/js/script1.js"></script> {% endcomment %}
     </form>
