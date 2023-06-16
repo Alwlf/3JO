@@ -238,8 +238,9 @@ def setFileInsert(request) :
     url = request.POST.get("img")
     img=Image.open(BytesIO(urllib.request.urlopen(url).read()))
     
-    img=img.resize((620,440))
+    img=img.resize((620,462))
     img_full_name="/static/projectapp/images/image.jpg"
+    img=img.convert("RGB")
     img.save(path+img_full_name)
     return render(request,
                   "projectapp/disease_result.html",
