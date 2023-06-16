@@ -49,8 +49,29 @@
       font-weight: bold;
       text-align: center;
     }
+    @font-face {
+          font-family: 'SUITE-Regular';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+          }
 
-    
+    @font-face {
+        font-family: 'GongGothicMedium';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    h2{
+      font-family: 'GongGothicMedium';
+      font-weight:700;
+      font-size:40px;
+    }
+    #txt{
+      font-family: 'SUITE-Regular';
+      font-weight:500;
+      font-size:20px;
+    }
     
   </style>
 </head>
@@ -86,8 +107,8 @@
                   <br/>
                   <br/>
                   <div style="text-align: center;">
-                  <input type="submit" value="저장" style="float:left">
-                  <input type="button" style="float:right" onclick="javascript:location.href='/'" value="취소">
+                  <input type="submit" value="저장" style="float:left; font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right">
+                  <input type="button" class="btn btn-light btn-primary pull-right" style="float:right; font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" onclick="javascript:location.href='/'" value="취소">
                   </div>
                 </form>
             </td>
