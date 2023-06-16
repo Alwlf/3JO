@@ -440,6 +440,12 @@
           }
           </script>
       </div>
+      <div id="pictureContent" style="display:hide;">
+        <br/>
+        <br/>
+        <img src="/static/projectapp/images/cat.jpg" style="width:37%;">
+        <img src="/static/projectapp/images/cat.jpg" style="width:37%;">
+      </div>
     </div>
     <script type="text/javascript">
       function showDiagnosis() {
@@ -448,6 +454,8 @@
         
         var hospitalContent = $('#hospitalContent');
         hospitalContent.hide();
+        var pictureContent = $('#pictureContent');
+        pictureContent.hide();
       }
       
       function showHospitals() {
@@ -456,6 +464,18 @@
         
         var diagnosisContent = $('#diagnosisContent');
         diagnosisContent.hide();
+        var pictureContent = $('#pictureContent');
+        pictureContent.hide();
+      }
+
+      function showPictures() {
+        var pictureContent = $('#pictureContent');
+        pictureContent.show();
+
+        var diagnosisContent = $('#diagnosisContent');
+        diagnosisContent.hide();
+        var hospitalContent = $('#hospitalContent');
+        hospitalContent.hide();
       }
       
 
