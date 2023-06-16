@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Blog Home - Start Bootstrap Template</title>
+        <title>게시판</title>
         <script type="text/javascript">
           function goinputform(){
               location.href="/project/inputpost/";
@@ -66,23 +66,23 @@
             </div>
 
 
-            <div class="container">
+            <div class="container" style="padding-left: 100px; padding-right: 100px;">
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th style="width:100px">번호</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
+                      <th style="width:100px; padding-left: 50px; font-size: 20px;" >번호</th>
+                      <th style="padding-left: 80px;font-size: 20px;">제목</th>
+                      <th style="padding-left: 80px;font-size: 20px;">작성자</th>
+                      <th style="font-size: 20px;">작성일</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for d in board_list %}
                     <tr>
-                      <td>{{d.board_id}}</td>
-                      <td><a href ="javascript:goView('{{ d.board_id }}'); ">{{d.board_title}}</a></td>
-                      <td>{{d.user_id}}</td>
-                      <td>{{ d.board_time }}</td>
+                      <td style="padding-left: 50px; font-size: 20px;">{{d.board_id}}</td>
+                      <td style="padding-left: 80px; font-size: 20px;"><a href ="javascript:goView('{{ d.board_id }}'); ">{{d.board_title}}</a></td>
+                      <td style="padding-left: 80px; font-size: 20px;">{{d.user_id}}</td>
+                      <td style="font-size: 20px;">{{ d.board_time }}</td>
                     </tr>
                     {%endfor %}
                   </tbody>
@@ -105,7 +105,7 @@
                       <option value="user_id">작성자</option>
                   </select></td>
                   <td><input type="text" class="form-control"
-                    placeholder="검색어 입력" name="searchText" id="searchText" maxlength="100" size="30px"></td>
+                    placeholder="검색어 입력" name="searchText" id="searchText" maxlength="100" size="35px"></td>
                   <td><button type="submit" class="btn btn-success" style="background-color: #2270FC;" onclick="searchBoard()">검색</button></td>
                 </tr>
       
