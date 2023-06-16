@@ -11,6 +11,30 @@
           function goBack(){
             history.go(-1);
           }
+          function fileDelete(fi_num1){
+           
+            if(confirm("정말 삭제하시겠습니까??") == true){
+              // alert(window.location.href);
+              fi_num= document.getElementById(fi_num1);
+       
+              
+              fm = document.getElementById("fm");
+
+              for(i=0; i<fm.fi_num_check.length; i++){
+                fm.fi_num_check[i].checked = true;
+                // if(fm.fi_num_check[i].value == fi_num1){
+                //     fm.fi_num_check[i].checked=true;
+                //     alert(fm.fi_num_check[i].checked);
+                //     break;
+                // }
+              }
+
+              fi_num.style.display = "none";
+            }
+            else{
+              return false;
+            }
+          }
         </script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
@@ -64,6 +88,14 @@
     <body>      
       <!-- Responsive navbar-->
         {% include "projectapp/include/navbar.html" %}
+<<<<<<< HEAD
+        <!-- Page header with logo and tagline-->
+        <form name="fm" id="fm" method="post" action="/project/board_update/"  enctype="multipart/form-data">
+          <input type="hidden" name="board_id" value="{{ board_view.board_id }}">
+          <input type="hidden" name="user_id" value="{{ board_view.user_id }}">
+          {% csrf_token %}
+=======
+>>>>>>> 9bab6c7597c73671a8f146841817b8e98ea4789a
 
         <header class="py-5 bg-light border-bottom mb-4">
           <div class="container">
@@ -81,6 +113,36 @@
               <table class="table table-hover">
                 <tbody>
                   
+<<<<<<< HEAD
+                  <tr>
+                    <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="board_content" id="board_cotent" minlength="2" maxlength="1024" style="height: 400px;" required>{{ board_view.board_content }}</textarea></td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <p>
+                            첨부파일 : 
+                            <input type="file" name="file_nm" id="file_nm">
+                          </p>
+                        </td>
+                  </tr>
+                  <tr?>
+                        <td>
+                          {% for file in file_list %}
+                          <p id ="{{ file.fi_num }}">
+                           <img src="/static/projectapp/board_file/{{ file.fi_name }}">
+                           
+                           <input type="reset" value="X" onclick="fileDelete('{{file.fi_num}}')">
+                          </p>
+                            <!-- <input type="checkbox" name = "fi_num_check" value="{{ file.fi_num }}" > -->
+                          {% endfor %}
+                   
+                      </td>
+                  </tr>
+                
+              </tbody>  
+            </table>
+          </div>    
+=======
                     <tr>
                       <td><p>글 제목:<input type="text" class="form-control" placeholder="글 제목" id="title" name="title" minlength="2" maxlength="20" value="{{ board_view.board_title }}" required></p></td>
                     </tr>
@@ -107,6 +169,7 @@
               </table>
             
               <div align="right">
+>>>>>>> 9bab6c7597c73671a8f146841817b8e98ea4789a
                 <input type ="submit" value ="저장">
                 <input type ="button" value = "뒤로가기" onclick="goBack()">
               </div>
