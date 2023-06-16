@@ -4,10 +4,28 @@
     <meta charset="utf-8">
     <title>아이디 중복 체크</title>
   </head>
+  <style>
+      @font-face {
+      font-family: 'SUITE-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      }
+
+      @font-face {
+          font-family: 'GongGothicMedium';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+          font-weight: normal;
+          font-style: normal;
+      }
+      body{
+        font-family:'SUITE-Regular';
+      }
+  </style>
   <body onload="idCheck({{id_list}});">
     <br/>
     <span id="SpanID">아이디를 입력하세요.</span>
-    <button onclick="javascript:self.close();" style="float: right; width:70px;">확인</button>
+    <button onclick="javascript:self.close();" style="float: right; width:70px; font-family: 'SUITE-Regular';">확인</button>
     
   
     <script>
