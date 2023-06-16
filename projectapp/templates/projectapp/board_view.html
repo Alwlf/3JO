@@ -27,8 +27,12 @@
                 return false;
               }
             }
-
           }
+
+          function goNext(board_id){
+            location.href="/project/board_view/?board_id="+(board_id+1);
+          }
+
 
         </script>
         <!-- Favicon-->
@@ -44,7 +48,7 @@
             font-style: normal;
         }
 
-        .text, h5{
+        .text, h5, button{
           font-family:'SUIT-Regular';
           font-weight: 700;
         }
@@ -84,7 +88,6 @@
     <body>
         <!-- Responsive navbar-->
         {% include "projectapp/include/navbar.html" %}
-        {% comment %} <link href="/static/projectapp/css/carousel.css" rel="stylesheet"> {% endcomment %}
         <div class="container marketing">
 
           
@@ -100,15 +103,17 @@
             <br/>
             {% if  board_view.user_id  == request.session.session_user_id  %}
             <div style="float:right">
-              <button onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )">수정</button>
-              <button onclick="goDelete( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )">삭제</button>
+              <button onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
+              style="font-weight:500;">수정</button>
+              <button onclick="goDelete( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
+              style="font-weight:500;">삭제</button>
             </div>
             {% endif %}
             <table class="table" >
               <tbody>
           
                   <tr>
-                    <td><p  class="text"  name="contentDetail" style="height: 400px;">
+                    <td><p  class="text"  name="contentDetail" style="height: 400px; font-weight:500;">
                       {{ board_view.board_content }}</p></td>
                   </tr>
                   <tr>
@@ -131,7 +136,7 @@
             <p type="text" id="username" size="10" style="font-family:'SUIT-Regular';font-weight: 500;">아이디: {{ request.session.session_user_id }}</p>
             <div>
             <textarea id="comment"rows="4" cols="145" style="font-family:'SUIT-Regular';font-weight: 500;" placeholder="댓글 쓰기.." required></textarea>
-            <button type="submit" style="float:right">댓글 작성</button>
+            <button type="submit" style="float:right; font-weight:500;">댓글 작성</button>
             </div>
           </form> 
 
@@ -207,7 +212,7 @@
               </li>
 
               <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
+                  <a class="page-link" href="#" onclick="goNext({{board_view.board_id}});" aria-label="Next">
                       <span aria-hidden="true">&raquo; </span>
                       <span class="sr-only">다음글</span>
                   </a>

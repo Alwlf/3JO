@@ -105,7 +105,7 @@
   <body>
     {% include "projectapp/include/navbar.html" %}
 
-    <link href="/static/projectapp/css/carousel.css" rel="stylesheet">
+    {% comment %} <link href="/static/projectapp/css/carousel.css" rel="stylesheet"> {% endcomment %}
     
     <div class="container marketing">
       <form id="fm" name="fm" method="post"
@@ -253,7 +253,7 @@
         <!-- <button type="button" class="btn btn-primary btn-lg" sstyle="width:33%;" onclick="javascript:history.go(-1);">파일초기화</button>
         <button type="button" class="btn btn-primary btn-lg" style="width:33%;" onclick="javascript:location.href='/project/disease_result';">진단하기</button> -->
     </div>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="/static/projectapp/js/script1.js"></script>
+    {% comment %} <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="/static/projectapp/js/script1.js"></script> {% endcomment %}
     </form>
     {% include "projectapp/include/footer.html" %}
 </html>
