@@ -113,7 +113,6 @@
               <table class="table table-hover">
                 <tbody>
                   
-<<<<<<< HEAD
                   <tr>
                     <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="board_content" id="board_cotent" minlength="2" maxlength="1024" style="height: 400px;" required>{{ board_view.board_content }}</textarea></td>
                   </tr>
@@ -142,34 +141,7 @@
               </tbody>  
             </table>
           </div>    
-=======
-                    <tr>
-                      <td><p>글 제목:<input type="text" class="form-control" placeholder="글 제목" id="title" name="title" minlength="2" maxlength="20" value="{{ board_view.board_title }}" required></p></td>
-                    </tr>
-                    
-                    <tr>
-                      <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="board_content" id="board_cotent" minlength="2" maxlength="1024" style="height: 400px;" required>{{ board_view.board_content }}</textarea></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
-                            첨부파일 : 
-                            <input type="file" name="file_nm">
-                            </p>
-                            {% for file in file_list %}
-                            <p>
-                            <img src="/static/projectapp/board_file/{{ file.fi_name }}">
-                            </p>
-                            {% endfor %}
-                        </td>
-                    </tr>
-                  
-                </tbody>  
-              
-              </table>
-            
-              <div align="right">
->>>>>>> 9bab6c7597c73671a8f146841817b8e98ea4789a
+            <div align="right">
                 <input type ="submit" value ="저장">
                 <input type ="button" value = "뒤로가기" onclick="goBack()">
               </div>

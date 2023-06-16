@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>게시글</title>
+
+        <script type="text/javascript">
+          function goUpdate(board_id,user_id,session_id){
+            if (user_id == session_id){
+              // alert(board_id+'/'+user_id+'/'+session_id);
+              url = '/project/board_update_form/?board_id='+board_id;
+              url = url+"&user_id="+user_id;
+              location.href = url;
+            }
+          }
+
+          function goDelete(board_id,user_id,session_id){
+            if (user_id == session_id){
+              if (confirm("정말 삭제하시겠습니까??") == true){
+                url = '/project/board_delete/?board_id='+board_id;
+                url = url+"&user_id="+user_id;
+                location.href = url;
+              }else{
+                return false;
+              }
+            }
+          }
+
+          function goPrev(board_id){
+            location.href="/project/board_view/?board_id="+(board_id-1);
+          }
+
+          function goNext(board_id){
+            location.href="/project/board_view/?board_id="+(board_id+1);
+          }
+
+
+        </script>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
+        <style>
+          
+          @font-face {
+            font-family: 'SUIT-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .text, h5{
+          font-family:'SUIT-Regular';
+          font-weight: 700;
+        }
+
+        button, textarea{
+          font-family:'SUIT-Regular';
+          font-weight: 500;
+        }
+
+          .comment {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+          }
+          .comment strong {
+            font-weight: bold;
+          }
+          .reply-form {
+            margin-top: 10px;
+          }
+          .reply-form textarea {
+            width: 100%; 
+            height: 100px; 
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+          }
+          .reply-form button[type="submit"],
+          .comment .delete-button {
+            padding: 2px 5px;
+            border-radius: 3px;
+            cursor: pointer;
+          }
+          .reply-form button[type="submit"]:hover,
+          .comment .delete-button:hover {
+            padding: 2px 5px;
+            border-radius: 3px;
+          }
+        </style>
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        {% include "projectapp/include/navbar.html" %}
+        <div class="container marketing">
+
+          
+        <!-- Page header with logo and tagline-->
+        <hr/>
+        <a href="/project/board" style="float:left; font-family:'SUIT-Regular';font-weight: 500;">게시판 가기</a>
+        <header class="py-5  border-bottom mb-4">
+          <div class="container">
+            <h1 class="text" style="text-align:center">{{ board_view.board_title }}</h1>
+            <p class="text" style="text-align:right;">작성자 아이디: {{ board_view.user_id }}</p>
+            <hr/>
+          </div>
+            <br/>
+            {% if  board_view.user_id  == request.session.session_user_id  %}
+            <div style="float:right">
+              <button onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
+              style="font-weight:500;">수정</button>
+              <button onclick="goDelete( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
+              style="font-weight:500;">삭제</button>
+            </div>
+            {% endif %}
+            <table class="table" >
+              <tbody>
+          
+                  <tr>
+                    <td><p  class="text"  name="contentDetail" style="height: 400px; font-weight:500;">
+                      {{ board_view.board_content }}</p></td>
+                  </tr>
+                  <tr>
+                      <td>
+                          {% for file in file_list %}
+                          <p>
+                          <img src="/static/projectapp/board_file/{{ file.fi_name }}">
+                          </p>
+                          {% endfor %}
+                      </td>
+                  </tr>
+                
+              </tbody>  
+            </table>       
+          <h5 style="font-weight: 500;">댓글</h5>
+          <hr/>
+          <div id="comments">
+          </div>
+          <form id="comment-form">
+            <p type="text" id="username" size="10" style="font-family:'SUIT-Regular';font-weight: 500;">아이디: {{ request.session.session_user_id }}</p>
+            <div>
+            <textarea id="comment"rows="4" cols="145" style="font-family:'SUIT-Regular';" placeholder="댓글 쓰기.." required></textarea>
+            <button type="submit" style="float:right;">댓글 작성</button>
+            </div>
+          </form> 
+
+          
+          <script>
+            document.getElementById("comment-form").addEventListener("submit", function(event) {
+              event.preventDefault();
+              var comment = document.getElementById("comment").value;
+              var username = request.session.session_user_id;
+              var newComment = document.createElement("div");
+              newComment.classList.add("comment");
+              newComment.innerHTML = "<strong>" + username + "</strong>: " + comment;
+              var replyButton = document.createElement("button");
+              replyButton.innerHTML = "답글 달기";
+              replyButton.addEventListener("click", function() {
+                var replyForm = document.createElement("div");
+                replyForm.classList.add("reply-form");
+                replyForm.innerHTML = `
+                  <label for="reply-username">아이디:</label>
+                  <input type="text" id="reply-username">
+                  <label for="reply-comment">대댓글:</label>
+                  <textarea id="reply-comment"></textarea>
+                  <button class="reply-button">답글 작성</button>
+                  <button class="delete-button">답글 삭제</button>
+                `;
+                var commentContainer = this.parentNode;
+                commentContainer.appendChild(replyForm);
+                var replyButton = replyForm.querySelector(".reply-button");
+                var deleteButton = replyForm.querySelector(".delete-button");
+        
+                replyButton.addEventListener("click", function() {
+                  var replyComment = replyForm.querySelector("textarea").value;
+                  var replyUsername = replyForm.querySelector("#reply-username").value;
+                  var newReply = document.createElement("div");
+                  newReply.classList.add("comment");
+                  newReply.innerHTML = "<strong>" + replyUsername + "</strong>: " + replyComment;
+                  var deleteButton = document.createElement("button");
+                  deleteButton.classList.add("delete-button");
+                  deleteButton.innerHTML = "답글 삭제";
+                  deleteButton.addEventListener("click", function() {
+                    commentContainer.removeChild(newReply);
+                    commentContainer.removeChild(deleteButton);
+                  });
+                  replyForm.parentNode.insertBefore(newReply, replyForm.nextSibling);
+                  replyForm.parentNode.insertBefore(deleteButton, replyForm.nextSibling);
+        
+                  commentContainer.removeChild(replyForm);
+                });
+        
+                deleteButton.addEventListener("click", function() {
+                  commentContainer.removeChild(this.parentNode);
+                });
+              });
+              newComment.appendChild(replyButton);
+              var commentsContainer = document.getElementById("comments");
+              commentsContainer.insertBefore(newComment, commentsContainer.firstChild);
+              document.getElementById("comment").value = "";
+              document.getElementById("username").value = "";
+            });
+          </script>
+
+    </header>
+
+  </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if board_view.board_id != first_id.board_id %}
+              <li class="page-item">
+                  <a class="page-link" href="#" onclick="goPrev({{board_view.board_id}});" aria-label="Previous">
+                    << 이전 글</a>
+                </li>
+              {% endif %}
+              
+              {% if board_view.board_id != last_id.board_id %}
+                <li class="page-item">
+                    <a class="page-link" href="#" onclick="goNext({{board_view.board_id}});" aria-label="Next">
+                      다음 글 >></a>
+                  </li>
+                {% endif %}
+          </ul>
+      </nav>
+    </div>
+ 
+        <!-- Footer-->
+        {% include "projectapp/include/footer.html" %}
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/static/projectapp/js/scripts.js"></script>
+        <script type="text/javascript"
+        src="/static/projectapp/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

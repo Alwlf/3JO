@@ -139,6 +139,11 @@ def inputpost(request):
                   "projectapp/inputpost.html", 
                   {})
 
+def inputpost2(request):
+    return render(request,      
+                  "projectapp/inputpost2.html", 
+                  {})
+
 ### 로그인
 def idChk(request):
 
@@ -283,7 +288,7 @@ def board(request):
 
     p = Paginator(board_list, num_row)
 
-    #  # Change 10 to the number of items per page you desire
+    #  # Change 5 to the number of items per page you desire
     rows_data = p.get_page(now_page)
     
     start_page = (now_page-1) // num_row * num_row + 1
@@ -307,7 +312,7 @@ def board(request):
         is_next = True
    
     context = {
-        ### 화면에 보여줄 10개의 행을 담고 있는 데이터
+        ### 화면에 보여줄 5개의 행을 담고 있는 데이터
         "board_list" : rows_data,
         ### 페이지 번호의 시작(start_page)~종료(end_page) 범위
         "page_range" : range(start_page, end_page+1),
@@ -333,6 +338,89 @@ def board(request):
                     context,
                   )
 
+def board_hospital(request):
+
+    board_list = Board.getBoardList2()
+   
+    searchField = request.GET.get('searchField','ERROR')
+    search = request.GET.get('searchText','ERROR')
+    
+    if search =="":
+        msg = """
+                <script type='text/javascript'>
+                    alert('다시 입력해주세요.');
+                    location.href = '/project/board_hospital/';
+                </script>
+            """
+        return HttpResponse(msg)
+    if search != "ERROR":
+        board_list = Board.searchBoard2(searchField,search)
+        
+        if not board_list:
+            msg = """
+                <script type='text/javascript'>
+                    alert('검색결과가 없습니다');
+                    location.href = '/project/board_hospital/';
+                </script>
+            """
+            return HttpResponse(msg)
+
+    now_page = request.GET.get("page", "1")
+    now_page = int(now_page)
+    num_row = 5
+
+    p = Paginator(board_list, num_row)
+
+    #  # Change 5 to the number of items per page you desire
+    rows_data = p.get_page(now_page)
+    
+    start_page = (now_page-1) // num_row * num_row + 1
+    end_page = start_page + 3
+    if end_page > p.num_pages :
+        end_page = p.num_pages
+
+    ####################################
+    ###     다음 / 이전 버튼 처리     ###
+    ####################################
+    ### 다음/이전 버튼을 보여줄지 여부 처리
+    is_prev = False # 이전
+    is_next = False # 다음
+
+    ### 이전 버튼 보여줄지 여부 처리
+    if start_page > 1 :
+        is_prev = True
+
+    ### 다음 버튼 보여줄지 여부 처리
+    if end_page < p.num_pages :
+        is_next = True
+   
+    context = {
+        ### 화면에 보여줄 5개의 행을 담고 있는 데이터
+        "board_list" : rows_data,
+        ### 페이지 번호의 시작(start_page)~종료(end_page) 범위
+        "page_range" : range(start_page, end_page+1),
+        ### 이전 버튼 보여줄지 여부
+        "is_prev" : is_prev,
+        ### 다음 버튼 보여줄지 여부
+        "is_next" : is_next,
+        ### 시작번호(start_page)
+        "start_page" : start_page,
+        ### 선택된 페이지 번호가 현재 페이지와 같은지 여부 확인용
+        "now_page" : now_page,
+        
+        ### 검색 유형 (글 제목, 작성자)
+        'searchField' :searchField,
+        ### 검색 내용
+        'searchText':search
+    }
+    
+   
+    return render(request,
+                  "projectapp/board_hospital.html", 
+                #   {"board_list":board_list},
+                    context,
+                  )
+
 ### 게시글 조회
 def boardView(request):
     board_id = request.GET.get("board_id","ERROR")
@@ -344,6 +432,21 @@ def boardView(request):
 
     return render(request,		
                   "projectapp/board_view.html", 
+                  {"board_view":board_view,
+                  "file_list":file_list,
+                  "last_id":last_id,
+                  "first_id":first_id})
+
+def board_view2(request):
+    board_id = request.GET.get("board_id","ERROR")
+
+    first_id = Board.first_post()
+    last_id = Board.last_post()
+    board_view = Board.getBoardView(board_id)
+    file_list = Board.getBoardFileView(board_id)
+
+    return render(request,		
+                  "projectapp/board_view2.html", 
                   {"board_view":board_view,
                   "file_list":file_list,
                   "last_id":last_id,
@@ -418,6 +521,36 @@ def post(request):
             <script type='text/javascript'>
                 alert('로그인을 해주세요!');
                 location.href = '/project/board/';
+            </script>
+        """
+    return HttpResponse(msg)
+
+### 병원 리뷰 게시글 작성
+def post2(request):
+
+    hospital = request.POST.get("title","ERROR")
+    reviewStar = request.POST.get("reviewStar","ERROR")
+    reviewContents = request.POST.get("reviewContents","ERROR")
+    user_id = request.session.get("session_user_id")
+    board_time = DateFormat(datetime.now()).format('Y.m.d H:i')
+    
+    if user_id :
+        
+        board_chk = Board.setBoardInsert2(hospital,reviewStar,reviewContents,user_id,board_time)
+
+        msg = """
+            <script type='text/javascript'>
+                alert('{}');
+                location.href = '/project/board_hospital/';
+            </script>
+        """.format(board_chk)
+    
+    else :
+         
+         msg = """
+            <script type='text/javascript'>
+                alert('로그인을 해주세요!');
+                location.href = '/project/board_hospital/';
             </script>
         """
     return HttpResponse(msg)
