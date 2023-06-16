@@ -66,15 +66,52 @@
             max-width: 720px;
             max-height: 480px;
         }
-        
-    </style>
 
+
+        @font-face {
+          font-family: 'SUITE-Regular';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+          }
+
+        @font-face {
+            font-family: 'GongGothicMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        p{
+          font-family:'SUITE-Regular';
+          font-weight: 700;
+        }
+        h3{
+          font-family:'GongGothicMedium';
+          font-weight: 700;
+        }
+        h4{
+          font-family:'GongGothicMedium';
+          font-weight: 400;
+        }
+        h5{
+          font-family:'GongGothicMedium';
+          font-weight: 300;
+        }
+    </style>
+    
+    <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
+    <link href="/static/projectapp/css/input-file-button.css"
+          rel="stylesheet"
+          type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="/static/projectapp/css/style1.css">
     
 
     <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
-
+    
   </head>
   <body>
     {% include "projectapp/include/navbar.html" %}
@@ -205,33 +242,32 @@
                     uploadedImage.style.display = 'none';
                 }
         </script>
-            </div>
-            <div class="bg-body-tertiary">
-              <table>
-                <td>
-                  <h3 style="text-align: center;">주의사항</h3>
-                  <br/>
-                  <h5 style="font-family: '굴림'; text-align: center;">※ 질병 부위를 최대한 자세히 촬영요망 ※</h5>
-                  <br/>
-                  
-                  <p><h4 style="text-align: center;"><예시></h4><img src="/static/projectapp/images/sickdog.jpg/"></p>
-                  <br/>
-                </td>
-              </table>
-          </div>
-            
-            <div class="filebox preview-image">
-                <!-- <input type="file" id="input-file" class="upload-hidden"> -->
-                <!-- <button id="reset-button" onclick="resetImage()">파일 초기화</button> -->
-                <label style="float:right"><input type="button" value="파일초기화" class="btn btn-light btn-outline-dark btn-primary pull-right" onclick="goreset()"></label>
-                <label style="float:right"><input for="file-upload-form" type="button" value="진단하기" class="btn btn-light btn-outline-dark btn-primary pull-right" onclick=imgs()></label>
-            </div>
-            <!-- <button type="button" class="btn btn-primary btn-lg" sstyle="width:33%;" onclick="javascript:history.go(-1);">파일초기화</button>
-            <button type="button" class="btn btn-primary btn-lg" style="width:33%;" onclick="javascript:location.href='/project/disease_result';">진단하기</button> -->
         </div>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="/static/projectapp/js/script1.js"></script>
-        </form>
+        <div class="bg-body-tertiary">
+          <table>
+            <td>
+              <h3 style="text-align: center; ">주의사항</h3>
+              <br/>
+              <h5 style="text-align: center;">※ 질병 부위를 최대한 자세히 촬영요망 ※</h5>
+              <br/>
+              
+              <p><h4 style="text-align: center;">< 예시 ></h4><img src="/static/projectapp/images/sickdog.jpg/"></p>
+              <br/>
+            </td>
+          </table>
+      </div>
+        
+        <div class="filebox preview-image">
+            <!-- <input type="file" id="input-file" class="upload-hidden"> -->
+            <!-- <button id="reset-button" onclick="resetImage()">파일 초기화</button> -->
+            <label style="float:right"><input type="button" style="font-size: 18px; font-family: 'SUITE-Regular';" value="파일초기화" class="btn btn-light btn-outline-dark btn-primary pull-right" onclick="goreset()"></label>
+            <label style="float:right"><input for="file-upload-form" type="button" style="font-size: 18px; font-family: 'SUITE-Regular';" value="진단하기" class="btn btn-light btn-outline-dark btn-primary pull-right" onclick=imgs()></label>
+        </div>
+        <!-- <button type="button" class="btn btn-primary btn-lg" sstyle="width:33%;" onclick="javascript:history.go(-1);">파일초기화</button>
+        <button type="button" class="btn btn-primary btn-lg" style="width:33%;" onclick="javascript:location.href='/project/disease_result';">진단하기</button> -->
     </div>
-        {% include "projectapp/include/footer.html" %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="/static/projectapp/js/script1.js"></script>
+    </form>
+    {% include "projectapp/include/footer.html" %}
 </html>
     
