@@ -11,6 +11,30 @@
           function goBack(){
             history.go(-1);
           }
+          function fileDelete(fi_num1){
+           
+            if(confirm("정말 삭제하시겠습니까??") == true){
+              // alert(window.location.href);
+              fi_num= document.getElementById(fi_num1);
+       
+              
+              fm = document.getElementById("fm");
+
+              for(i=0; i<fm.fi_num_check.length; i++){
+                fm.fi_num_check[i].checked = true;
+                // if(fm.fi_num_check[i].value == fi_num1){
+                //     fm.fi_num_check[i].checked=true;
+                //     alert(fm.fi_num_check[i].checked);
+                //     break;
+                // }
+              }
+
+              fi_num.style.display = "none";
+            }
+            else{
+              return false;
+            }
+          }
         </script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
@@ -55,7 +79,7 @@
       <!-- Responsive navbar-->
         {% include "projectapp/include/navbar.html" %}
         <!-- Page header with logo and tagline-->
-        <form name="fm" id="fm" method="post" action="/project/board_update/">
+        <form name="fm" id="fm" method="post" action="/project/board_update/"  enctype="multipart/form-data">
           <input type="hidden" name="board_id" value="{{ board_view.board_id }}">
           <input type="hidden" name="user_id" value="{{ board_view.user_id }}">
           {% csrf_token %}
@@ -81,14 +105,22 @@
                   <tr>
                       <td>
                           <p>
-                          첨부파일 : 
-                          <input type="file" name="file_nm">
+                            첨부파일 : 
+                            <input type="file" name="file_nm" id="file_nm">
                           </p>
+                        </td>
+                  </tr>
+                  <tr?>
+                        <td>
                           {% for file in file_list %}
-                          <p>
+                          <p id ="{{ file.fi_num }}">
                            <img src="/static/projectapp/board_file/{{ file.fi_name }}">
+                           
+                           <input type="reset" value="X" onclick="fileDelete('{{file.fi_num}}')">
                           </p>
+                            <!-- <input type="checkbox" name = "fi_num_check" value="{{ file.fi_num }}" > -->
                           {% endfor %}
+                   
                       </td>
                   </tr>
                 

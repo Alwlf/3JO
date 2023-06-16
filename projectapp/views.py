@@ -216,8 +216,6 @@ def login_chk(request):
             </script>
     """.format(user_view.get("user_name"),url)
 
-
-    
     return HttpResponse(msg)
 
 
@@ -347,75 +345,6 @@ def boardView(request):
                   "file_list":file_list})
 
 
-### 게시글 수정 폼
-def boardUpdateForm(request):
-
-    board_id = request.GET.get("board_id","ERROR")
-
-
-    board_view = Board.getBoardView(board_id)
-    file_list = Board.getBoardFileView(board_id)
-
-    return render(request,"projectapp/board_update_form.html",
-                  {"board_view":board_view,
-                   "file_list":file_list})
-
-### 게시글 수정 
-def boardUpdate(request):
-    board_id = request.POST.get("board_id",'')
-    board_title = request.POST.get("board_title",'')
-    board_content = request.POST.get("board_content",'')
-    user_id = request.POST.get("user_id",'')
-
-    update_chk = Board.setBoardUpdate(board_id,board_title,board_content)
-
-    msg = """
-            <script type='text/javascript'>
-                alert('{}');
-                location.href = '/project/board/';
-            </script>
-    """.format(update_chk)
-    return HttpResponse(msg)
-
-
-### 게시글 삭제
-def boardDelete(request):
-    try:
-
-        board_id = request.GET.get("board_id","ERROR")
-        user_id = request.GET.get("user_id","ERROR")
-        
-        file_view = Board.getBoardFileView(board_id)
-
-        delete_chk = Board.setBoardDelete(board_id)
-        
-
-        for ee in file_view:
-            
-            print(path+'/static/projectapp/board_file/'+ee['fi_name'])
-            os.remove(path+'/static/projectapp/board_file/'+ee['fi_name'])
-
-    except:
-            msg = """
-                <script type='text/javascript'>
-                    alert('잘못된 접근입니다.!!');
-                    location.href = '/project/board/';
-                </script>
-            """
-            return HttpResponse(msg)
-
-    msg = """
-            <script type='text/javascript'>
-                alert('정상적으로 삭제되었습니다!');
-                location.href='/project/board/';
-            </script>
-    """
-    return HttpResponse(msg)
-
-
-
-
-
 ### 게시글 작성
 def post(request):
 
@@ -487,6 +416,115 @@ def post(request):
             </script>
         """
     return HttpResponse(msg)
+
+
+### 게시글 수정 폼
+def boardUpdateForm(request):
+
+    board_id = request.GET.get("board_id","ERROR")
+ 
+
+    board_view = Board.getBoardView(board_id)
+    file_list = Board.getBoardFileView(board_id)
+
+    return render(request,"projectapp/board_update_form.html",
+                  {"board_view":board_view,
+                   "file_list":file_list})
+
+### 게시글 수정 
+def boardUpdate(request):
+    board_id = request.POST.get("board_id",'')
+    board_title = request.POST.get("board_title",'')
+    board_content = request.POST.get("board_content",'')
+    user_id = request.POST.get("user_id",'')
+    
+    fi_num = request.POST.get("fi_num",'')
+    
+    print(request.POST)
+
+    if request.FILES.get("file_nm") is not None :
+            file_nm = request.FILES.get("file_nm")
+    else :
+            file_nm = ""
+    
+    if file_nm != "" :
+            ###########[ File Upload 처리하기 ]##########
+            ### - 파일 업로드 폴더 위치 지정 및 물리적 위치 생성하기
+            upload_dir = "./projectapp/static/projectapp/board_file/"
+            download_dir = "./projectapp/static/projectapp/board_file/"
+
+            ### 파일(이미지)을 페이지에 보여줄 경우 : 폴더 전체 경로 지정
+            img_dir = "/static/projectapp/board_file/"
+
+            ### File_Uitl 클래스 생성하기
+            fu = File_Util()
+
+            ### 초기값 셋팅(설정)하기
+            fu.setUpload(file_nm, upload_dir, img_dir, download_dir)
+
+            ### 파일 업로드 실제 수행하기*****
+            fu.fileUpload()
+
+            ########## [ 업로드된 파일 정보 조회 ] #########
+            ### 파일 사이즈
+            file_size = fu.file_size
+            ### 업로드된 파일명
+            filename = fu.filename
+            ### <img> 태그에 넣을 src 전체 경로
+            img_full_name = fu.img_full_name
+            ### (DB 저장용) 다운로드 전체경로+파일명
+            download_full_name = fu.download_full_name
+
+            fileInsert_chk = Board.setFileInsert(filename,board_id)
+
+    update_chk = Board.setBoardUpdate(board_id,board_title,board_content)
+
+    # setFileDelete(file_nm)
+    
+    msg = """
+            <script type='text/javascript'>
+                alert('{}');
+                location.href = '/project/board/';
+            </script>
+    """.format(update_chk)
+    return HttpResponse(msg)
+
+
+### 게시글 삭제
+def boardDelete(request):
+    try:
+
+        board_id = request.GET.get("board_id","ERROR")
+        user_id = request.GET.get("user_id","ERROR")
+        
+        file_view = Board.getBoardFileView(board_id)
+
+        delete_chk = Board.setBoardDelete(board_id)
+        
+
+        for ee in file_view:
+            if os.path.exists(path+'/static/projectapp/board_file/'+ee['fi_name']) :
+                # print(path+'/static/projectapp/board_file/'+ee['fi_name'])
+                os.remove(path+'/static/projectapp/board_file/'+ee['fi_name'])
+
+    except:
+            msg = """
+                <script type='text/javascript'>
+                    alert('잘못된 접근입니다.!!');
+                    location.href = '/project/board/';
+                </script>
+            """
+            return HttpResponse(msg)
+
+    msg = """
+            <script type='text/javascript'>
+                alert('정상적으로 삭제되었습니다!');
+                location.href='/project/board/';
+            </script>
+    """
+    return HttpResponse(msg)
+
+
 
 # 아이디 찾기
 def search_id(request):

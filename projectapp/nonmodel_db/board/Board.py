@@ -47,6 +47,13 @@ def setFileInsert(file_name,board_id):
     """.format(file_name,board_id)
     return db_sql.setCUD(sql)
 
+def setFileDelete(fi_num):
+    sql ="""
+        Delete 
+        From file 
+        Where fi_num = {};
+    """.format(fi_num)
+    return db_sql.setCUD(sql)
 
 
 ### 게시글 검색
