@@ -17,6 +17,18 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
         <style>
+          @font-face {
+            font-family: 'SUIT-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        h1, p, textarea, input{
+          font-family:'SUIT-Regular';
+          font-weight: 500;
+        }
+
           .comment {
             margin-bottom: 10px;
             padding: 10px;
@@ -49,33 +61,28 @@
           }
         </style>
     </head>
-    <body>
-       
-      
+    <body>      
       <!-- Responsive navbar-->
         {% include "projectapp/include/navbar.html" %}
-        <!-- Page header with logo and tagline-->
-        {% comment %} <link href="/static/projectapp/css/carousel.css" rel="stylesheet"> {% endcomment %}
 
-        <div class="container marketing"> 
+        <header class="py-5 bg-light border-bottom mb-4">
+          <div class="container">
+              <div class="text-center my-5">
+                  <h1 class="fw-bolder" style="font-weight: 500;">게시글 수정하기</h1>
+              </div>
+          </div>
+      </header>
+
           <form name="fm" id="fm" method="post" action="/project/board_update/">
             <input type="hidden" name="board_id" value="{{ board_view.board_id }}">
             <input type="hidden" name="user_id" value="{{ board_view.user_id }}">
             {% csrf_token %}
-
-            <header class="py-5 bg-light border-bottom mb-4">
-              <div class="container">
-                  <div class="text-center my-5">
-                      <h1 class="fw-bolder">게시글 수정하기</h1>
-                  </div>
-              </div>
-          </header>
+            <div class="container">    
               <table class="table table-hover">
                 <tbody>
                   
                     <tr>
                       <td><p>글 제목:<input type="text" class="form-control" placeholder="글 제목" id="title" name="title" minlength="2" maxlength="20" value="{{ board_view.board_title }}" required></p></td>
-                      {% comment %} <td><p>글 졔목: <input type="text" name="board_title" value="{{ board_view.board_title }}" minlength="2" maxlength="20" required></p></td> {% endcomment %}
                     </tr>
                     
                     <tr>
@@ -96,15 +103,17 @@
                     </tr>
                   
                 </tbody>  
-        
+              
               </table>
-              <input type ="submit" value ="저장">
-              <input type ="button" value = "뒤로가기" onclick="goBack()">
-            </div>    
+            
+              <div align="right">
+                <input type ="submit" value ="저장">
+                <input type ="button" value = "뒤로가기" onclick="goBack()">
+              </div>
+            </div>
                   
             </form>
 
-        </div>
         <!-- Footer-->
         {% include "projectapp/include/footer.html" %}
         <!-- Bootstrap core JS-->
