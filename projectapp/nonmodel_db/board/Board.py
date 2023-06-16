@@ -76,6 +76,26 @@ def getBoardView(board_id):
     """.format(board_id)
     return db_sql.getView(sql)
 
+### 첫 번째 게시글 번호 조회 
+def first_post():
+    # 구문 작성
+    sql="""
+        Select board_id
+        From Board 
+        ORDER BY board_id LIMIT 1"""
+
+    return db_sql.getView(sql)
+
+### 마지막 게시글 번호 조회 
+def last_post():
+    # 구문 작성
+    sql="""
+        Select board_id
+        From Board 
+        ORDER BY board_id DESC LIMIT 1"""
+
+    return db_sql.getView(sql)
+
 ### 해당 게시글 첨부파일 가져오기
 def getBoardFileView(board_id):
     sql="""

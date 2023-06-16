@@ -336,13 +336,17 @@ def board(request):
 def boardView(request):
     board_id = request.GET.get("board_id","ERROR")
 
+    first_id = Board.first_post()
+    last_id = Board.last_post()
     board_view = Board.getBoardView(board_id)
     file_list = Board.getBoardFileView(board_id)
 
     return render(request,		
                   "projectapp/board_view.html", 
                   {"board_view":board_view,
-                  "file_list":file_list})
+                  "file_list":file_list,
+                  "last_id":last_id,
+                  "first_id":first_id})
 
 
 ### 게시글 작성

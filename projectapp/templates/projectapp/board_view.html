@@ -29,6 +29,10 @@
             }
           }
 
+          function goPrev(board_id){
+            location.href="/project/board_view/?board_id="+(board_id-1);
+          }
+
           function goNext(board_id){
             location.href="/project/board_view/?board_id="+(board_id+1);
           }
@@ -48,9 +52,14 @@
             font-style: normal;
         }
 
-        .text, h5, button{
+        .text, h5{
           font-family:'SUIT-Regular';
           font-weight: 700;
+        }
+
+        button, textarea, a{
+          font-family:'SUIT-Regular';
+          font-weight: 500;
         }
 
           .comment {
@@ -93,9 +102,9 @@
           
         <!-- Page header with logo and tagline-->
         <hr/>
+        <a href="/project/board" style="float:left">게시판 가기</a>
         <header class="py-5  border-bottom mb-4">
           <div class="container">
-            
             <h1 class="text" style="text-align:center">{{ board_view.board_title }}</h1>
             <p class="text" style="text-align:right;">작성자 아이디: {{ board_view.user_id }}</p>
             <hr/>
@@ -135,8 +144,8 @@
           <form id="comment-form">
             <p type="text" id="username" size="10" style="font-family:'SUIT-Regular';font-weight: 500;">아이디: {{ request.session.session_user_id }}</p>
             <div>
-            <textarea id="comment"rows="4" cols="145" style="font-family:'SUIT-Regular';font-weight: 500;" placeholder="댓글 쓰기.." required></textarea>
-            <button type="submit" style="float:right; font-weight:500;">댓글 작성</button>
+            <textarea id="comment"rows="4" cols="145" style="font-family:'SUIT-Regular';" placeholder="댓글 쓰기.." required></textarea>
+            <button type="submit" style="float:right;">댓글 작성</button>
             </div>
           </form> 
 
@@ -201,26 +210,24 @@
     </header>
 
   </div>
-    <div class="row g-5" style="position: absolute;left: 50%;transform: translateX(-50%);">
-      <nav aria-label="Page navigation" style="text-align:center">
-          <ul class="pagination">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if board_view.board_id != first_id.board_id %}
               <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">이전글</span>
-                  </a>
-              </li>
-
-              <li class="page-item">
-                  <a class="page-link" href="#" onclick="goNext({{board_view.board_id}});" aria-label="Next">
-                      <span aria-hidden="true">&raquo; </span>
-                      <span class="sr-only">다음글</span>
-                  </a>
-              </li>
+                  <a class="page-link" href="#" onclick="goPrev({{board_view.board_id}});" aria-label="Previous">
+                    << 이전 글</a>
+                </li>
+              {% endif %}
+              
+              {% if board_view.board_id != last_id.board_id %}
+                <li class="page-item">
+                    <a class="page-link" href="#" onclick="goNext({{board_view.board_id}});" aria-label="Next">
+                      다음 글 >></a>
+                  </li>
+                {% endif %}
           </ul>
       </nav>
     </div>
-    <br/>
  
         <!-- Footer-->
         {% include "projectapp/include/footer.html" %}

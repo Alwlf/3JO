@@ -84,11 +84,3 @@ def search_user_pw(user_id,user_email):
 
     return db_sql.getView(sql)
 
-def last_post():
-    # 구문 작성
-    sql="""
-        Select board_id
-        From board 
-        ORDER BY board_id DESC LIMIT 1"""
-
-    return db_sql.getView(sql)
