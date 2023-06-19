@@ -10,8 +10,7 @@
         <script type="text/javascript">
           function goUpdate(board_id,user_id,session_id){
             if (user_id == session_id){
-              // alert(board_id+'/'+user_id+'/'+session_id);
-              url = '/project/board_update_form/?board_id='+board_id;
+              url = '/project/board_update_form2/?board_id='+board_id;
               url = url+"&user_id="+user_id;
               location.href = url;
             }
@@ -20,7 +19,7 @@
           function goDelete(board_id,user_id,session_id){
             if (user_id == session_id){
               if (confirm("정말 삭제하시겠습니까??") == true){
-                url = '/project/board_delete/?board_id='+board_id;
+                url = '/project/board_delete2/?board_id='+board_id;
                 url = url+"&user_id="+user_id;
                 location.href = url;
               }else{
@@ -57,7 +56,12 @@
           font-weight: 700;
         }
 
-        button, textarea{
+        h1, p{
+          font-family:'SUIT-Regular';
+          font-weight: 500;
+        }
+
+        button, textarea, input{
           font-family:'SUIT-Regular';
           font-weight: 500;
         }
@@ -97,47 +101,41 @@
     <body>
         <!-- Responsive navbar-->
         {% include "projectapp/include/navbar.html" %}
+        
         <div class="container marketing">
 
           
         <!-- Page header with logo and tagline-->
         <hr/>
-        <a href="/project/board" style="float:left; font-family:'SUIT-Regular';font-weight: 500;">게시판 가기</a>
+        <a href="/project/board_hospital" style="float:left; font-family:'SUIT-Regular'; font-size:20px; font-weight: 500;text-decoration:none;">리뷰 목록 가기</a>
+        <link rel="stylesheet" type="text/css" media="screen" href="static/projectapp/css/comment.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+        
         <header class="py-5  border-bottom mb-4">
           <div class="container">
-            <h1 class="text" style="text-align:center">{{ board_view.board_title }}</h1>
+            <h1 class="text" style="text-align:center">{{ board_view.hospital }}</h1>
+            <p class="lead mb-0" style="text-align:center" >{{ board_view.address }}</p>
             <p class="text" style="text-align:right;">작성자 아이디: {{ board_view.user_id }}</p>
             <hr/>
           </div>
-            <br/>
             {% if  board_view.user_id  == request.session.session_user_id  %}
             <div style="float:right">
-              <button onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
-              style="font-weight:500;">수정</button>
-              <button onclick="goDelete( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
-              style="font-weight:500;">삭제</button>
+              <input type="button" onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
+              style="font-weight:500;" value="수정">
+              <input type="button" onclick="goDelete( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
+              style="font-weight:500;" value="삭제">
             </div>
             {% endif %}
             <table class="table" >
               <tbody>
-          
                   <tr>
-                    <td><p  class="text"  name="contentDetail" style="height: 400px; font-weight:500;">
+                    <td><p  class="text"  name="contentDetail" style="height: 100px; font-weight:500; font-size:20px">
+                      별점 : {% for i in "x"|rjust:board_view.reviewstar %}★{% endfor %}<br/><br/>
                       {{ board_view.board_content }}</p></td>
                   </tr>
-                  <tr>
-                      <td>
-                          {% for file in file_list %}
-                          <p>
-                          <img src="/static/projectapp/board_file/{{ file.fi_name }}">
-                          </p>
-                          {% endfor %}
-                      </td>
-                  </tr>
-                
               </tbody>  
             </table>       
-          <h5 style="font-weight: 500;">댓글</h5>
+          {% comment %} <h5 style="font-weight: 500;">댓글</h5>
           <hr/>
           <div id="comments">
           </div>
@@ -145,10 +143,30 @@
             <p type="text" id="username" size="10" style="font-family:'SUIT-Regular';font-weight: 500;">아이디: {{ request.session.session_user_id }}</p>
             <div>
             <textarea id="comment"rows="4" cols="145" style="font-family:'SUIT-Regular';" placeholder="댓글 쓰기.." required></textarea>
-            <button type="submit" style="float:right;">댓글 작성</button>
-            </div>
+            <input type="submit" style="float:right;" value="댓글 작성">
+            </div> {% endcomment %}
           </form> 
 
+          <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://project-rotifr7ebo.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          
           
           <script>
             document.getElementById("comment-form").addEventListener("submit", function(event) {

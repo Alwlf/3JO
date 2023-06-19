@@ -341,7 +341,7 @@ def board(request):
 def board_hospital(request):
 
     board_list = Board.getBoardList2()
-   
+    print(board_list)
     searchField = request.GET.get('searchField','ERROR')
     search = request.GET.get('searchText','ERROR')
     
@@ -425,9 +425,9 @@ def board_hospital(request):
 def boardView(request):
     board_id = request.GET.get("board_id","ERROR")
 
-    first_id = Board.first_post()
-    last_id = Board.last_post()
-    board_view = Board.getBoardView(board_id)
+    first_id = Board.first_post('board')
+    last_id = Board.last_post('board')
+    board_view = Board.getBoardView('board',board_id)
     file_list = Board.getBoardFileView(board_id)
 
     return render(request,		
@@ -437,18 +437,16 @@ def boardView(request):
                   "last_id":last_id,
                   "first_id":first_id})
 
-def board_view2(request):
+def boardview2(request):
     board_id = request.GET.get("board_id","ERROR")
 
-    first_id = Board.first_post()
-    last_id = Board.last_post()
-    board_view = Board.getBoardView(board_id)
-    file_list = Board.getBoardFileView(board_id)
+    first_id = Board.first_post('board_hospital')
+    last_id = Board.last_post('board_hospital')
+    board_view = Board.getBoardView('board_hospital',board_id)
 
     return render(request,		
                   "projectapp/board_view2.html", 
                   {"board_view":board_view,
-                  "file_list":file_list,
                   "last_id":last_id,
                   "first_id":first_id})
 
@@ -529,6 +527,7 @@ def post(request):
 def post2(request):
 
     hospital = request.POST.get("title","ERROR")
+    address =  request.POST.get("member_addr","ERROR")
     reviewStar = request.POST.get("reviewStar","ERROR")
     reviewContents = request.POST.get("reviewContents","ERROR")
     user_id = request.session.get("session_user_id")
@@ -536,7 +535,7 @@ def post2(request):
     
     if user_id :
         
-        board_chk = Board.setBoardInsert2(hospital,reviewStar,reviewContents,user_id,board_time)
+        board_chk = Board.setBoardInsert2(hospital,address,reviewStar,reviewContents,user_id,board_time)
 
         msg = """
             <script type='text/javascript'>
@@ -562,12 +561,22 @@ def boardUpdateForm(request):
     board_id = request.GET.get("board_id","ERROR")
  
 
-    board_view = Board.getBoardView(board_id)
+    board_view = Board.getBoardView('board',board_id)
     file_list = Board.getBoardFileView(board_id)
 
     return render(request,"projectapp/board_update_form.html",
                   {"board_view":board_view,
                    "file_list":file_list})
+
+def boardUpdateForm2(request):
+
+    board_id = request.GET.get("board_id","ERROR")
+ 
+
+    board_view = Board.getBoardView('board_hospital',board_id)
+
+    return render(request,"projectapp/board_update_form2.html",
+                  {"board_view":board_view})
 
 ### 게시글 수정 
 def boardUpdate(request):
@@ -658,6 +667,31 @@ def boardDelete(request):
             <script type='text/javascript'>
                 alert('정상적으로 삭제되었습니다!');
                 location.href='/project/board/';
+            </script>
+    """
+    return HttpResponse(msg)
+
+def boardDelete2(request):
+    try:
+
+        board_id = request.GET.get("board_id","ERROR")
+
+        delete_chk = Board.setBoardDelete2(board_id)
+        
+
+    except:
+            msg = """
+                <script type='text/javascript'>
+                    alert('잘못된 접근입니다.!!');
+                    location.href = '/project/board_hospital/';
+                </script>
+            """
+            return HttpResponse(msg)
+
+    msg = """
+            <script type='text/javascript'>
+                alert('정상적으로 삭제되었습니다!');
+                location.href='/project/board_hospital/';
             </script>
     """
     return HttpResponse(msg)

@@ -46,15 +46,15 @@ def setBoardInsert(board_title,board_content,user_id,board_time) :
 
     return db_sql.setCUD(sql)
 
-def setBoardInsert2(hospital,reviewStar,reviewContents,user_id,board_time) :
+def setBoardInsert2(hospital,address,reviewStar,reviewContents,user_id,board_time) :
     
     sql = """
             Insert Into board_hospital (
-                hospital,reviewStar, board_content, user_id,board_time
+                hospital,address,reviewStar, board_content, user_id,board_time
             ) Values (
-                '{}', '{}', '{}','{}','{}'
+                '{}', '{}', '{}', '{}','{}','{}'
             )
-    """.format(hospital,reviewStar,reviewContents,user_id,board_time)
+    """.format(hospital,address,reviewStar,reviewContents,user_id,board_time)
 
     return db_sql.setCUD(sql)
 
@@ -100,30 +100,30 @@ def searchBoard2(searchField,search):
 
 
 ### 게시글아이디로 해당하는 값들 불러오기 (board_view)
-def getBoardView(board_id):
+def getBoardView(table,board_id):
     sql="""
         Select * 
-        From Board
+        From {}
         Where board_id = {};
-    """.format(board_id)
+    """.format(table,board_id)
     return db_sql.getView(sql)
 
 ### 첫 번째 게시글 번호 조회 
-def first_post():
+def first_post(table):
     # 구문 작성
-    sql="""
+    sql=f"""
         Select board_id
-        From Board 
+        From {table} 
         ORDER BY board_id LIMIT 1"""
 
     return db_sql.getView(sql)
 
 ### 마지막 게시글 번호 조회 
-def last_post():
+def last_post(table):
     # 구문 작성
-    sql="""
+    sql=f"""
         Select board_id
-        From Board 
+        From {table}  
         ORDER BY board_id DESC LIMIT 1"""
 
     return db_sql.getView(sql)
@@ -169,3 +169,14 @@ def setBoardDelete(board_id):
     
     return db_sql.setCUD2(sql)
 
+def setBoardDelete2(board_id):
+    
+    sql = f"""
+
+        Delete
+        From board_hospital
+        Where board_id = {board_id};
+
+    """
+    
+    return db_sql.setCUD2(sql)

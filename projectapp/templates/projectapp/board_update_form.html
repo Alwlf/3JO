@@ -88,14 +88,6 @@
     <body>      
       <!-- Responsive navbar-->
         {% include "projectapp/include/navbar.html" %}
-<<<<<<< HEAD
-        <!-- Page header with logo and tagline-->
-        <form name="fm" id="fm" method="post" action="/project/board_update/"  enctype="multipart/form-data">
-          <input type="hidden" name="board_id" value="{{ board_view.board_id }}">
-          <input type="hidden" name="user_id" value="{{ board_view.user_id }}">
-          {% csrf_token %}
-=======
->>>>>>> 9bab6c7597c73671a8f146841817b8e98ea4789a
 
         <header class="py-5 bg-light border-bottom mb-4">
           <div class="container">
@@ -112,7 +104,9 @@
             <div class="container">    
               <table class="table table-hover">
                 <tbody>
-                  
+                  <tr>
+                    <td><textarea type="text" class="form-control" style="font-size:20px" placeholder="글 제목" id="title" name="title" minlength="2" maxlength="20" required>{{board_view.board_title}}</textarea></td>
+                  </tr>
                   <tr>
                     <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="board_content" id="board_cotent" minlength="2" maxlength="1024" style="height: 400px;" required>{{ board_view.board_content }}</textarea></td>
                   </tr>

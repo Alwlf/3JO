@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>게시글 수정</title>
+
+        <script type="text/javascript">
+          function goBack(){
+            history.go(-1);
+          }
+          function fileDelete(fi_num1){
+           
+            if(confirm("정말 삭제하시겠습니까??") == true){
+              // alert(window.location.href);
+              fi_num= document.getElementById(fi_num1);
+       
+              
+              fm = document.getElementById("fm");
+
+              for(i=0; i<fm.fi_num_check.length; i++){
+                fm.fi_num_check[i].checked = true;
+                // if(fm.fi_num_check[i].value == fi_num1){
+                //     fm.fi_num_check[i].checked=true;
+                //     alert(fm.fi_num_check[i].checked);
+                //     break;
+                // }
+              }
+
+              fi_num.style.display = "none";
+            }
+            else{
+              return false;
+            }
+          }
+
+          
+  
+          function findAddr(){
+            new daum.Postcode({
+                  oncomplete: function(data) {
+                    
+                    console.log(data);
+
+                    
+                      // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                      // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                      // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                      var roadAddr = data.roadAddress; // 도로명 주소 변수
+                      var jibunAddr = data.jibunAddress; // 지번 주소 변수
+                      // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                      document.getElementById('member_post').value = data.zonecode;
+                      if(roadAddr !== ''){
+                          document.getElementById("member_addr").value = roadAddr;
+                      } 
+                      else if(jibunAddr !== ''){
+                          document.getElementById("member_addr").value = jibunAddr;
+                      }
+                  }
+              }).open();
+          }
+
+          function check(){
+            var size = document.getElementsByName("reviewStar").length;
+            var value = '';
+            for(var i = 0; i < size; i++){
+                if(document.getElementsByName("reviewStar")[i].checked == true){
+                  value = document.getElementsByName("reviewStar")[i].value;
+                  break;
+                }
+            }
+            if(value==''){
+              alert('별점을 입력해주세요')
+            }
+            
+          }
+        </script>
+        <!-- 주소 찾기 -->
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <!-- 별점 -->
+        <link href="/static/projectapp/css/star.css" rel="stylesheet"/>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
+        <style>
+          @font-face {
+            font-family: 'SUIT-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        h1, p, textarea, input{
+          font-family:'SUIT-Regular';
+          font-weight: 500;
+        }
+
+          .comment {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+          }
+          .comment strong {
+            font-weight: bold;
+          }
+          .reply-form {
+            margin-top: 10px;
+          }
+          .reply-form textarea {
+            width: 100%; 
+            height: 100px; 
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+          }
+          .reply-form button[type="submit"],
+          .comment .delete-button {
+            padding: 2px 5px;
+            border-radius: 3px;
+            cursor: pointer;
+          }
+          .reply-form button[type="submit"]:hover,
+          .comment .delete-button:hover {
+            padding: 2px 5px;
+            border-radius: 3px;
+          }
+        </style>
+    </head>
+    <body>      
+      <!-- Responsive navbar-->
+        {% include "projectapp/include/navbar.html" %}
+
+        <header class="py-5 bg-light border-bottom mb-4">
+          <div class="container">
+              <div class="text-center my-5">
+                  <h1 class="fw-bolder" style="font-weight: 500;">게시글 수정하기</h1>
+              </div>
+          </div>
+      </header>
+
+          <form class="mb-3" name="myform" id="myform" method="post" action="/project/board_update/">
+            <input type="hidden" name="board_id" value="{{ board_view.board_id }}">
+            <input type="hidden" name="user_id" value="{{ board_view.user_id }}">
+            {% csrf_token %}
+            <div class="container">     
+              <input type="text" class="form-control" style="font-size:20px; width:600px;" placeholder="병원 이름" 
+              id="title" name="title" minlength="2" maxlength="20" value={{board_view.hospital}} required>   
+              <br/>
+              <input id="member_addr" name="member_addr" type="text" value={{board_view.address}} size=40 readonly> 
+              <input id="member_post" type="hidden" size=10 readonly>
+              <input type="button" onclick="findAddr()" value="주소 찾기">
+              <div>
+              <fieldset>
+                <span class="text-bold">별점을 선택해주세요</span>
+                <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                  for="rate1">★</label>
+                <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                  for="rate2">★</label>
+                <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                  for="rate3">★</label>
+                <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                  for="rate4">★</label>
+                <input type="radio" name="reviewStar" value="1" id="rate5" required><label
+                  for="rate5">★</label>
+              </fieldset>
+                <textarea class="col-auto form-control" type="text" id="reviewContents" name="reviewContents"
+                      placeholder="리뷰를 입력해주세요." required>{{board_view.board_content}}</textarea>
+              </div>
+            </form>
+            <br/> 
+              <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6"></div>
+                <div class="col-md-3" style="padding-left: 110px;">
+                <input type="submit" onclick="check()" class="btn btn-light btn-primary pull-right" style="border: 1px solid; height:40px" value="업로드하기">
+                <input type="button" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" value="취소하기" onclick="goBack()">
+                </div>
+                </div>
+            </div>
+                  
+            </form>
+            
+        <!-- Footer-->
+        {% include "projectapp/include/footer.html" %}
+        <!-- Bootstrap core JS-->
+        {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
+        <!-- Core theme JS-->
+        {% comment %} <script src="/static/projectapp/js/scripts.js"></script>
+        <script type="text/javascript"
+        src="/static/projectapp/js/bootstrap.bundle.min.js"></script> {% endcomment %}
+</body>
+</html>

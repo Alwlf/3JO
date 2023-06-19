@@ -80,7 +80,7 @@
                     {% for d in board_list %}
                     <tr>
                       <td style="padding-left: 50px; font-size: 20px;">{{d.board_id}}</td>
-                      <td style="padding-left: 80px; font-size: 20px;"><a href ="javascript:goView('{{ d.board_id }}'); ">{{d.board_title}}</a></td>
+                      <td style="padding-left: 80px; font-size: 20px;"><a href ="javascript:goView('{{ d.board_id }}');" style="text-decoration:none;">{{d.board_title}}</a></td>
                       <td style="padding-left: 80px; font-size: 20px;">{{d.user_id}}</td>
                       <td style="font-size: 20px;">{{ d.board_time }}</td>
                     </tr>
