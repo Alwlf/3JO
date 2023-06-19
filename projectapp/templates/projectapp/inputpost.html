@@ -37,9 +37,18 @@
           font-family: 'SUITE-Regular';
           font-weight: 700;
         }
+
+            
+        .hidden {
+            display: none;
+        }
+
+
     </style>
 
     <script type="text/javascript">
+      var currentDiv = 1;
+      var totalDivs = 5;
         function goBack(){
             history.go(-1);
         }
@@ -48,6 +57,14 @@
             fm = document.getElementById("fm");
             fm.action ='/project/board/';
             fm.submit();
+        }
+        function showNextDiv() {
+           
+            if (currentDiv < totalDivs) {
+                var div = document.getElementById("div" + currentDiv);
+                div.style.display = "block";
+                currentDiv++;
+            }
         }
 
       </script>
@@ -80,10 +97,29 @@
 
             <tr>
                 <td>
-                    <p>
-                    첨부파일 : 
-                    <input type="file" name="file_nm" id="file_nm">
-                    </p>
+                    <button type="button" onclick="showNextDiv()" style="float:right;">추가하기</button>
+                    <div >
+                      첨부파일 :
+                      <input type="file" name="fi_name" id="fi_name" class="files form-control form-control-sm"> <!-- 사진 여러개 multiple -->
+                    </div> 
+                    <div id="div1" class="hidden">
+                      <div>첨부파일 :
+                        <input type="file" name="fi_name" id="fi_name" class="files form-control form-control-sm">
+                      </div>
+                    </div> 
+                    <div id="div2" class="hidden">
+                      첨부파일 :
+                      <input type="file" name="fi_name" id="fi_name" class="files form-control form-control-sm" > <!-- 사진 여러개 multiple -->
+                    </div> 
+                    <div id="div3"  class="hidden">
+                      첨부파일 :
+                      <input type="file" name="fi_name" id="fi_name" class="files form-control form-control-sm"> <!-- 사진 여러개 multiple -->
+                    </div> 
+                    <div id="div4" class="hidden">
+                      첨부파일 :
+                      <input type="file" name="fi_name" id="fi_name" class="files form-control form-control-sm"> <!-- 사진 여러개 multiple -->
+                    </div> 
+                    
                 </td>
             </tr>
         </tbody>  

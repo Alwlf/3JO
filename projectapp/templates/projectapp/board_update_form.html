@@ -12,24 +12,33 @@
             history.go(-1);
           }
           function fileDelete(fi_num1){
-           
+            
             if(confirm("정말 삭제하시겠습니까??") == true){
-              // alert(window.location.href);
-              fi_num= document.getElementById(fi_num1);
-       
+              fi_num_p= document.getElementById(fi_num1);
               
-              fm = document.getElementById("fm");
+              fi_num = document.getElementsByName("fi_num");
 
-              for(i=0; i<fm.fi_num_check.length; i++){
-                fm.fi_num_check[i].checked = true;
-                // if(fm.fi_num_check[i].value == fi_num1){
-                //     fm.fi_num_check[i].checked=true;
-                //     alert(fm.fi_num_check[i].checked);
-                //     break;
-                // }
+              for(i=0; i<fi_num.length;i++){
+          
+                if(fi_num[i].value == fi_num1){
+                  fi_num[i].value = "0";
+                  break;
+                }
               }
+    
 
-              fi_num.style.display = "none";
+              // document.getElementsByName("fi_name");
+              // fm = document.getElementById("fm");
+
+              // for(i=0; i<fm.fi_num_check.length; i++){
+              //   fm.fi_num_check[i].checked = true;
+              //   if(fm.fi_num_check[i].value == fi_num1){
+              //       fm.fi_num_check[i].checked=true;
+              //       alert(fm.fi_num_check[i].checked);
+              //       break;
+              //   }
+              // }
+              fi_num_p.style.display = "none";
             }
             else{
               return false;
@@ -88,6 +97,7 @@
     <body>      
       <!-- Responsive navbar-->
         {% include "projectapp/include/navbar.html" %}
+        <!-- Page header with logo and tagline-->
 
         <header class="py-5 bg-light border-bottom mb-4">
           <div class="container">
@@ -97,41 +107,44 @@
           </div>
       </header>
 
-          <form name="fm" id="fm" method="post" action="/project/board_update/">
+          <form name="fm" id="fm" method="post" action="/project/board_update/" enctype="multipart/form-data">
             <input type="hidden" name="board_id" value="{{ board_view.board_id }}">
             <input type="hidden" name="user_id" value="{{ board_view.user_id }}">
             {% csrf_token %}
             <div class="container">    
               <table class="table table-hover">
                 <tbody>
-                  <tr>
-                    <td><textarea type="text" class="form-control" style="font-size:20px" placeholder="글 제목" id="title" name="title" minlength="2" maxlength="20" required>{{board_view.board_title}}</textarea></td>
-                  </tr>
+                  <tr><td>제목 : <input type="text" name ="board_title" id ="board_title" value="{{board_view.board_title}}">  </td></tr>
                   <tr>
                     <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="board_content" id="board_cotent" minlength="2" maxlength="1024" style="height: 400px;" required>{{ board_view.board_content }}</textarea></td>
                   </tr>
                   <tr>
                       <td>
-                          <p>
-                            첨부파일 : 
-                            <input type="file" name="file_nm" id="file_nm">
-                          </p>
+                          <div>
+                            첨부파일 :
+                            <input type="file" name="file_nm" id="file_nm" class="files form-control form-control-sm"> <!-- 사진 여러개 multiple -->
+                          </div> 
                         </td>
                   </tr>
-                  <tr?>
+                  <tr>  
                         <td>
                           {% for file in file_list %}
-                          <p id ="{{ file.fi_num }}">
-                           <img src="/static/projectapp/board_file/{{ file.fi_name }}">
-                           
-                           <input type="reset" value="X" onclick="fileDelete('{{file.fi_num}}')">
-                          </p>
-                            <!-- <input type="checkbox" name = "fi_num_check" value="{{ file.fi_num }}" > -->
+                          <div class="bg-body-tertiary">
+                            <p id ="{{ file.fi_num }}">
+                            <img src="/static/projectapp/board_file/{{ file.fi_name }}">
+                            <input type="reset" value="X" onclick="fileDelete('{{file.fi_num}}')">
+                            <input type="hidden" name ="fi_num" value="{{file.fi_num}}">
+                            <input type="hidden" name ="fi_name" value="{{file.fi_name}}">
+                            </p>
+                          </div>
                           {% endfor %}
-                   
                       </td>
                   </tr>
-                
+                  <!-- <tr>
+                      <td>
+                        <input type="reset" value="X" onclick="fileDelete('{{file.fi_num}}')">
+                      </td>
+                  </tr> -->
               </tbody>  
             </table>
           </div>    

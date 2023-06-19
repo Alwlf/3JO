@@ -180,3 +180,27 @@ def setBoardDelete2(board_id):
     """
     
     return db_sql.setCUD2(sql)
+
+
+### 파일 삭제
+def setFileDelete(board_id,fi_num):
+    
+    sql = f"""
+        Delete
+        From file
+        Where board_id = {board_id} and fi_num not in {fi_num};
+    """
+
+    return db_sql.setCUD(sql)
+
+
+### 파일 삭제 리스트
+
+def getFileDeleteList(board_id,fi_num):
+    sql = f"""
+        Select fi_name
+        From file
+        Where board_id = {board_id} and fi_num not in {fi_num};
+    """
+    print(sql)
+    return db_sql.getList(sql)

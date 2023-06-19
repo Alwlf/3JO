@@ -461,12 +461,12 @@ def post(request):
     
     if user_id :
 
-        if request.FILES.get("file_nm") is not None :
-                file_nm = request.FILES.get("file_nm")
+        if request.FILES.get("fi_name") is not None :
+                fi_name = dict(request.FILES).get("fi_name")
+                print(fi_name)
         else :
-                file_nm = ""
+                fi_name = ""
         
-        # board_time = datetime.now()
         
         board_chk = Board.setBoardInsert(board_title,board_content,user_id,board_time)
         
@@ -474,37 +474,44 @@ def post(request):
         board_list = Board.findBoardId(board_title,user_id,board_time)
         board_id=board_list['board_id']
 
-        if file_nm != "" :
-            ###########[ File Upload 처리하기 ]##########
-            ### - 파일 업로드 폴더 위치 지정 및 물리적 위치 생성하기
-            upload_dir = "./projectapp/static/projectapp/board_file/"
-            download_dir = "./projectapp/static/projectapp/board_file/"
+        if fi_name != "" :
 
-            ### 파일(이미지)을 페이지에 보여줄 경우 : 폴더 전체 경로 지정
-            img_dir = "/static/projectapp/board_file/"
+            for data in fi_name:
 
-            ### File_Uitl 클래스 생성하기
-            fu = File_Util()
+                ###########[ File Upload 처리하기 ]##########
+                ### - 파일 업로드 폴더 위치 지정 및 물리적 위치 생성하기
+                upload_dir = "./projectapp/static/projectapp/board_file/"
+                download_dir = "./projectapp/static/projectapp/board_file/"
 
-            ### 초기값 셋팅(설정)하기
-            fu.setUpload(file_nm, upload_dir, img_dir, download_dir)
+                ### 파일(이미지)을 페이지에 보여줄 경우 : 폴더 전체 경로 지정
+                img_dir = "/static/projectapp/board_file/"
 
-            ### 파일 업로드 실제 수행하기*****
-            fu.fileUpload()
+                ### File_Uitl 클래스 생성하기
+                fu = File_Util()
 
-            ########## [ 업로드된 파일 정보 조회 ] #########
-            ### 파일 사이즈
-            file_size = fu.file_size
-            ### 업로드된 파일명
-            filename = fu.filename
-            ### <img> 태그에 넣을 src 전체 경로
-            img_full_name = fu.img_full_name
-            ### (DB 저장용) 다운로드 전체경로+파일명
-            download_full_name = fu.download_full_name
+                ### 초기값 셋팅(설정)하기
+                fu.setUpload(data, upload_dir, img_dir, download_dir)
 
-            board_ee=Board.setFileInsert(filename,board_id)
-            
-    
+                ### 파일 업로드 실제 수행하기*****
+                fu.fileUpload()
+
+                ########## [ 업로드된 파일 정보 조회 ] #########
+                ### 파일 사이즈
+                file_size = fu.file_size
+                ### 업로드된 파일명
+                filename = fu.filename
+                ### <img> 태그에 넣을 src 전체 경로
+                img_full_name = fu.img_full_name
+                ### (DB 저장용) 다운로드 전체경로+파일명
+                download_full_name = fu.download_full_name
+                
+                board_ee=Board.setFileInsert(filename,board_id)
+                
+                img=Image.open(path+img_full_name)
+                
+                img=img.resize((620,450))
+                img=img.convert("RGB")
+                img.save(path+img_full_name)
 
         msg = """
             <script type='text/javascript'>
@@ -522,6 +529,7 @@ def post(request):
             </script>
         """
     return HttpResponse(msg)
+
 
 ### 병원 리뷰 게시글 작성
 def post2(request):
@@ -578,16 +586,16 @@ def boardUpdateForm2(request):
     return render(request,"projectapp/board_update_form2.html",
                   {"board_view":board_view})
 
+
 ### 게시글 수정 
 def boardUpdate(request):
     board_id = request.POST.get("board_id",'')
     board_title = request.POST.get("board_title",'')
     board_content = request.POST.get("board_content",'')
     user_id = request.POST.get("user_id",'')
-    
-    fi_num = request.POST.get("fi_num",'')
-    
+
     print(request.POST)
+    # print(dict(request.POST)['fi_num'])
 
     if request.FILES.get("file_nm") is not None :
             file_nm = request.FILES.get("file_nm")
@@ -624,6 +632,28 @@ def boardUpdate(request):
 
             fileInsert_chk = Board.setFileInsert(filename,board_id)
 
+            img=Image.open(path+img_full_name)
+            
+            img=img.resize((620,450))
+            img=img.convert("RGB")
+            img.save(path+img_full_name)
+
+            
+    fi_num = dict(request.POST).get("fi_num",'')
+    
+    fi_num = tuple(map(int,fi_num))
+    
+    if 0 in fi_num:
+        if len(fi_num) == 1:
+            fi_num = f"({fi_num[0]})"
+        file_delete_list = Board.getFileDeleteList(board_id,fi_num)
+        
+        for ee in file_delete_list:   ### 로컬에서 이미지 삭제
+            if os.path.exists(path+'/static/projectapp/board_file/'+ee['fi_name']) :
+                # print(path+'/static/projectapp/board_file/'+ee['fi_name'])
+                os.remove(path+'/static/projectapp/board_file/'+ee['fi_name'])
+        fi_delete_chk = Board.setFileDelete(board_id,fi_num) ### file db 데이터 삭제
+
     update_chk = Board.setBoardUpdate(board_id,board_title,board_content)
 
     # setFileDelete(file_nm)
@@ -635,6 +665,7 @@ def boardUpdate(request):
             </script>
     """.format(update_chk)
     return HttpResponse(msg)
+
 
 
 ### 게시글 삭제
