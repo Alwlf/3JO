@@ -32,6 +32,11 @@
             location.href = url;
           }
        
+          function star(){
+            num=document.getElementById('star').value;
+            document.getElementById('star').value=('★'.repeat(num));
+            
+          }
         </script>
 
         <style>
@@ -46,14 +51,22 @@
             font-family: 'SUITE-Regular';
           }
 
-        </style>
+          #star{
+            border:none;
+          }
 
+          #star:focus{
+            outline:none;
+          }
+
+        </style>
+        
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
     </head>
-    <body>
+    <body onload="javascript:star();">
         <!-- Responsive navbar-->
         {% include "projectapp/include/navbar.html" %}
         <!-- Page header with logo and tagline-->
@@ -81,12 +94,13 @@
                     {% for d in board_list %}
                     <tr>
                       <td style="padding-left: 50px; font-size: 20px;">{{d.board_id}}</td>
-                      <td style="padding-left: 80px; font-size: 20px;"><a href ="javascript:goView('{{ d.board_id }}');">{{d.hospital}}</a></td>
-                      <td style="padding-left: 80px; font-size: 20px;">{{d.reviewStar}}</td>
+                      <td style="padding-left: 80px; font-size: 20px;"><a href ="javascript:goView('{{ d.board_id }}');" style="text-decoration:none;">{{d.hospital}}</a></td>
+                      <td style="padding-left: 80px; font-size: 20px;"><a>{% for i in "x"|rjust:d.reviewstar %}★{% endfor %}</a>
+                      </td>
                       <td style="padding-left: 80px; font-size: 20px;">{{d.user_id}}</td>
                       <td style="font-size: 20px;">{{ d.board_time }}</td>
                     </tr>
-                    {%endfor %}
+                    {% endfor %}
                   </tbody>
                 </table>
                 <hr/>

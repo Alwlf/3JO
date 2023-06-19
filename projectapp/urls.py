@@ -37,16 +37,18 @@ urlpatterns = [
     path('inputpost2/',views.inputpost2),
     # 게시글 작성
     path('post/',views.post),
-    path('post/',views.post2),
+    path('post2/',views.post2),
     # 게시판 상세조회
     path('board_view/',views.boardView),
-    path('board_view2/',views.board_view2),
+    path('board_view2/',views.boardview2),
     # 게시판 수정 폼
     path('board_update_form/',views.boardUpdateForm),
+    path('board_update_form2/',views.boardUpdateForm2),
     # 게시판 수정
     path('board_update/',views.boardUpdate),
     # 게시판 삭제
     path('board_delete/',views.boardDelete),
+    path('board_delete2/',views.boardDelete2),
 
     # 아이디 찾기
     path('search_id/',views.search_id),
