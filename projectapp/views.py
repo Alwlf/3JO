@@ -240,16 +240,25 @@ def logout_chk(request) :
 
 
 def setFileInsert(request) :
-    url = request.POST.get("img")
-    img=Image.open(BytesIO(urllib.request.urlopen(url).read()))
+    try:
+        url = request.POST.get("img")
+        img=Image.open(BytesIO(urllib.request.urlopen(url).read()))
     
-    img=img.resize((620,450))
-    img_full_name="/static/projectapp/images/image.jpg"
-    img=img.convert("RGB")
-    img.save(path+img_full_name)
-    return render(request,
-                  "projectapp/disease_result.html",
-                  {"img_full_name":img_full_name})
+        img=img.resize((620,450))
+        img_full_name="/static/projectapp/images/image.jpg"
+        img=img.convert("RGB")
+        img.save(path+img_full_name)
+        return render(request,
+                    "projectapp/disease_result.html",
+                    {"img_full_name":img_full_name})
+    except:
+        msg = """
+            <script type='text/javascript'>
+                alert('파일을 업로드 해 주세요.');
+                location.href = history.go(-1);
+            </script>
+        """
+        return HttpResponse(msg)
 
 
 
