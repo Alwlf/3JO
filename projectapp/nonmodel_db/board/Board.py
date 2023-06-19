@@ -144,8 +144,16 @@ def setBoardUpdate(board_id,board_title,board_content):
     sql ="""
         Update Board
         Set board_title= '{}', board_content='{}'
-        Where board_id = {}
+        Where board_id = '{}'
         """.format(board_title,board_content,board_id)
+    return db_sql.setCUD(sql)
+
+def setBoardUpdate2(board_id,hospital,address,reviewStar,board_content):
+    sql ="""
+        Update board_hospital
+        Set hospital= '{}', address='{}', reviewStar='{}', board_content='{}'
+        Where board_id = '{}'
+        """.format(hospital,address,reviewStar,board_content,board_id)
     return db_sql.setCUD(sql)
 
 

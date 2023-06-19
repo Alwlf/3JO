@@ -137,77 +137,27 @@
                 
               </tbody>  
             </table>       
-          <h5 style="font-weight: 500;">댓글</h5>
-          <hr/>
-          <div id="comments">
-          </div>
-          <form id="comment-form">
-            <p type="text" id="username" size="10" style="font-family:'SUIT-Regular';font-weight: 500;">아이디: {{ request.session.session_user_id }}</p>
-            <div>
-            <textarea id="comment" rows="4" cols="145" style="font-family:'SUIT-Regular';" placeholder="댓글 쓰기.." required></textarea>
-            <input type="submit" style="float:right;" value="댓글 작성">
-            </div>
           </form> 
 
-          
-
-          
+          <div id="disqus_thread"></div>
           <script>
-            document.getElementById("comment-form").addEventListener("submit", function(event) {
-              event.preventDefault();
-              var comment = document.getElementById("comment").value;
-              var username = request.session.session_user_id;
-              var newComment = document.createElement("div");
-              newComment.classList.add("comment");
-              newComment.innerHTML = "<strong>" + username + "</strong>: " + comment;
-              var replyButton = document.createElement("button");
-              replyButton.innerHTML = "답글 달기";
-              replyButton.addEventListener("click", function() {
-                var replyForm = document.createElement("div");
-                replyForm.classList.add("reply-form");
-                replyForm.innerHTML = `
-                  <label for="reply-username">아이디:</label>
-                  <input type="text" id="reply-username">
-                  <label for="reply-comment">대댓글:</label>
-                  <textarea id="reply-comment"></textarea>
-                  <button class="reply-button">답글 작성</button>
-                  <button class="delete-button">답글 삭제</button>
-                `;
-                var commentContainer = this.parentNode;
-                commentContainer.appendChild(replyForm);
-                var replyButton = replyForm.querySelector(".reply-button");
-                var deleteButton = replyForm.querySelector(".delete-button");
-        
-                replyButton.addEventListener("click", function() {
-                  var replyComment = replyForm.querySelector("textarea").value;
-                  var replyUsername = replyForm.querySelector("#reply-username").value;
-                  var newReply = document.createElement("div");
-                  newReply.classList.add("comment");
-                  newReply.innerHTML = "<strong>" + replyUsername + "</strong>: " + replyComment;
-                  var deleteButton = document.createElement("button");
-                  deleteButton.classList.add("delete-button");
-                  deleteButton.innerHTML = "답글 삭제";
-                  deleteButton.addEventListener("click", function() {
-                    commentContainer.removeChild(newReply);
-                    commentContainer.removeChild(deleteButton);
-                  });
-                  replyForm.parentNode.insertBefore(newReply, replyForm.nextSibling);
-                  replyForm.parentNode.insertBefore(deleteButton, replyForm.nextSibling);
-        
-                  commentContainer.removeChild(replyForm);
-                });
-        
-                deleteButton.addEventListener("click", function() {
-                  commentContainer.removeChild(this.parentNode);
-                });
-              });
-              newComment.appendChild(replyButton);
-              var commentsContainer = document.getElementById("comments");
-              commentsContainer.insertBefore(newComment, commentsContainer.firstChild);
-              document.getElementById("comment").value = "";
-              document.getElementById("username").value = "";
-            });
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+              /*
+              var disqus_config = function () {
+              this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              */
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://project-rotifr7ebo.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
           </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
     </header>
 

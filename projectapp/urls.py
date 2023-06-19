@@ -46,6 +46,7 @@ urlpatterns = [
     path('board_update_form2/',views.boardUpdateForm2),
     # 게시판 수정
     path('board_update/',views.boardUpdate),
+    path('board_update2/',views.boardUpdate2),
     # 게시판 삭제
     path('board_delete/',views.boardDelete),
     path('board_delete2/',views.boardDelete2),
