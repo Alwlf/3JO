@@ -675,6 +675,22 @@ def boardUpdate(request):
     """.format(update_chk)
     return HttpResponse(msg)
 
+def boardUpdate2(request):
+    board_id = request.POST.get("board_id",'')
+    hospital = request.POST.get("hospital",'')
+    address = request.POST.get("member_addr",'')
+    reviewStar = request.POST.get("reviewStar",'')
+    board_content = request.POST.get("board_content",'')
+    
+    update_chk = Board.setBoardUpdate2(board_id,hospital,address,reviewStar,board_content)
+
+    msg = """
+            <script type='text/javascript'>
+                alert('{}');
+                location.href = '/project/board_hospital/';
+            </script>
+    """.format(update_chk)
+    return HttpResponse(msg)
 
 
 ### 게시글 삭제

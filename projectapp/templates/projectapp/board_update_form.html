@@ -114,7 +114,9 @@
             <div class="container">    
               <table class="table table-hover">
                 <tbody>
-                  <tr><td>제목 : <input type="text" name ="board_title" id ="board_title" value="{{board_view.board_title}}">  </td></tr>
+                  <tr>
+                    <td><textarea type="text" class="form-control" style="font-size:20px" placeholder="글 제목" id="board_title" name="board_title" minlength="2" maxlength="20" required>{{board_view.board_title}}</textarea></td>
+                  </tr>
                   <tr>
                     <td><textarea type="text" class="form-control" placeholder="글 내용을 작성하세요" name="board_content" id="board_cotent" minlength="2" maxlength="1024" style="height: 400px;" required>{{ board_view.board_content }}</textarea></td>
                   </tr>

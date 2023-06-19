@@ -24,7 +24,7 @@
     <style>
 
 
-      .img{
+      .img:not(#board){
         box-shadow: 5px 5px 5px;
       }
 
@@ -74,16 +74,6 @@
         border-radius: 20px;
         font-family: "굴림";
         font-weight: bold;
-      }
-      .col2{
-        text-align: center;
-        background-color: #f1ebe3;
-        border-radius: 10%;
-        padding-left: 30px;
-        padding-right: 30px;
-        padding-top: 30px;
-        padding-bottom: 10px;
-        box-shadow: 4px 4px 4px ;
       }
       .table{
         padding-top:40px;
@@ -151,14 +141,12 @@
             <img class="img" src="/static/projectapp/images/cat1.png" style="cursor: pointer; border-radius:10%" height="400" width="400"
             onclick="javascript:location.href='/project/disease';">
           </div>
-
           <div class="col">
-            <div class="col2">
-            <h4><a href="/project/board">자유 게시판</a></h4>
-            <h4><a href="/project/board_hospital">동물병원 리뷰</a></h4>
+              <img class="img" id="board" src="/static/projectapp/images/병원리뷰.png" style="cursor: pointer;" height="200" width="400"
+              onclick="javascript:location.href='/project/board_hospital';">
+              <img class="img" id="board" src="/static/projectapp/images/자유게시판.png" style="cursor: pointer;" height="200" width="400"
+              onclick="javascript:location.href='/project/board';">
             </div>
-            </div>
-
           </div>
         </div>
       </div>
