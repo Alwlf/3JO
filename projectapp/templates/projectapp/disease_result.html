@@ -12,6 +12,13 @@
         function goToBoardForm(){
             location.href="/project/board/";
         }
+
+        function onLoadEvent(){
+          document.getElementById('find').click();
+        }
+
+        window.onload = onLoadEvent;
+
     </script>
     <style>
       @font-face {
@@ -138,7 +145,7 @@
                   <div class="option">
                       <div>
                           <form onsubmit="searchPlaces(); return false;">
-                              <button type="submit" style="font-size: 18px; font-family: 'SUITE-Regular'; border: 1px solid; border-radius: 10px; padding-left: 10px; padding-right: 10px;">주변 동물병원 검색</button> 
+                              <button type="submit" id='find' style="font-size: 18px; font-family: 'SUITE-Regular'; border: 1px solid; border-radius: 10px; padding-left: 10px; padding-right: 10px;">주변 동물병원 검색</button> 
                           </form>
                       </div>
                   </div>
