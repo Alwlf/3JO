@@ -134,7 +134,8 @@
                           <div class="bg-body-tertiary">
                             <p id ="{{ file.fi_num }}">
                             <img src="/static/projectapp/board_file/{{ file.fi_name }}">
-                            <input type="reset" value="X" onclick="fileDelete('{{file.fi_num}}')">
+                            <button type="button" class="btn-close" aria-label="Close" onclick="fileDelete('{{file.fi_num}}')" ></button>
+                            <!-- <input type="reset" value="X" onclick="fileDelete('{{file.fi_num}}')"> -->
                             <input type="hidden" name ="fi_num" value="{{file.fi_num}}">
                             <input type="hidden" name ="fi_name" value="{{file.fi_name}}">
                             </p>

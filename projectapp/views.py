@@ -1,11 +1,11 @@
 # 사용자 브라우저로 응답을 하기 위한 라이브러리 불러들이기
 from django.http import HttpResponse
 # 템플릿을 불러오는 라이브러리
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 from projectapp.nonmodel_db.user import user    
 from projectapp.nonmodel_db.board import Board
-
+from projectapp.nonmodel_db.review import Review
 
 ### 현재시간 가져오는 라이브러리
 from datetime import datetime
@@ -439,12 +439,33 @@ def boardView(request):
     board_view = Board.getBoardView('board',board_id)
     file_list = Board.getBoardFileView(board_id)
 
+    rev_content = request.POST.get("rev_content")
+    # print(request.POST)
+    if (rev_content is not None) and (rev_content !="") :
+        user_id = request.session.get("session_user_id")
+        rev_chk = Review.setReviewInsert(rev_content,user_id,board_id)
+        if rev_chk !="작업이 정상적으로 완료되었습니다!":
+            msg = """
+                <script type='text/javascript'>
+                    alert('다시작성해주세요');
+                    location.href = '/project/board_view/?board_view'+board_id;
+                </script>
+            """
+            return HttpResponse(msg)
+        else :
+            rev_content=""
+        return redirect('/project/board_view/?board_id='+board_id)
+    
+    
+    review_list = Review.getReviewList(board_id)
+    
     return render(request,		
                   "projectapp/board_view.html", 
                   {"board_view":board_view,
                   "file_list":file_list,
                   "last_id":last_id,
-                  "first_id":first_id})
+                  "first_id":first_id,
+                  "review_lst":review_list})
 
 def boardview2(request):
     board_id = request.GET.get("board_id","ERROR")
@@ -751,6 +772,23 @@ def boardDelete2(request):
             </script>
     """
     return HttpResponse(msg)
+
+
+
+## 댓글 삭제
+def reviewDelete(request):
+ 
+    rev_id = request.GET.get("rev_id",'')
+    board_id = request.GET.get("board_id",'')
+    review_chk=Review.setReviewDelete(rev_id)
+    
+    msg = """
+            <script type='text/javascript'>
+                alert('{}');
+                location.href=history.go(-1);
+            </script>
+        """.format(review_chk)
+    return redirect('/project/board_view/?board_id='+board_id)
 
 
 

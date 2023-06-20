@@ -51,6 +51,9 @@ urlpatterns = [
     path('board_delete/',views.boardDelete),
     path('board_delete2/',views.boardDelete2),
 
+    # 댓글 삭제
+    path('review_delete/',views.reviewDelete),
+
     # 아이디 찾기
     path('search_id/',views.search_id),
     # 비밀번호 찾기

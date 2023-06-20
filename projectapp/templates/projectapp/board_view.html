@@ -37,7 +37,24 @@
             location.href="/project/board_view/?board_id="+(board_id+1);
           }
 
+  
+          function checklogin(){
+            alert('로그인을 해주세요');
+          }
 
+          function goReviewDelete(rev_id,user_id,session_id,board_id){
+            if(session_id==user_id){
+              if (confirm("정말 삭제하시겠습니까??") == true){
+                url = '/project/review_delete/?rev_id='+rev_id;
+                url = url+'&board_id='+board_id;
+                location.href = url;
+              }
+            }else{
+              alert('작성자가 아닙니다.!');
+            }
+            
+            
+          }
         </script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
@@ -45,13 +62,18 @@
         <link href="/static/projectapp/css/styles.css" rel="stylesheet" />
         <style>
           
-          @font-face {
+        @font-face {
             font-family: 'SUIT-Regular';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
             font-weight: normal;
             font-style: normal;
         }
-
+        @font-face {
+            font-family: 'GongGothicMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
         .text, h5{
           font-family:'SUIT-Regular';
           font-weight: 700;
@@ -137,29 +159,53 @@
                 
               </tbody>  
             </table>       
-          </form> 
-
-          <div id="disqus_thread"></div>
-          <script>
-              /**
-              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-              /*
-              var disqus_config = function () {
-              this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-              this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-              };
-              */
-              (function() { // DON'T EDIT BELOW THIS LINE
-              var d = document, s = d.createElement('script');
-              s.src = 'https://project-rotifr7ebo.disqus.com/embed.js';
-              s.setAttribute('data-timestamp', +new Date());
-              (d.head || d.body).appendChild(s);
-              })();
-          </script>
-          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
+        
+       
     </header>
+    <h5 style="font-weight: 500;">댓글</h5>
+    <hr/>
+  
+    <form method="post" id="fm" name="fm">
+      {% csrf_token %}
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" name ="rev_content" id="rev_content" value="">
+        {% if not request.session.session_user_id  %}
+        <input type="button" value="작성하기" onclick="checklogin()">
+        {% else %}
+        <input type="submit" value ="작성하기" >
+        {% endif %}
+      </div>
+
+
+      <div class="card">
+        <ul class="list-group">
+        {% for data in review_lst %}
+            <li class="list-group-item d-flex justify-content-center-between">
+              <div class="container">
+                <div>
+                  <span style="font-family:SUIT-Regular; font-size:20px; font-weight: 800;">{{  data.user_id }}</span> 
+                  <button type="button" class="btn-close" aria-label="Close" style="float:right;" onclick="goReviewDelete('{{data.rev_id}}','{{ data.user_id }}','{{request.session.session_user_id}}','{{ board_view.board_id}}')"></button>
+                </div>
+                <div>
+                  <span style="font-family:SUIT-Regular; font-weight: 300;">{{  data.rev_content }} </span>
+                </div>
+              </div>
+            </li>
+        {% endfor %}
+        </ul>
+      </div>
+     
+      <!-- <input type="text" name ="rev_content" id="rev_content" value="">
+      {% if not request.session.session_user_id  %}
+      <input type="button" value="작성하기" onclick="checklogin()">
+      {% else %}
+      <input type="submit" value ="작성하기" >
+      {% endif %} -->
+    </form>
+
+
+
 
   </div>
       <nav aria-label="Page navigation example">
