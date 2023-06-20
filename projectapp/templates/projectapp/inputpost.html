@@ -97,7 +97,6 @@
 
             <tr>
                 <td>
-                    <button type="button" onclick="showNextDiv()" style="float:right;">추가하기</button>
                     <div >
                       첨부파일 :
                       <input type="file" name="fi_name" id="fi_name" class="files form-control form-control-sm"> <!-- 사진 여러개 multiple -->
@@ -119,10 +118,12 @@
                       첨부파일 :
                       <input type="file" name="fi_name" id="fi_name" class="files form-control form-control-sm"> <!-- 사진 여러개 multiple -->
                     </div> 
-                    
+                    <br/>
+                    <input type="button" onclick="showNextDiv()" style="float:right;" value="추가하기">
                 </td>
             </tr>
         </tbody>  
+        
       </table>
       <div class="row">
         <div class="col-md-3"></div>
@@ -132,7 +133,7 @@
         <input type="button" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" value="취소하기" onclick="goBack()">
         </div>
         </div>
-    </div>
+        </div>
     <br/>
 </form>
 {% include "projectapp/include/footer.html" %}

@@ -38,7 +38,7 @@
           font-family: 'SUITE-Regular';
           font-weight: 700;
         }
-        p, .text-bold{
+        p, .text-bold, input, textarea{
           font-family: 'SUITE-Regular';
           font-weight: 500;
         }
@@ -65,7 +65,7 @@
               }
           }
           if(value==''){
-            alert('별점을 입력해주세요')
+            alert('별점을 입력해주세요!')
           }
           
         }
@@ -82,12 +82,12 @@
                     var roadAddr = data.roadAddress; // 도로명 주소 변수
                     var jibunAddr = data.jibunAddress; // 지번 주소 변수
                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById('member_post').value = data.zonecode;
+                    document.getElementById('hospital').value = data.buildingName;
                     if(roadAddr !== ''){
-                        document.getElementById("member_addr").value = roadAddr;
+                        document.getElementById("address").value = roadAddr;
                     } 
                     else if(jibunAddr !== ''){
-                        document.getElementById("member_addr").value = jibunAddr;
+                        document.getElementById("address").value = jibunAddr;
                     }
                 }
             }).open();
@@ -114,12 +114,9 @@
   <form class="mb-3" name="myform" id="myform" method="post" action="/project/post2/">
     {% csrf_token %}
     <div class="container">     
-      <input type="text" class="form-control" style="font-size:20px; width:600px;" placeholder="병원 이름" 
-      id="title" name="title" minlength="2" maxlength="20" required>   
-      <br/>
-      <input id="member_addr" name="member_addr" type="text" size=40 readonly> 
-      <input id="member_post" type="hidden" size=10 readonly>
-      <input type="button" onclick="findAddr()" value="주소 찾기">
+      <input id="hospital" name="hospital" type="text" placeholder="병원 이름" style="width:250px; height:40px" readonly> 
+      <input id="address" name="address"type="text" style="width:400px; height:40px" readonly>
+      <input type="button" style="height:40px" onclick="findAddr()" value="주소 찾기">
       <div>
       <fieldset>
         <span class="text-bold">별점을 선택해주세요</span>

@@ -147,24 +147,16 @@
                         <input type="reset" value="X" onclick="fileDelete('{{file.fi_num}}')">
                       </td>
                   </tr> -->
-              </tbody>  
-            </table>
-          </div>    
-            <div align="right">
-                <input type ="submit" value ="저장">
-                <input type ="button" value = "뒤로가기" onclick="goBack()">
+                </tbody>  
+              </table>
+              <div align="right">
+                <input type ="submit" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" value ="저장">
+                <input type ="button" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" value = "취소" onclick="goBack()">
               </div>
-            </div>
-                  
-            </form>
-
+            </div>    
+          </form>
+          <br/>
         <!-- Footer-->
         {% include "projectapp/include/footer.html" %}
-        <!-- Bootstrap core JS-->
-        {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
-        <!-- Core theme JS-->
-        {% comment %} <script src="/static/projectapp/js/scripts.js"></script>
-        <script type="text/javascript"
-        src="/static/projectapp/js/bootstrap.bundle.min.js"></script> {% endcomment %}
 </body>
 </html>

@@ -120,8 +120,8 @@
           </div>
             {% if  board_view.user_id  == request.session.session_user_id  %}
             <div style="float:right">
-              {% comment %} <input type="button" onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
-              style="font-weight:500;" value="수정"> {% endcomment %}
+              <input type="button" onclick="goUpdate( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
+              style="font-weight:500;" value="수정">
               <input type="button" onclick="goDelete( '{{ board_view.board_id }}', '{{ board_view.user_id }}', '{{ request.session.session_user_id }}'  )"
               style="font-weight:500;" value="삭제">
             </div>
