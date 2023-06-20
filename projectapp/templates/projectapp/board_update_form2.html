@@ -51,12 +51,12 @@
                       var roadAddr = data.roadAddress; // 도로명 주소 변수
                       var jibunAddr = data.jibunAddress; // 지번 주소 변수
                       // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                      document.getElementById('member_post').value = data.zonecode;
+                      document.getElementById('hospital').value = data.buildingName;
                       if(roadAddr !== ''){
-                          document.getElementById("member_addr").value = roadAddr;
+                          document.getElementById("address").value = roadAddr;
                       } 
                       else if(jibunAddr !== ''){
-                          document.getElementById("member_addr").value = jibunAddr;
+                          document.getElementById("address").value = jibunAddr;
                       }
                   }
               }).open();
@@ -72,7 +72,7 @@
                 }
             }
             if(value==''){
-              alert('별점을 입력해주세요')
+              alert('별점을 입력해주세요!')
             }
             
           }
@@ -143,57 +143,43 @@
           </div>
       </header>
 
-          <form class="mb-3" name="myform" id="myform" method="post" action="/project/board_update2/">
-            <input type="hidden" name="board_id" value="{{ board_view.board_id }}">
-            <input type="hidden" name="user_id" value="{{ board_view.user_id }}">
-            {% csrf_token %}
-            <div class="container">     
-              <input type="text" class="form-control" style="font-size:20px; width:600px;" placeholder="병원 이름" 
-              id="hospital" name="hospital" minlength="2" maxlength="20" value={{board_view.hospital}} required>   
-              <br/>
-              <input id="member_addr" name="member_addr" type="text" value={{board_view.address}} size=40 readonly> 
-              <p class="text"  >{{ board_view.address }}</p>
-              <input type="text" class="text" value={{board_view.address}}>
-              <input id="member_post" type="text" size=10 readonly>
-              <input id="member_post" type="button" onclick="findAddr()" value="주소 찾기">
-              <div>
-              <fieldset>
-                <span class="text-bold">별점을 선택해주세요</span>
-                <input type="radio" name="reviewStar" value="5" id="rate1"><label
-                  for="rate1">★</label>
-                <input type="radio" name="reviewStar" value="4" id="rate2"><label
-                  for="rate2">★</label>
-                <input type="radio" name="reviewStar" value="3" id="rate3"><label
-                  for="rate3">★</label>
-                <input type="radio" name="reviewStar" value="2" id="rate4"><label
-                  for="rate4">★</label>
-                <input type="radio" name="reviewStar" value="1" id="rate5" required><label
-                  for="rate5">★</label>
-              </fieldset>
-                <textarea class="col-auto form-control" type="text" id="board_content" name="board_content"
-                      placeholder="리뷰를 입력해주세요." required>{{board_view.board_content}}</textarea>
-              </div>
-            </form>
-            <br/> 
-              <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6"></div>
-                <div class="col-md-3" style="padding-left: 110px;">
-                <input type="submit" onclick="check()" class="btn btn-light btn-primary pull-right" style="border: 1px solid; height:40px" value="업로드하기">
-                <input type="button" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" value="취소하기" onclick="goBack()">
-                </div>
-              </div>
-            </div>
-                  
-            </form>
+      <form class="mb-3" name="myform" id="myform" method="post" action="/project/board_update2/">
+        {% csrf_token %}
+        <input type="hidden" name="board_id" value="{{ board_view.board_id }}">
+        <input type="hidden" name="user_id" value="{{ board_view.user_id }}">
+        
+        <div class="container">     
+          <input id="hospital" name="hospital" type="text" placeholder="병원 이름" style="width:250px; height:40px" value="{{board_view.hospital}}" readonly> 
+          <input id="address" name="address"type="text" style="width:400px; height:40px" value="{{board_view.address}}" readonly>
+          <input type="button" style="height:40px" onclick="findAddr()" value="주소 찾기">
+          <div>
+          <fieldset>
+            <span class="text-bold">별점을 선택해주세요</span>
+            <input type="radio" name="reviewStar" value="5" id="rate1"><label
+              for="rate1">★</label>
+            <input type="radio" name="reviewStar" value="4" id="rate2"><label
+              for="rate2">★</label>
+            <input type="radio" name="reviewStar" value="3" id="rate3"><label
+              for="rate3">★</label>
+            <input type="radio" name="reviewStar" value="2" id="rate4"><label
+              for="rate4">★</label>
+            <input type="radio" name="reviewStar" value="1" id="rate5" required><label
+              for="rate5">★</label>
+          </fieldset>
+            <textarea class="col-auto form-control" type="text" id="board_content" name="board_content"
+                  placeholder="리뷰를 입력해주세요." required>{{board_view.board_content}}</textarea>
+          </div>
+          <br/> 
+          <div style="float:right;">
+            <input type ="submit" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" onclick="check()" value ="저장">
+            <input type ="button" style="font-family:'SUITE-Regular'; font-weight: 300; font-size: 18px; border: 1px solid;" class="btn btn-light btn-primary pull-right" value = "취소" onclick="goBack()">
+          </div>
+          <br/> 
+        </div>
+              
+      </form>
             
         <!-- Footer-->
-        {% include "projectapp/include/footer.html" %}
-        <!-- Bootstrap core JS-->
-        {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
-        <!-- Core theme JS-->
-        {% comment %} <script src="/static/projectapp/js/scripts.js"></script>
-        <script type="text/javascript"
-        src="/static/projectapp/js/bootstrap.bundle.min.js"></script> {% endcomment %}
+      {% include "projectapp/include/footer.html" %}
 </body>
 </html>

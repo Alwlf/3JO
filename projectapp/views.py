@@ -543,8 +543,8 @@ def post(request):
 ### 병원 리뷰 게시글 작성
 def post2(request):
 
-    hospital = request.POST.get("title","ERROR")
-    address =  request.POST.get("member_addr","ERROR")
+    hospital = request.POST.get("hospital","ERROR")
+    address =  request.POST.get("address","ERROR")
     reviewStar = request.POST.get("reviewStar","ERROR")
     reviewContents = request.POST.get("reviewContents","ERROR")
     user_id = request.session.get("session_user_id")
@@ -678,7 +678,7 @@ def boardUpdate(request):
 def boardUpdate2(request):
     board_id = request.POST.get("board_id",'')
     hospital = request.POST.get("hospital",'')
-    address = request.POST.get("member_addr",'')
+    address = request.POST.get("address",'')
     reviewStar = request.POST.get("reviewStar",'')
     board_content = request.POST.get("board_content",'')
     
