@@ -9,20 +9,37 @@
     <title>질병진단</title>
     <script type="text/javascript">
       function goreset(){
-        uploadBox.style.display = 'block'; // upload-box를 숨김
-        uploadedImage.style.display = 'none'; // uploaded-image를 표시
+        
+          uploadBox.style.display = 'block'; // upload-box를 숨김
+          uploadedImage.style.display = 'none'; // uploaded-image를 표시
+        
       }
 
       function imgs(){
-        fi = document.getElementById('uploaded-image').src;
-        document.getElementById('img').value=fi
-    
-        f = document.getElementById('fm');
-        // f.setAttribute('method', 'post');
-        // f.setAttribute('action', "/project/disease_result/");
+        var selected = false;
+        var radios = document.getElementsByName('inlineRadioOptions');
+        for (var radio of radios){
+            if (radio.type === 'radio' && radio.checked){
+              fi = document.getElementById('uploaded-image').src;
+              document.getElementById('img').value=fi
+          
+              f = document.getElementById('fm');
+              // f.setAttribute('method', 'post');
+              // f.setAttribute('action', "/project/disease_result/");
 
-        f.submit();
+              f.submit();
+
+              selected = true;
+            }
+        }
+        if (!selected) {
+            alert('진단 부위를 선택해주세요. (피부 또는 눈)');
+        }
       }
+
+        
+      
+
     </script>
     <style>
       /* .container {
@@ -124,7 +141,7 @@
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" style="width: 30px; height: 30px;">
             <span style="margin-right: 15px;"></span>
-            <label class="form-check-label" for="inlineRadio2" style="font-size: 30px; ">눈</label>
+            <label class="form-check-label"for="inlineRadio2" style="font-size: 30px; ">눈</label>
           </div>
         </div>
         <br/>
@@ -245,7 +262,7 @@
         
             <div class="filebox preview-image" style="padding-right: 14px;">
               <label style="float:right; margin-left: 10px;">
-                  <input type="button" style="font-size: 18px; font-family: 'SUITE-Regular'; border: 1px solid;" value="진단하기" class="btn btn-light btn-primary pull-right" onclick=imgs()>
+                  <input type="button" style="font-size: 18px; font-family: 'SUITE-Regular'; border: 1px solid;" value="진단하기" class="btn btn-light btn-primary pull-right" onclick="imgs()">
               </label>
               <label style="float:right;">
                   <input type="button" style="font-size: 18px; font-family: 'SUITE-Regular'; border: 1px solid;" value="파일초기화" class="btn btn-light btn-primary pull-right" onclick="goreset()">
