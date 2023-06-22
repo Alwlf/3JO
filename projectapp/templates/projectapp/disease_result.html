@@ -28,9 +28,9 @@
         font-style: normal;
         }
 
-      p{
+      /* p{
         padding-left: 150px;
-      }
+      } */
 
       .navbar-nav .center-align{
         margin-left: 20px; 
@@ -39,7 +39,7 @@
 
       h2{
         font-family: 'SUITE-Regular';
-        padding-left: 200px;
+        padding-left: 50px;
         font-size: 20px;
       }
 
@@ -62,7 +62,7 @@
 
 <div class="d-grid gap-3" style="grid-template-columns: 1fr 2fr;">
     <div class="bg-body-tertiary">
-      <p><img src='{{ img_full_name }}'></p>
+      <p style="padding-left: 150px;"><img src='{{ img_full_name }}'></p>
     </div>
     <div class="bg-body-tertiary" style="padding-left:20px">
       <nav class="navbar navbar-expand-lg navbar-light bg-light w-75 p-3 text-center" >
@@ -79,7 +79,7 @@
               </li>
               
               <li class="nav-item center-align">
-                <a class="nav-link" href="#" >관련 사진</a>
+                <a class="nav-link" href="#" onclick="showlist()" >관련 사진</a>
               </li>
               <li class="nav-item center-align">
                 <a class="nav-link" href="/project/board/" >문의하기</a>
@@ -91,12 +91,31 @@
       <div id="diagnosisContent" style="display: none;">
         <br/>
         <br/>
+          <h2>진단명 : {{ result_b }}</h2>
+        <br/>
+        <h2>확률 : {{ result_p }}</h2>
         <br/>
         <br/>
-        <h2>진단명 : XX</h2>
-        <br/>
-        <h2>확률 : XX</h2>
+        <ul style="font-family: SUITE-Regular; padding-left: 50px;">
+          <li>
+            <p > 증상: {{ di_view.di_content }} </p>
+          </li>
+          <li>
+            <p> 원인: {{ di_view.di_cause }} </p>
+          </li>
+          <li>
+            <p> 치료:  {{ di_view.di_warning }} </p>
+          </li>
+        </ul>
+              </div>
+      <div id="diagnosislist" style="display: none;">
+        
+        {% for i in show_image_path %}
+        <img src="{{i}}">
+        {% endfor %}
+        
       </div>
+
       <div id="hospitalContent">
         <style>
           .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
@@ -458,7 +477,20 @@
       function showDiagnosis() {
         var diagnosisContent = $('#diagnosisContent');
         diagnosisContent.show();
-        
+        var diagnosislist = $('#diagnosislist');
+        diagnosislist.hide();
+        var hospitalContent = $('#hospitalContent');
+        hospitalContent.hide();
+        var pictureContent = $('#pictureContent');
+        pictureContent.hide();
+
+      }
+
+      function showlist() {
+        var diagnosislist = $('#diagnosislist');
+        diagnosislist.show();
+        var diagnosisContent = $('#diagnosisContent');
+        diagnosisContent.hide();
         var hospitalContent = $('#hospitalContent');
         hospitalContent.hide();
         var pictureContent = $('#pictureContent');
@@ -468,7 +500,8 @@
       function showHospitals() {
         var hospitalContent = $('#hospitalContent');
         hospitalContent.show();
-        
+        var diagnosislist = $('#diagnosislist');
+        diagnosislist.hide();
         var diagnosisContent = $('#diagnosisContent');
         diagnosisContent.hide();
         var pictureContent = $('#pictureContent');
@@ -478,13 +511,14 @@
       function showPictures() {
         var pictureContent = $('#pictureContent');
         pictureContent.show();
-
+        var diagnosislist = $('#diagnosislist');
+        diagnosislist.hide();
         var diagnosisContent = $('#diagnosisContent');
         diagnosisContent.hide();
         var hospitalContent = $('#hospitalContent');
         hospitalContent.hide();
       }
-      
+    
 
       // 페이지가 로드될 때 자동으로 진단명과 확률을 보여줍니다
       $(document).ready(function() {

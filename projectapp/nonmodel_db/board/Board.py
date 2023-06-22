@@ -166,7 +166,7 @@ def setBoardDelete(board_id):
         Where board_id = {board_id};
 
         Delete
-        From rev
+        From review
         Where board_id = {board_id};
 
         Delete
