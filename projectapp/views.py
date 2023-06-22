@@ -254,7 +254,7 @@ def setFileInsert(request) :
     except:
         msg = """
             <script type='text/javascript'>
-                alert('파일을 업로드 해 주세요.');
+                alert('파일을 업로드 해주세요.');
                 location.href = history.go(-1);
             </script>
         """
