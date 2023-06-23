@@ -129,17 +129,19 @@
         enctype="multipart/form-data">
         {% csrf_token %}
         <input type="text" id="img" name="img" style="display: none;">
+        <input type="text" id="dc" name="dc" value="{{dc}}"style="display: none;">
+        
         <br/>
         <div class="col-md-3">
         </div>
         <div class="col-md-6">
           <div class="form-check form-check-inline" style="padding-left: 230px;">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" style="width: 30px; height: 30px;">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="pibu" style="width: 30px; height: 30px;">
             <span style="margin-right: 15px;"></span>
             <label class="form-check-label" for="inlineRadio1" style="font-size: 30px; padding-right: 90px;">피부</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" style="width: 30px; height: 30px;">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="eye" style="width: 30px; height: 30px;">
             <span style="margin-right: 15px;"></span>
             <label class="form-check-label"for="inlineRadio2" style="font-size: 30px; ">눈</label>
           </div>
