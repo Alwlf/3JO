@@ -91,7 +91,7 @@
                   <thead>
                     <tr>
                       <th style="width:100px; padding-left: 50px; font-size: 20px;" >번호</th>
-                      <th style="padding-left: 80px;font-size: 20px;">병원이름</th>
+                      <th style="padding-left: 80px;font-size: 20px;">병원명</th>
                       <th style="padding-left: 80px;font-size: 20px;">별점</th>
                       <th style="padding-left: 80px;font-size: 20px;">작성자</th>
                       <th style="font-size: 20px;">작성일</th>
@@ -121,7 +121,7 @@
               <table class="pull-right" float="right" >
                 <tr>
                   <td style="padding-left: 450px;"><select class="form-control" name="searchField" id="searchField">
-                      <option value="hospital">제목</option>
+                      <option value="hospital">병원명</option>
                       <option value="user_id">작성자</option>
                   </select></td>
                   <td><input type="text" class="form-control"
@@ -141,7 +141,7 @@
                {% if is_prev %}
                <li class="page-item">
                    <a class="page-link" 
-                       href="/project/board/?page={{start_page | add:'-3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
+                       href="/project/board_hospital/?page={{start_page | add:'-3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
                        aria-label="Previous" >
                        <span aria-hidden="true">&laquo;</span>
                    </a>
@@ -157,7 +157,7 @@
                     </strong>
                 {% else %}
                     <a class="page-link" 
-                        href="/project/board/?page={{ i }}&searchField={{searchField}}&searchText={{ searchText }}" >{{ i }}</a>
+                        href="/project/board_hospital/?page={{ i }}&searchField={{searchField}}&searchText={{ searchText }}" >{{ i }}</a>
                 {% endif %}
               </li>
             {% endfor %} 
@@ -166,7 +166,7 @@
             {% if is_next %}
             <li class="page-item">
                 <a class="page-link" 
-                    href="/project/board/?page={{start_page | add:'3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
+                    href="/project/board_hospital/?page={{start_page | add:'3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
                     aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
