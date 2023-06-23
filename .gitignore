@@ -1,6 +1,6 @@
 *.pyc
 db.sqlite3
-dc_model
+*.h5
 ddd.ipynb
-질병데이터.csv
+*.csv
 질병데이터.xlsx
