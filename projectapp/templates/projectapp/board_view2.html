@@ -29,15 +29,21 @@
           }
 
           function goPrev(board_id){
-            location.href="/project/board_view/?board_id="+(board_id-1);
+            url="/project/board_view2/?board_id="+(board_id-1);
+            url = url+"&goButton=goPrev";
+            location.href=url;
           }
 
           function goNext(board_id){
-            location.href="/project/board_view/?board_id="+(board_id+1);
+            var board_id = parseInt(board_id)
+            url="/project/board_view2/?board_id="+(board_id+1);
+            url = url+"&goButton=goNext";
+            location.href=url;
           }
 
-
         </script>
+
+
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/static/projectapp/assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -164,14 +170,14 @@
         <ul class="pagination justify-content-center">
             {% if board_view.board_id != first_id.board_id %}
               <li class="page-item">
-                  <a class="page-link" href="#" onclick="goPrev({{board_view.board_id}});" aria-label="Previous">
+                  <a class="page-link" href="#" onclick="goPrev('{{board_view.board_id}}');" aria-label="Previous">
                     << 이전 글</a>
                 </li>
               {% endif %}
               
               {% if board_view.board_id != last_id.board_id %}
                 <li class="page-item">
-                    <a class="page-link" href="#" onclick="goNext({{board_view.board_id}});" aria-label="Next">
+                    <a class="page-link" href="#" onclick="goNext('{{board_view.board_id}}');" aria-label="Next">
                       다음 글 >></a>
                   </li>
                 {% endif %}

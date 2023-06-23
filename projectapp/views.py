@@ -19,7 +19,7 @@ from projectapp.file_util.file_util import File_Util
 from django.core.paginator import Paginator
 
 ### 피부 모델 가져오기
-from projectapp.dc_model.model_pred import *
+# from projectapp.dc_model.model_pred import *
 
 import urllib
 
@@ -242,7 +242,7 @@ def logout_chk(request) :
     return HttpResponse(msg)
 
 
-
+### 진단 결과 페이지
 def setFileInsert(request) :
     url = request.POST.get("img")
 
@@ -258,8 +258,8 @@ def setFileInsert(request) :
         # 이미지 저장
         img_view.save(path+img_full_name)
         
-        p,b=pibu(img)
-        # p,b = 0.99,"구진 플라크"
+        # p,b=pibu(img)
+        p,b = 0.99,"구진 플라크"
         di_name=b.replace(' ','')
 
         di_view = Disease.getDiseaseOne(di_name)
@@ -267,7 +267,7 @@ def setFileInsert(request) :
         
         show_image_path="/static/projectapp/bot/"+"구진플라크"
         show_image_paths=[]
-        print(os.listdir(path+show_image_path))
+        # print(os.listdir(path+show_image_path))
         for i in os.listdir(path+show_image_path):
             show_image_paths.append(show_image_path+"/"+i)
         
@@ -327,7 +327,7 @@ def board(request):
     rows_data = p.get_page(now_page)
     
     start_page = (now_page-1) // num_row * num_row + 1
-    end_page = start_page + 3
+    end_page = start_page + 5
     if end_page > p.num_pages :
         end_page = p.num_pages
 
@@ -376,7 +376,6 @@ def board(request):
 def board_hospital(request):
 
     board_list = Board.getBoardList2()
-    print(board_list)
     searchField = request.GET.get('searchField','ERROR')
     search = request.GET.get('searchText','ERROR')
     
@@ -462,7 +461,21 @@ def boardView(request):
 
     first_id = Board.first_post('board')
     last_id = Board.last_post('board')
+    goButton = request.GET.get("goButton",'')
+    
+    if goButton =="goPrev":
+        board_id = Board.getBoardPrevView('board',board_id)
+        board_id = board_id['board_id']
+        return redirect('/project/board_view/?board_id='+str(board_id))
+    if goButton =="goNext":
+        board_id = Board.getBoardNextView('board',board_id)
+        board_id = board_id['board_id']
+        return redirect('/project/board_view/?board_id='+str(board_id))
+        
+        
+    
     board_view = Board.getBoardView('board',board_id)
+    
     file_list = Board.getBoardFileView(board_id)
 
     rev_content = request.POST.get("rev_content")
@@ -498,6 +511,17 @@ def boardview2(request):
 
     first_id = Board.first_post('board_hospital')
     last_id = Board.last_post('board_hospital')
+    goButton = request.GET.get("goButton",'')
+    
+    if goButton =="goPrev":
+        board_id = Board.getBoardPrevView('board_hospital',board_id)
+        board_id = board_id['board_id']
+        return redirect('/project/board_view2/?board_id='+str(board_id))
+    if goButton =="goNext":
+        board_id = Board.getBoardNextView('board_hospital',board_id)
+        board_id = board_id['board_id']
+        return redirect('/project/board_view2/?board_id='+str(board_id))
+
     board_view = Board.getBoardView('board_hospital',board_id)
 
     return render(request,		
@@ -519,7 +543,7 @@ def post(request):
 
         if request.FILES.get("fi_name") is not None :
                 fi_name = dict(request.FILES).get("fi_name")
-                print(fi_name)
+                # print(fi_name)
         else :
                 fi_name = ""
         
@@ -650,7 +674,7 @@ def boardUpdate(request):
     board_content = request.POST.get("board_content",'')
     user_id = request.POST.get("user_id",'')
 
-    print(request.POST)
+    # print(request.POST)
     # print(dict(request.POST)['fi_num'])
 
     if request.FILES.get("file_nm") is not None :
@@ -748,9 +772,9 @@ def boardDelete(request):
         user_id = request.GET.get("user_id","ERROR")
         
         file_view = Board.getBoardFileView(board_id)
-        print(file_view)
+        # print(file_view)
         delete_chk = Board.setBoardDelete(board_id)
-        print(delete_chk)
+        # print(delete_chk)
 
         for ee in file_view:
             if os.path.exists(path+'/static/projectapp/board_file/'+ee['fi_name']) :
