@@ -6,6 +6,7 @@ from django.shortcuts import render,redirect
 from projectapp.nonmodel_db.user import user    
 from projectapp.nonmodel_db.board import Board
 from projectapp.nonmodel_db.review import Review
+from projectapp.nonmodel_db.disease import Disease
 
 ### 현재시간 가져오는 라이브러리
 from datetime import datetime
@@ -16,6 +17,9 @@ from projectapp.file_util.file_util import File_Util
 
 ### 페이징 처리를 위한 라이브러리
 from django.core.paginator import Paginator
+
+### 피부 모델 가져오기
+from projectapp.dc_model.model_pred import *
 
 import urllib
 
@@ -240,26 +244,48 @@ def logout_chk(request) :
 
 
 def setFileInsert(request) :
-    try:
-        url = request.POST.get("img")
-        img=Image.open(BytesIO(urllib.request.urlopen(url).read()))
-    
-        img=img.resize((620,450))
-        img_full_name="/static/projectapp/images/image.jpg"
-        img=img.convert("RGB")
-        img.save(path+img_full_name)
-        return render(request,
-                    "projectapp/disease_result.html",
-                    {"img_full_name":img_full_name})
-    except:
-        msg = """
-            <script type='text/javascript'>
-                alert('파일을 업로드 해주세요.');
-                location.href = history.go(-1);
-            </script>
-        """
-        return HttpResponse(msg)
+    url = request.POST.get("img")
 
+    options=request.POST.get("inlineRadioOptions")
+    # print(request.POST)
+    if url:
+        # 바이트 이미지 변환
+        img=Image.open(BytesIO(urllib.request.urlopen(url).read()))
+        #보여주는 이미지 사이즈 조절
+        img_view=img.resize((640,440))
+        # 이지미 저장 경로 
+        img_full_name="/static/projectapp/images/image.jpg"
+        # 이미지 저장
+        img_view.save(path+img_full_name)
+        
+        p,b=pibu(img)
+        # p,b = 0.99,"구진 플라크"
+        di_name=b.replace(' ','')
+
+        di_view = Disease.getDiseaseOne(di_name)
+        # print(di_view)
+        
+        show_image_path="/static/projectapp/bot/"+"구진플라크"
+        show_image_paths=[]
+        print(os.listdir(path+show_image_path))
+        for i in os.listdir(path+show_image_path):
+            show_image_paths.append(show_image_path+"/"+i)
+        
+    else:
+        msg = """
+        <script type='text/javascript'>
+            alert('이미지없음 에러.');
+            history.go(-1);
+        </script>
+            """
+        return HttpResponse(msg)
+    return render(request,
+                  "projectapp/disease_result.html",
+                  {"img_full_name":img_full_name,
+                   "result_b":b,
+                   "result_p":p,
+                   "show_image_path":show_image_paths,
+                   "di_view":di_view})
 
 
 ### 게시판 목록보기
@@ -722,9 +748,9 @@ def boardDelete(request):
         user_id = request.GET.get("user_id","ERROR")
         
         file_view = Board.getBoardFileView(board_id)
-
+        print(file_view)
         delete_chk = Board.setBoardDelete(board_id)
-        
+        print(delete_chk)
 
         for ee in file_view:
             if os.path.exists(path+'/static/projectapp/board_file/'+ee['fi_name']) :
@@ -826,7 +852,7 @@ def search_pw(request):
     try:
         user_id=request.POST.get("user_id","A")
         user_email=request.POST.get("user_email","B")
-        url = request.POST.get("url_fp","ERROR")
+        url = request.POST.get("url_fw","ERROR")
         
         rs_msg=user.search_user_pw(user_id,user_email)
 
