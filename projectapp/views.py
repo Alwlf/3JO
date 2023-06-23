@@ -19,10 +19,10 @@ from projectapp.file_util.file_util import File_Util
 from django.core.paginator import Paginator
 
 ### 피부 모델 가져오기
-# from projectapp.dc_model.model_pred import *
+from projectapp.dc_model.model_pred import *
 
 import urllib
-
+import numpy as np
 from PIL import Image
 
 import os
@@ -32,6 +32,12 @@ import base64
 
 from io import  BytesIO
 
+## 한번 실행해서 로딩시간 줄이기 
+a=Image.open(path+"/static/projectapp/images/dogeye.png")
+for i in ["dog","cat"]:
+    for j in ["pibu","eye"]:
+        bot_model(i,j,a)
+## 
 def index(request):
 
     board_list = Board.getBoardList()
@@ -47,9 +53,10 @@ def post(request):
                   {})
 
 def disease(request):
+    dc=request.GET.get("dc")
     return render(request,		
                   "projectapp/disease.html", 
-                  {})
+                  {"dc":dc})
 
 # def disease_result(request):
 #     return render(request,		
@@ -58,57 +65,6 @@ def disease(request):
 
 
 ### File Upload 처리하기
-def setFileInsert(request) :
-    try :
-        title = request.POST.get("title")
-
-        if request.FILES.get("fileUpload") is not None :
-            file_nm = request.FILES.get("fileUpload")
-        else :
-            file_nm = ""
-
-    except :
-        pass
-    if file_nm != "" :
-        ###########[ File Upload 처리하기 ]##########
-        ### - 파일 업로드 폴더 위치 지정 및 물리적 위치 생성하기
-        upload_dir = "./projectapp/static/projectapp/file_UpDown/"
-        download_dir = "./projectapp/static/projectapp/file_UpDown/"
-
-        ### 파일(이미지)을 페이지에 보여줄 경우 : 폴더 전체 경로 지정
-        img_dir = "/static/projectapp/file_UpDown/"
-
-        ### File_Uitl 클래스 생성하기
-        fu = File_Util()
-
-        ### 초기값 셋팅(설정)하기
-        fu.setUpload(file_nm, upload_dir, img_dir, download_dir)
-
-        ### 파일 업로드 실제 수행하기*****
-        fu.fileUpload()
-
-        ########## [ 업로드된 파일 정보 조회 ] #########
-        ### 파일 사이즈
-        file_size = fu.file_size
-        ### 업로드된 파일명
-        filename = fu.filename
-        ### <img> 태그에 넣을 src 전체 경로
-        img_full_name = fu.img_full_name
-        ### (DB 저장용) 다운로드 전체경로+파일명
-        download_full_name = fu.download_full_name
-
-        ####### [Database 이용시]
-        # 컬럼은 두개사용 : img_full_name, download_full_name
-        
-    # msg = """
-    #     <p><img src='{0}'></p>
-    # """.format(img_full_name, file_size, 
-    #            filename, download_full_name)
-    
-    return render(request,
-                  "projectapp/disease_result.html",
-                  {"img_full_name":img_full_name})
-    # return HttpResponse(msg)
 
 
 ### 마이페이지
@@ -247,7 +203,9 @@ def setFileInsert(request) :
     url = request.POST.get("img")
 
     options=request.POST.get("inlineRadioOptions")
-    # print(request.POST)
+    dc=request.POST.get("dc")
+    
+    #print(request.POST)
     if url:
         # 바이트 이미지 변환
         img=Image.open(BytesIO(urllib.request.urlopen(url).read()))
@@ -256,25 +214,31 @@ def setFileInsert(request) :
         # 이지미 저장 경로 
         img_full_name="/static/projectapp/images/image.jpg"
         # 이미지 저장
+        img_view=img_view.convert("RGB")
         img_view.save(path+img_full_name)
-        
-        # p,b=pibu(img)
-        p,b = 0.99,"구진 플라크"
-        di_name=b.replace(' ','')
 
+        # 모델 
+        p,b=bot_model(dc,options,img)
+
+        di_name=b.replace(' ','')
+      
         di_view = Disease.getDiseaseOne(di_name)
-        # print(di_view)
         
-        show_image_path="/static/projectapp/bot/"+"구진플라크"
+        show_image_path="/static/projectapp/bot/"+di_name
+        
         show_image_paths=[]
+        
         # print(os.listdir(path+show_image_path))
-        for i in os.listdir(path+show_image_path):
+        img_lis=os.listdir(path+show_image_path)
+        if img_lis:
+            img_lis=np.random.choice(img_lis,3)
+        for i in img_lis:
             show_image_paths.append(show_image_path+"/"+i)
         
     else:
         msg = """
         <script type='text/javascript'>
-            alert('이미지없음 에러.');
+            alert('이미지가 없습니다.');
             history.go(-1);
         </script>
             """
