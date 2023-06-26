@@ -7,10 +7,7 @@ urlpatterns = [
     # 인덱스 페이지
     path('',views.index),
     path('index/',views.index),
-  
-    # 게시글
-    path('post/',views.post),
-    path('post2/',views.post2),
+
     # 진단하기
     path('disease/',views.disease),
     # 진단 결과
@@ -26,14 +23,20 @@ urlpatterns = [
     path('log_out/',views.logout_chk),
     # 회원 가입
     path('insert/',views.insert_user),
+    # 아이디 찾기
+    path('search_id/',views.search_id),
+    # 비밀번호 찾기
+    path('search_pw/',views.search_pw),
     # 아이디 중복 체크
     path('idChk/',views.idChk),
 
-    # 게시판
+    # 자유 게시판 페이지
     path('board/',views.board),
+    # 리뷰 게시판 페이지
     path('board_hospital/',views.board_hospital),
-    # 게시판 글쓰기
+    # 자유 게시판 글쓰기 페이지
     path('inputpost/',views.inputpost),
+    # 리뷰 게시판 글쓰기 페이지
     path('inputpost2/',views.inputpost2),
     # 게시글 작성
     path('post/',views.post),
@@ -50,14 +53,6 @@ urlpatterns = [
     # 게시판 삭제
     path('board_delete/',views.boardDelete),
     path('board_delete2/',views.boardDelete2),
-
     # 댓글 삭제
     path('review_delete/',views.reviewDelete),
-
-    # 아이디 찾기
-    path('search_id/',views.search_id),
-    # 비밀번호 찾기
-    path('search_pw/',views.search_pw),
-    # 지도 보여주기
-    path('map_view/',views.mapview),
 ]

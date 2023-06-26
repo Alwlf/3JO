@@ -9,13 +9,16 @@
     <meta name="generator" content="Hugo 0.104.2">
     <title>질병진단결과</title>
     <script type="text/javascript">
-        function goToBoardForm(){
-            location.href="/project/board/";
-        }
 
-        function onLoadEvent(){
-          document.getElementById('find').click();
-        }
+      // 자유 게시판 가기
+      function goToBoardForm(){
+          location.href="/project/board/";
+      }
+
+      // 페이지 로드시 주변 병원 찾기 버튼 눌리게 
+      function onLoadEvent(){
+        document.getElementById('find').click();
+      }
 
         window.onload = onLoadEvent;
 
@@ -474,6 +477,7 @@
       </div>
     </div>
     <script type="text/javascript">
+      //진단 결과 보기
       function showDiagnosis() {
         var diagnosisContent = $('#diagnosisContent');
         diagnosisContent.show();
@@ -485,7 +489,7 @@
         pictureContent.hide();
 
       }
-
+      //관련 사진 보기
       function showlist() {
         var diagnosislist = $('#diagnosislist');
         diagnosislist.show();
@@ -496,7 +500,7 @@
         var pictureContent = $('#pictureContent');
         pictureContent.hide();
       }
-      
+      //주변 병원 찾기
       function showHospitals() {
         var hospitalContent = $('#hospitalContent');
         hospitalContent.show();
@@ -506,17 +510,6 @@
         diagnosisContent.hide();
         var pictureContent = $('#pictureContent');
         pictureContent.hide();
-      }
-
-      function showPictures() {
-        var pictureContent = $('#pictureContent');
-        pictureContent.show();
-        var diagnosislist = $('#diagnosislist');
-        diagnosislist.hide();
-        var diagnosisContent = $('#diagnosisContent');
-        diagnosisContent.hide();
-        var hospitalContent = $('#hospitalContent');
-        hospitalContent.hide();
       }
     
 

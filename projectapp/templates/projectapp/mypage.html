@@ -8,10 +8,12 @@
   <title>마이페이지</title>
   <script type="text/javascript">
 
+    // 로드시 해당 사용자 아이디 가져오기
     function mypage(){
       form_id.value=document.getElementById('user_id').value;
     }
 
+    // 비밀번호 유효성 체크
     function pw_handleOnInput(e)  {
       e.value = e.value.replace(/[^0-9A-Za-z]/ig, '').substr(0,15)
     }

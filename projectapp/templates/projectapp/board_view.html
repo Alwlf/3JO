@@ -8,6 +8,8 @@
         <title>게시글</title>
 
         <script type="text/javascript">
+
+          // 게시글 수정 폼 가기
           function goUpdate(board_id,user_id,session_id){
             if (user_id == session_id){
               // alert(board_id+'/'+user_id+'/'+session_id);
@@ -17,6 +19,7 @@
             }
           }
 
+          // 게시글 삭제 하기
           function goDelete(board_id,user_id,session_id){
             if (user_id == session_id){
               if (confirm("정말 삭제하시겠습니까??") == true){
@@ -29,12 +32,14 @@
             }
           }
 
+          // 이전 글로 넘어가기
           function goPrev(board_id){
             url = "/project/board_view/?board_id="+(board_id-1);
             url = url+"&goButton=goPrev";
             location.href=url;
           }
 
+          // 다음 글로 넘어가기
           function goNext(board_id){
             var board_id = parseInt(board_id)
             url = "/project/board_view/?board_id="+(board_id+1);
@@ -42,11 +47,12 @@
             location.href=url;
           }
 
-  
+          // 로그인 안하고 댓글 작성 버튼 눌렀을 시
           function checklogin(){
             alert('로그인을 해주세요');
           }
 
+          // 
           function goReviewDelete(rev_id,user_id,session_id,board_id){
             if(session_id==user_id){
               if (confirm("정말 삭제하시겠습니까??") == true){

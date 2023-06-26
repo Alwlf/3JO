@@ -19,7 +19,7 @@ from projectapp.file_util.file_util import File_Util
 from django.core.paginator import Paginator
 
 ### 피부 모델 가져오기
-from projectapp.dc_model.model_pred import *
+# from projectapp.dc_model.model_pred import *
 
 import urllib
 import numpy as np
@@ -32,12 +32,14 @@ import base64
 
 from io import  BytesIO
 
-## 한번 실행해서 로딩시간 줄이기 
+### 한번 실행해서 로딩시간 줄이기 
 a=Image.open(path+"/static/projectapp/images/dogeye.png")
 for i in ["dog","cat"]:
     for j in ["pibu","eye"]:
-        bot_model(i,j,a)
-## 
+        # bot_model(i,j,a)
+        pass
+
+### 인덱스 페이지
 def index(request):
 
     board_list = Board.getBoardList()
@@ -46,26 +48,12 @@ def index(request):
                   "projectapp/index.html", 
                   {"board_list":board_list})
 
-
-def post(request):
-    return render(request,		
-                  "projectapp/post.html", 
-                  {})
-
+### 진단 페이지
 def disease(request):
     dc=request.GET.get("dc")
     return render(request,		
                   "projectapp/disease.html", 
                   {"dc":dc})
-
-# def disease_result(request):
-#     return render(request,		
-#                   "projectapp/disease_result.html", 
-#                   {})
-
-
-### File Upload 처리하기
-
 
 ### 마이페이지
 def mypage(request):
@@ -93,18 +81,7 @@ def update_mypage(request):
     """
     return HttpResponse(msg)
 
-
-def inputpost(request):
-    return render(request,      
-                  "projectapp/inputpost.html", 
-                  {})
-
-def inputpost2(request):
-    return render(request,      
-                  "projectapp/inputpost2.html", 
-                  {})
-
-### 로그인
+### 아이디 중복 체크
 def idChk(request):
 
     id_list = user.idCheck()
@@ -141,8 +118,65 @@ def insert_user(request):
     """
     return HttpResponse(msg)
 
+### 아이디 찾기
+def search_id(request):
+    try:
+        user_name=request.POST.get("user_name","A")
+        user_email=request.POST.get("user_email","B")
+        url = request.POST.get("url_fi","ERROR")
 
-### 로그인 인증 처리
+        rs_msg=user.search_user_id(user_name,user_email)
+
+        ms = rs_msg['user_id']
+
+        msg="""
+            <script type='text/javascript'>
+                alert('{}');
+                location.href='{}';
+            </script>
+        """.format(ms,url)
+        return HttpResponse(msg)
+    
+    except:
+        msg = f"""
+            <script type='text/javascript'>
+                alert('이름 또는 이메일을 확인해 주세요.');
+                location.href = '{url}';
+            </script>
+        """
+        return HttpResponse(msg)
+
+
+### 비번 찾기
+def search_pw(request):
+    try:
+        user_id=request.POST.get("user_id","A")
+        user_email=request.POST.get("user_email","B")
+        url = request.POST.get("url_fw","ERROR")
+        
+        rs_msg=user.search_user_pw(user_id,user_email)
+
+        ms = rs_msg['user_pw']
+        
+        msg="""
+            <script type='text/javascript'>
+                alert('{}');
+                location.href='{}';
+            </script>
+        """.format(ms,url)
+        return HttpResponse(msg)
+    
+    except:
+        msg = f"""
+            <script type='text/javascript'>
+                alert('아이디 또는 이메일을 확인해 주세요.');
+                location.href = '{url}';
+            </script>
+        """
+        return HttpResponse(msg)
+
+
+### 로그인 처리 기능
 def login_chk(request):
 
     id = request.POST.get("user_id","")
@@ -171,6 +205,7 @@ def login_chk(request):
         return HttpResponse(msg)
     
     request.session["session_user_id"] = id
+    ## 해당 아이디의 이름 값 가져오기
     request.session["session_user_name"] = user_view.get("user_name")
 
 
@@ -218,7 +253,7 @@ def setFileInsert(request) :
         img_view.save(path+img_full_name)
 
         # 모델 
-        p,b=bot_model(dc,options,img)
+        # p,b=bot_model(dc,options,img)
 
         di_name=b.replace(' ','')
       
@@ -252,7 +287,7 @@ def setFileInsert(request) :
                    "di_view":di_view})
 
 
-### 게시판 목록보기
+### 자유 게시판 목록보기
 def board(request):
 
     board_list = Board.getBoardList()
@@ -264,7 +299,7 @@ def board(request):
     if search =="":
         msg = """
                 <script type='text/javascript'>
-                    alert('다시 입력해주세요.');
+                    alert('검색어를 입력해주세요.');
                     location.href = '/project/board/';
                 </script>
             """
@@ -275,7 +310,7 @@ def board(request):
         if not board_list:
             msg = """
                 <script type='text/javascript'>
-                    alert('검색결과가 없습니다');
+                    alert('검색 결과가 없습니다');
                     location.href = '/project/board/';
                 </script>
             """
@@ -337,6 +372,7 @@ def board(request):
                     context,
                   )
 
+### 리뷰 게시판 목록보기
 def board_hospital(request):
 
     board_list = Board.getBoardList2()
@@ -346,7 +382,7 @@ def board_hospital(request):
     if search =="":
         msg = """
                 <script type='text/javascript'>
-                    alert('다시 입력해주세요.');
+                    alert('검색어를 입력해주세요.');
                     location.href = '/project/board_hospital/';
                 </script>
             """
@@ -415,11 +451,10 @@ def board_hospital(request):
    
     return render(request,
                   "projectapp/board_hospital.html", 
-                #   {"board_list":board_list},
                     context,
                   )
 
-### 게시글 조회
+### 자유 게시판 게시글 조회
 def boardView(request):
     board_id = request.GET.get("board_id","ERROR")
 
@@ -427,6 +462,7 @@ def boardView(request):
     last_id = Board.last_post('board')
     goButton = request.GET.get("goButton",'')
     
+    ## 이전글 다음글 기능
     if goButton =="goPrev":
         board_id = Board.getBoardPrevView('board',board_id)
         board_id = board_id['board_id']
@@ -436,12 +472,13 @@ def boardView(request):
         board_id = board_id['board_id']
         return redirect('/project/board_view/?board_id='+str(board_id))
         
-        
-    
+    ## 해당 게시글 보여주기    
     board_view = Board.getBoardView('board',board_id)
     
+    ## 해당 게시글의 사진 보여주기
     file_list = Board.getBoardFileView(board_id)
 
+    ## 댓글 기능
     rev_content = request.POST.get("rev_content")
     # print(request.POST)
     if (rev_content is not None) and (rev_content !="") :
@@ -465,11 +502,15 @@ def boardView(request):
     return render(request,		
                   "projectapp/board_view.html", 
                   {"board_view":board_view,
+                    ## 게시글 사진
                   "file_list":file_list,
+                    ## 처음 게시글과 마지막 게시글 번호
                   "last_id":last_id,
                   "first_id":first_id,
+                    ## 댓글
                   "review_lst":review_list})
 
+### 리뷰 게시판 게시글 조회
 def boardview2(request):
     board_id = request.GET.get("board_id","ERROR")
 
@@ -477,6 +518,7 @@ def boardview2(request):
     last_id = Board.last_post('board_hospital')
     goButton = request.GET.get("goButton",'')
     
+    ## 이전글 다음글 기능
     if goButton =="goPrev":
         board_id = Board.getBoardPrevView('board_hospital',board_id)
         board_id = board_id['board_id']
@@ -491,9 +533,21 @@ def boardview2(request):
     return render(request,		
                   "projectapp/board_view2.html", 
                   {"board_view":board_view,
+                   ## 처음 게시글과 마지막 게시글 번호
                   "last_id":last_id,
                   "first_id":first_id})
 
+### 자유 게시판 글쓰기 페이지
+def inputpost(request):
+    return render(request,      
+                  "projectapp/inputpost.html", 
+                  {})
+
+### 리뷰 게시판 글쓰기 페이지
+def inputpost2(request):
+    return render(request,      
+                  "projectapp/inputpost2.html", 
+                  {})
 
 ### 게시글 작성
 def post(request):
@@ -501,6 +555,7 @@ def post(request):
     board_title = request.POST.get("title","ERROR")
     board_content = request.POST.get("content","ERROR")
     user_id = request.session.get("session_user_id")
+    # 글을 작성한 시간
     board_time = DateFormat(datetime.now()).format('Y.m.d H:i')
     
     if user_id :
@@ -575,7 +630,7 @@ def post(request):
     return HttpResponse(msg)
 
 
-### 병원 리뷰 게시글 작성
+### 리뷰 게시글 작성
 def post2(request):
 
     hospital = request.POST.get("hospital","ERROR")
@@ -583,6 +638,7 @@ def post2(request):
     reviewStar = request.POST.get("reviewStar","ERROR")
     reviewContents = request.POST.get("reviewContents","ERROR")
     user_id = request.session.get("session_user_id")
+    #글을 작성한 시간
     board_time = DateFormat(datetime.now()).format('Y.m.d H:i')
     
     if user_id :
@@ -611,7 +667,6 @@ def post2(request):
 def boardUpdateForm(request):
 
     board_id = request.GET.get("board_id","ERROR")
- 
 
     board_view = Board.getBoardView('board',board_id)
     file_list = Board.getBoardFileView(board_id)
@@ -620,11 +675,11 @@ def boardUpdateForm(request):
                   {"board_view":board_view,
                    "file_list":file_list})
 
+### 리뷰 게시글 수정 폼
 def boardUpdateForm2(request):
 
     board_id = request.GET.get("board_id","ERROR")
  
-
     board_view = Board.getBoardView('board_hospital',board_id)
 
     return render(request,"projectapp/board_update_form2.html",
@@ -710,6 +765,8 @@ def boardUpdate(request):
     """.format(update_chk)
     return HttpResponse(msg)
 
+
+### 리뷰 게시글 수정 
 def boardUpdate2(request):
     board_id = request.POST.get("board_id",'')
     hospital = request.POST.get("hospital",'')
@@ -733,7 +790,6 @@ def boardDelete(request):
     try:
 
         board_id = request.GET.get("board_id","ERROR")
-        user_id = request.GET.get("user_id","ERROR")
         
         file_view = Board.getBoardFileView(board_id)
         # print(file_view)
@@ -762,6 +818,8 @@ def boardDelete(request):
     """
     return HttpResponse(msg)
 
+
+### 리뷰 게시글 삭제
 def boardDelete2(request):
     try:
 
@@ -805,66 +863,4 @@ def reviewDelete(request):
     return redirect('/project/board_view/?board_id='+board_id)
 
 
-
-# 아이디 찾기
-def search_id(request):
-    try:
-        user_name=request.POST.get("user_name","A")
-        user_email=request.POST.get("user_email","B")
-        url = request.POST.get("url_fi","ERROR")
-
-        rs_msg=user.search_user_id(user_name,user_email)
-
-        ms = rs_msg['user_id']
-
-        msg="""
-            <script type='text/javascript'>
-                alert('{}');
-                location.href='{}';
-            </script>
-        """.format(ms,url)
-        return HttpResponse(msg)
-    
-    except:
-        msg = f"""
-            <script type='text/javascript'>
-                alert('이름 또는 이메일을 확인해 주세요.');
-                location.href = '{url}';
-            </script>
-        """
-        return HttpResponse(msg)
-
-
-# 비번 찾기
-def search_pw(request):
-    try:
-        user_id=request.POST.get("user_id","A")
-        user_email=request.POST.get("user_email","B")
-        url = request.POST.get("url_fw","ERROR")
-        
-        rs_msg=user.search_user_pw(user_id,user_email)
-
-        ms = rs_msg['user_pw']
-        
-        msg="""
-            <script type='text/javascript'>
-                alert('{}');
-                location.href='{}';
-            </script>
-        """.format(ms,url)
-        return HttpResponse(msg)
-    
-    except:
-        msg = f"""
-            <script type='text/javascript'>
-                alert('아이디 또는 이메일을 확인해 주세요.');
-                location.href = '{url}';
-            </script>
-        """
-        return HttpResponse(msg)
-
-def mapview(request):
-    return render(request,
-                  "projectapp/map_view.html",
-                  {})
 
