@@ -19,7 +19,7 @@ from projectapp.file_util.file_util import File_Util
 from django.core.paginator import Paginator
 
 ### 피부 모델 가져오기
-# from projectapp.dc_model.model_pred import *
+from projectapp.dc_model.model_pred import *
 
 import urllib
 import numpy as np
@@ -36,8 +36,7 @@ from io import  BytesIO
 a=Image.open(path+"/static/projectapp/images/dogeye.png")
 for i in ["dog","cat"]:
     for j in ["pibu","eye"]:
-        # bot_model(i,j,a)
-        pass
+        bot_model(i,j,a)
 
 ### 인덱스 페이지
 def index(request):
@@ -253,7 +252,7 @@ def setFileInsert(request) :
         img_view.save(path+img_full_name)
 
         # 모델 
-        # p,b=bot_model(dc,options,img)
+        p,b=bot_model(dc,options,img)
 
         di_name=b.replace(' ','')
       
