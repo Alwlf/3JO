@@ -8,6 +8,8 @@
     <meta name="generator" content="Hugo 0.104.2">
     <title>질병진단</title>
     <script type="text/javascript">
+
+      // 파일 초기화 버튼
       function goreset(){
         
           uploadBox.style.display = 'block'; // upload-box를 숨김
@@ -15,6 +17,7 @@
         
       }
 
+      // 진단하기 버튼 클릭 시 진단 부위 체크 확인
       function imgs(){
         var selected = false;
         var radios = document.getElementsByName('inlineRadioOptions');
@@ -24,8 +27,6 @@
               document.getElementById('img').value=fi
           
               f = document.getElementById('fm');
-              // f.setAttribute('method', 'post');
-              // f.setAttribute('action', "/project/disease_result/");
 
               f.submit();
 

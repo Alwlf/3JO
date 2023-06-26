@@ -8,6 +8,8 @@
         <title>게시글</title>
 
         <script type="text/javascript">
+
+          // 리뷰글 수정 폼 가기
           function goUpdate(board_id,user_id,session_id){
             if (user_id == session_id){
               url = '/project/board_update_form2/?board_id='+board_id;
@@ -16,6 +18,7 @@
             }
           }
 
+          // 리뷰글 삭제하기
           function goDelete(board_id,user_id,session_id){
             if (user_id == session_id){
               if (confirm("정말 삭제하시겠습니까??") == true){
@@ -28,12 +31,14 @@
             }
           }
 
+          // 이전 글로 넘어가기
           function goPrev(board_id){
             url="/project/board_view2/?board_id="+(board_id-1);
             url = url+"&goButton=goPrev";
             location.href=url;
           }
 
+          // 다음 글로 넘어가기
           function goNext(board_id){
             var board_id = parseInt(board_id)
             url="/project/board_view2/?board_id="+(board_id+1);
@@ -168,6 +173,8 @@
   </div>
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
+
+            <!-- 처음 페이지와 마지막 페이지에 각각 이전글과 다음글 버튼 보이지 않게  -->
             {% if board_view.board_id != first_id.board_id %}
               <li class="page-item">
                   <a class="page-link" href="#" onclick="goPrev('{{board_view.board_id}}');" aria-label="Previous">

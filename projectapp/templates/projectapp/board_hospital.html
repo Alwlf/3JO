@@ -7,6 +7,8 @@
         <meta name="author" content="" />
         <title>게시판</title>
         <script type="text/javascript">
+
+          // 글쓰기 폼으로 이동
           function goinputform(user_id){
             if (user_id){
               location.href="/project/inputpost2";
@@ -17,28 +19,23 @@
             }
           }
 
+          // 게시글 검색 기능
           function searchBoard(){
               fm = document.getElementById("fm");
-              // s1 = "";
-              // for(i=0; i<fm.searchField.options.length; i++){
-              //   if(fm.searchField.options[i].selected == true){
-              //       s1 = fm.searchField.options[i].value;
-              //       break;
-              //   }
-              // }
               url = "/project/board_hospital/?";
               url = url;
               fm.action = url;
               fm.submit();
           }
     
-
+          // 게시글 보기
           function goView(board_id){
             url = "/project/board_view2/?"
             url = url + "board_id="+ board_id;
             location.href = url;
           }
-       
+          
+          // 리뷰 별점 보여주기
           function star(){
             num=document.getElementById('star').value;
             document.getElementById('star').value=('★'.repeat(num));
@@ -91,7 +88,7 @@
                   <thead>
                     <tr>
                       <th style="width:100px; padding-left: 50px; font-size: 20px;" >번호</th>
-                      <th style="padding-left: 80px;font-size: 20px;">병원이름</th>
+                      <th style="padding-left: 80px;font-size: 20px;">병원명</th>
                       <th style="padding-left: 80px;font-size: 20px;">별점</th>
                       <th style="padding-left: 80px;font-size: 20px;">작성자</th>
                       <th style="font-size: 20px;">작성일</th>
@@ -121,7 +118,7 @@
               <table class="pull-right" float="right" >
                 <tr>
                   <td style="padding-left: 450px;"><select class="form-control" name="searchField" id="searchField">
-                      <option value="hospital">제목</option>
+                      <option value="hospital">병원명</option>
                       <option value="user_id">작성자</option>
                   </select></td>
                   <td><input type="text" class="form-control"
@@ -141,7 +138,7 @@
                {% if is_prev %}
                <li class="page-item">
                    <a class="page-link" 
-                       href="/project/board/?page={{start_page | add:'-3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
+                       href="/project/board_hospital/?page={{start_page | add:'-3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
                        aria-label="Previous" >
                        <span aria-hidden="true">&laquo;</span>
                    </a>
@@ -157,7 +154,7 @@
                     </strong>
                 {% else %}
                     <a class="page-link" 
-                        href="/project/board/?page={{ i }}&searchField={{searchField}}&searchText={{ searchText }}" >{{ i }}</a>
+                        href="/project/board_hospital/?page={{ i }}&searchField={{searchField}}&searchText={{ searchText }}" >{{ i }}</a>
                 {% endif %}
               </li>
             {% endfor %} 
@@ -166,7 +163,7 @@
             {% if is_next %}
             <li class="page-item">
                 <a class="page-link" 
-                    href="/project/board/?page={{start_page | add:'3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
+                    href="/project/board_hospital/?page={{start_page | add:'3'}}&searchField={{ searchField }}&searchText={{ searchText }}" 
                     aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

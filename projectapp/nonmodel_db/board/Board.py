@@ -1,6 +1,6 @@
 from projectapp.nonmodel_db import db_sql
 
-
+### 게시글 아이디로 게시글 정보 가져오기
 def getBoardList():
 
     sql= """
@@ -11,6 +11,7 @@ def getBoardList():
 
     return db_sql.getList(sql)
 
+### 리뷰글 아이디로 리뷰글 정보 가져오기
 def getBoardList2():
 
     sql= """
@@ -21,7 +22,7 @@ def getBoardList2():
 
     return db_sql.getList(sql)
 
-
+### 게시글 아이디 찾기
 def findBoardId(board_title,user_id,board_time):
 
     sql ="""
@@ -46,6 +47,7 @@ def setBoardInsert(board_title,board_content,user_id,board_time) :
 
     return db_sql.setCUD(sql)
 
+### 리뷰글 테이블에 데이터 작성
 def setBoardInsert2(hospital,address,reviewStar,reviewContents,user_id,board_time) :
     
     sql = """
@@ -69,6 +71,7 @@ def setFileInsert(file_name,board_id):
     """.format(file_name,board_id)
     return db_sql.setCUD(sql)
 
+### 첨부파일 데이터 삭제
 def setFileDelete(fi_num):
     sql ="""
         Delete 
@@ -88,6 +91,7 @@ def searchBoard(searchField,search):
     """.format(searchField,search)
     return db_sql.getList(sql)
 
+### 리뷰글 검색
 def searchBoard2(searchField,search):
 
     sql = """
@@ -199,6 +203,7 @@ def setBoardDelete(board_id):
     
     return db_sql.setCUD2(sql)
 
+### 리뷰글 삭제
 def setBoardDelete2(board_id):
     
     sql = f"""

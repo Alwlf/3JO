@@ -49,15 +49,19 @@
     <script type="text/javascript">
       var currentDiv = 1;
       var totalDivs = 5;
+
+      // 취소 버튼 클릭 시
         function goBack(){
             history.go(-1);
         }
-
+       // 업로드 버튼 클릭 시
         function goUpload(){
             fm = document.getElementById("fm");
             fm.action ='/project/board/';
             fm.submit();
         }
+
+        // 사진 추가하기 버튼 클릭 시
         function showNextDiv() {
            
             if (currentDiv < totalDivs) {
@@ -88,7 +92,7 @@
       <table class="table table-hover">
         <tbody>
             <tr>
-              <td><input type="text" class="form-control" style="font-size:20px" placeholder="글 제목" id="title" name="title" minlength="2" maxlength="20" required></td>
+              <td><input type="text" class="form-control" style="font-size:20px" placeholder="글 제목" id="title" name="title" minlength="2" required></td>
             </tr>
 
             <tr>

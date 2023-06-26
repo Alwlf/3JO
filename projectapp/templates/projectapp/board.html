@@ -6,7 +6,9 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>게시판</title>
+
         <script type="text/javascript">
+          // 글쓰기 폼으로 이동
           function goinputform(user_id){
             if (user_id){
               location.href="/project/inputpost";
@@ -16,22 +18,17 @@
               location.href="/project/board";
             }
           }
+
+          // 게시글 검색 기능
           function searchBoard(){
               fm = document.getElementById("fm");
-              // s1 = "";
-              // for(i=0; i<fm.searchField.options.length; i++){
-              //   if(fm.searchField.options[i].selected == true){
-              //       s1 = fm.searchField.options[i].value;
-              //       break;
-              //   }
-              // }
               url = "/project/board/?";
               url = url;
               fm.action = url;
               fm.submit();
           }
-    
-
+          
+          // 게시글 보기
           function goView(board_id){
             url = "/project/board_view/?"
             url = url + "board_id="+ board_id;
