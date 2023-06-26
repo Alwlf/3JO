@@ -103,10 +103,32 @@ def searchBoard2(searchField,search):
 def getBoardView(table,board_id):
     sql="""
         Select * 
-        From {}
+        From '{}'
         Where board_id = {};
     """.format(table,board_id)
     return db_sql.getView(sql)
+
+### 이전 버튼 눌렀을때 게시글 있는지 확인
+def getBoardPrevView(table,board_id):
+    sql = """
+        Select max(board_id) as board_id
+        From '{}'
+        Where board_id <= {};
+    """.format(table,board_id)
+    return db_sql.getView(sql)
+
+### 다음 버튼 눌렀을때 게시글 있는지 확인
+def getBoardNextView(table,board_id):
+    sql = """
+        Select min(board_id) as board_id
+        From '{}'
+        Where board_id >= {};
+    """.format(table,board_id)
+    print(sql)
+    return db_sql.getView(sql)
+
+
+
 
 ### 첫 번째 게시글 번호 조회 
 def first_post(table):
